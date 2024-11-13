@@ -1,13 +1,14 @@
 import {View, Text, StatusBar, StyleSheet, Image} from 'react-native';
 import React from 'react';
 import {Icons} from '../../assets';
-import colors from '../../utils/colors';
+import colors from '../../theme/colors';
 import CustomButton from '../../components/customButton';
 import {
   responsiveFontSize,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import Animated, {FadeInRight} from 'react-native-reanimated';
+import Animated, {FadeInLeft, FadeInRight} from 'react-native-reanimated';
+
 
 const Login = ({navigation}) => {
   return (
@@ -15,8 +16,11 @@ const Login = ({navigation}) => {
       <StatusBar barStyle={'light-content'} />
       <View style={styles.container}>
         <View style={styles.top}>
+
           <Image style={styles.symbol} source={Icons.symbol} />
-          <Animated.View entering={FadeInRight.delay(100).duration(500)}>
+
+          
+          <Animated.View entering={FadeInLeft.delay(800).duration(500)}>
             <Image style={styles.exclude} source={Icons.exclude} />
           </Animated.View>
         </View>
@@ -31,7 +35,7 @@ const Login = ({navigation}) => {
           />
           <CustomButton
             title="Continue"
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.navigate('BottomTab')}
             style={{marginTop: 20}}
             textStyle={{fontWeight: '700'}}
             borderRadius={50}

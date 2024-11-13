@@ -3,7 +3,7 @@ import React, { Children } from 'react'
 
 const AppWrapper = ({children}) => {
   return (
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
     {children}
     </SafeAreaView>
   )

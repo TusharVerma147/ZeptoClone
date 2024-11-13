@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet, StatusBar, Image} from 'react-native';
 import React, { useEffect } from 'react';
-import colors from '../../utils/colors';
+import colors from '../../theme/colors';
 import {Icons} from '../../assets';
 import {responsiveWidth} from 'react-native-responsive-dimensions';
 import AppWrapper from '../../components/appWrapper';

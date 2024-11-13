@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Text, Image} from 'react-native';
 import {responsiveFontSize} from 'react-native-responsive-dimensions';
-import colors from '../../utils/colors';
+import colors from '../../theme/colors';
 
 const CustomButton = ({
   onPress,
