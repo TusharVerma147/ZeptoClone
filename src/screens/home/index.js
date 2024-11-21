@@ -29,7 +29,7 @@ import CustomButton from '../../components/customButton';
 import axios from 'axios';
 import Carousel from 'react-native-reanimated-carousel';
 import HomeTitles from '../../components/homeTitle';
-import { products } from '../../utils/mockdata';
+import {products, trending_products} from '../../utils/mockdata/item';
 import ProductList from '../../components/productList';
 
 const width = Dimensions.get('window').width;
@@ -46,6 +46,8 @@ const Home = ({navigation}) => {
       bottomSheetRef.current.open();
     }
   }, []);
+
+  
 
   // const requestLocationPermission = async () => {
   //   if (Platform.OS === 'android') {
@@ -114,13 +116,12 @@ const Home = ({navigation}) => {
         <AppBody />
         <AppFooter />
       </ScrollView>
-      
-      {/* <RBSheet
+{/* 
+      <RBSheet
         ref={bottomSheetRef}
         closeOnPressMask
         paddingHorizontal={20}
-        height={height/1.75}
-      
+        height={height / 1.75}
         draggable={true}
         openDuration={250}
         customStyles={{
@@ -130,6 +131,7 @@ const Home = ({navigation}) => {
           container: {
             borderTopLeftRadius: 30,
             borderTopRightRadius: 30,
+            // backgroundColor:'red'
           },
           draggableIcon: {
             width: '20%',
@@ -163,7 +165,7 @@ const AppHeader = () => {
     <View style={styles.headerparent}>
       <View style={styles.header}>
         <TouchableOpacity>
-        <Image source={Icons.accountwhite} style={styles.account} />
+          <Image source={Icons.accountwhite} style={styles.account} />
         </TouchableOpacity>
         <View>
           <View style={styles.delivery}>
@@ -173,8 +175,8 @@ const AppHeader = () => {
           <Text style={styles.address}>Home - 1st floor</Text>
         </View>
         <TouchableOpacity>
-        <Image source={Icons.writingwhite} style={styles.account} />
-        </TouchableOpacity> 
+          <Image source={Icons.writingwhite} style={styles.account} />
+        </TouchableOpacity>
       </View>
       <View
         style={{
@@ -186,7 +188,6 @@ const AppHeader = () => {
           borderColor: 'grey',
           paddingHorizontal: 10,
           marginVertical: 10,
-
         }}>
         <Image source={Icons.search} style={{height: 20, width: 20}} />
         <TextInput
@@ -197,8 +198,6 @@ const AppHeader = () => {
     </View>
   );
 };
-
-
 
 const AppBody = () => {
   const banners = [
@@ -212,38 +211,41 @@ const AppBody = () => {
   return (
     <View style={styles.flat}>
       <View>
-      <Carousel
-        loop
-        width={width}
-        height={width / 2}
-        autoPlay
-        autoPlayInterval={2000}
-        data={banners}
-        renderItem={({item}) => (
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
-            >
-            <Image source={item.source} style={styles.banner} />
-          </View>
-        )}
-      />
-     </View>
-    <View>
-    <HomeTitles title={'Your Go-to items'}  subtitle={'See All'}
-     onSubtitlePress={() => console.log("Subtitle pressed")} 
-     iconSource={Icons.forward1}
-     />
-     <ProductList  data={products}/>
+        <Carousel
+          loop
+          width={width}
+          height={width / 2}
+          autoPlay
+          autoPlayInterval={2000}
+          data={banners}
+          renderItem={({item}) => (
+            <View
+              style={{ alignItems: 'center', }}>
+              <Image source={item.source} style={styles.banner} />
+            </View>
+          )}
+        />
+      </View>
+      <View>
+        <HomeTitles
+          title={'Your Go-to items'}
+          subtitle={'See All'}
+          onSubtitlePress={() => console.log('Subtitle pressed')}
+          iconSource={Icons.forward1}
+        />
+        <ProductList data={products} />
+      </View>
+       <Image source={Icons.freshdeal} style={styles.freshdeal} />
+      <View>
+        <HomeTitles
+          title={'Trending Products'}
+          subtitle={'See All'}
+          onSubtitlePress={() => console.log('Subtitle pressed')}
+          iconSource={Icons.forward1}
+        />
+        <ProductList data={trending_products} />
+      </View> 
     </View>
-   <Image  source={Icons.freshdeal}  style={styles.freshdeal} />
-    <View>
-    <HomeTitles title={'Trending Products'}  subtitle={'See All'}
-     onSubtitlePress={() => console.log("Subtitle pressed")} 
-     iconSource={Icons.forward1}
-     />
-    </View>
-    </View>
-  
   );
 };
 
@@ -322,8 +324,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     // flex: 1,
   },
-  freshdeal:{
-    width:{width},
-    height:width / 2,
-  }
+  freshdeal: {
+    width: {width},
+    height: width / 2,
+  },
 });

@@ -22,12 +22,13 @@ const Login = ({navigation}) => {
           
           <Animated.View entering={FadeInLeft.delay(800).duration(500)}>
             <Image style={styles.exclude} source={Icons.exclude} />
-          </Animated.View>
+          </Animated.View>x
         </View>
         <View style={styles.bottom}>
           <CustomButton
             icon={Icons.google}
             title="SignIn with Google"
+            onPress={() => navigation.navigate('Map')}
             textStyle={{fontWeight: '700'}}
             borderRadius={50}
             backgroundColor={colors.white}

@@ -7,4 +7,9 @@ export default {
     reddish:'#ca2354',
     grey:'#808080',
     darkgrey:'#5a5a5a',
+    lightgrey:'#d3d3d3',
+    pink:'#ef4272',
+    lightpink:'#feecf1',
+    greyish:'#edecec'
+   
 }

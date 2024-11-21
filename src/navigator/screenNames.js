@@ -8,7 +8,8 @@ const ScreenNames = {
     Details:'Details',
     Cart:'Cart',
     BottomTab: 'BottomTab',
-    Category:'Category'
+    Category:'Category',
+    Map:'Map'
   };
   
   export {ScreenNames};

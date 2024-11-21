@@ -5,9 +5,11 @@ import { NavigationContainer,  useNavigationContainerRef, } from '@react-navigat
 import Splash from '../screens/splash';
 import Login from '../screens/login';
 import Home from '../screens/home';
+import Cart from '../screens/cart';
 import Details from '../screens/details';
 import { ScreenNames } from './screenNames';
 import BottomTab from './bottomTab';
+import Map from '../screens/map';
 
 const Stack =createNativeStackNavigator();
 
@@ -17,10 +19,13 @@ const RootNavigator = () => {
   return (
     <NavigationContainer   ref={navigationRef}>
     <Stack.Navigator 
-    screenOptions={{headerShown:false}}
+    screenOptions={{headerShown:false,  animation: 'slide_from_right',}}
     initialRouteName={ScreenNames.Splash}>
         <Stack.Screen name={ScreenNames.Splash}  component={Splash}/>
         <Stack.Screen name={ScreenNames.Login}  component={Login}/>
+        <Stack.Screen name={ScreenNames.Details}  component={Details}/>
+        <Stack.Screen name={ScreenNames.Cart}  component={Cart}/>
+        <Stack.Screen name={ScreenNames.Map}  component={Map}/>
         <Stack.Screen
             component={BottomTab}
             name={ScreenNames.BottomTab}

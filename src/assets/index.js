@@ -24,13 +24,45 @@ const Icons = {
     shoppingcart: require('./icons/shoppingcart.png'),
     shoppingcartselect: require('./icons/shoppingcartselect.png'),
     freshdeal: require('./icons/freshdeal.jpeg'),
+   clock: require('./icons/clock.png'),
+   clock1: require('./icons/clock1.png'),
+   drop: require('./icons/drop.png'),
+  upload: require('./icons/upload.png'),
+  bag: require('./icons/bag.png'),
+  left: require('./icons/left.png'),
+cart: require('./icons/cart+.png'),
+bagempt: require('./icons/bagempt.png'),
+   
 
      
 
 
 }
-//   const Images = {
-//     splash_img: require('./icons/splash_img.png'),
-//   };
+  const Images = {
+    vegetable: require('./images/vegetable.png'),
+ dairy: require('./images/dairy.png'),
+    veggies: require('./images/veggies.png'),
+    atta: require('./images/atta.png'),
+    meet: require('./images/meet.png'),
+    masala: require('./images/masala.png'),
+    package: require('./images/package.png'),
+    tea: require('./images/tea.png'),
+    sweet: require('./images/sweet.png'),
+  juice: require('./images/juice.png'),
+   frozen: require('./images/frozen.png'),
+    ice: require('./images/ice.png'),
+    makeup: require('./images/makeup.png'),
+    skin: require('./images/skin.png'),
+    hair: require('./images/hair.png'),
+    groom: require('./images/groom.png'),
+    biscuits: require('./images/biscuits.png'),
+    pharma: require('./images/pharma.png'),
+   kitchen: require('./images/kitchen.png'),
+    copy: require('./images/copy.png'),
+    toys: require('./images/toys.png'),
+    fan: require('./images/fan.png'),
+    clean: require('./images/clean1.png'),
+    table: require('./images/table.png'),
+  };
   
-  export {Icons, /*Images*/};
+  export {Icons, Images};
