@@ -1,23 +1,34 @@
-import {
-  View,
-  Text,
-  Image,
-  FlatList,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
 import React from 'react';
+import { View, Text, Image, FlatList, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import colors from '../../theme/colors';
+import { Icons, Images } from '../../assets';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct, incrementQuantity, decrementQuantity } from '../../redux/CartSlice';
+
 
 const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const OtherProducts = ({ data }) => {
+  const dispatch = useDispatch();
+  const cartStore = useSelector(state => state.cart);
 
-const OtherProducts = ({data}) => {
-  const renderGridCategory = ({item, index}) => {
+  const renderGridCategory = ({ item, index }) => {
+    const isAddedToCart = cartStore.find(grocery => grocery.id === item.id);
+
+    const handleAddToCart = () => {
+      dispatch(addProduct(item));
+    };
+
+    const handleIncrement = () => {
+      dispatch(incrementQuantity(item));
+    };
+
+    const handleDecrement = () => {
+      dispatch(decrementQuantity(item));
+    };
+
     return (
       <View style={styles.renderproduct}>
-        <Image source={item.image} style={styles.itemimage} />
+        <Image source={{ uri: item.image }} style={styles.itemimage} />
         <View style={styles.name}>
           <Text numberOfLines={1} style={styles.des}>
             {item.name}
@@ -30,20 +41,23 @@ const OtherProducts = ({data}) => {
           <Text style={styles.price}>₹{item.discounted}</Text>
         </View>
 
-        {/* <TouchableOpacity style={styles.cart}>
+        {!isAddedToCart ? (
+          <TouchableOpacity style={styles.cart} onPress={handleAddToCart}>
             <Text style={styles.carttext}>Add to Cart</Text>
-        </TouchableOpacity> */}
-        <View style={styles.removecart}>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.removecart}>
+            <Text style={styles.removecarttext} onPress={handleDecrement}>
+              -
+            </Text>
 
-            <Text style={styles.removecarttext}>-</Text>
+            <Text style={styles.removecarttextdigit}>{isAddedToCart.quantity}</Text>
 
-          <Text style={styles.removecarttextdigit}>1</Text>
-   
-          <Text style={styles.removecarttext} onPress={''}>
-            +
-          </Text>
-     
-        </View>
+            <Text style={styles.removecarttext} onPress={handleIncrement}>
+              +
+            </Text>
+          </View>
+        )}
       </View>
     );
   };
@@ -57,12 +71,10 @@ const OtherProducts = ({data}) => {
         numColumns={2}
         data={data}
         renderItem={renderGridCategory}
-        // horizontal
       />
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,

@@ -16,6 +16,8 @@ import colors from '../../theme/colors';
 import HomeTitles from '../../components/homeTitle';
 import OtherProducts from '../../components/otherProducts';
 import {other_products} from '../../utils/mockdata/item';
+import { trending_products } from '../../utils/mockdata/item';
+import ProductList from '../../components/productList';
 import AppHeader from '../../components/appHeader';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -52,13 +54,13 @@ const Details = ({navigation}) => {
     setIsOpened(!isOpened);
   };
 
-  // Check if any item is in the cart
+
   const hasItemsInCart = cartStore.length > 0;
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <AppHeader title="Category" />
+      <AppHeader  />
       <ScrollView>
         <View style={styles.imageview}>
           <Image source={{uri: item.image}} style={styles.itemimage} />
@@ -115,7 +117,7 @@ const Details = ({navigation}) => {
             titleFontSize={23}
             titleFontWeight="500"
           />
-          <OtherProducts data={other_products} />
+           <OtherProducts data={trending_products} />
         </View>
       </ScrollView>
       {hasItemsInCart && (

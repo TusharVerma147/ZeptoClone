@@ -45,7 +45,7 @@ const products = [
   },
   {
     id:105,
-    name: 'Whole Wheat Bread',
+    name: 'Wheat Bread',
     grams: 400,
     price: 55,
     discounted: 50,
@@ -55,7 +55,7 @@ const products = [
   },
   {
     id:106,
-    name: 'Full Cream Fresh Milk',
+    name: 'Fresh Milk',
     grams: 1000,
     price: 68,
     discounted: 60,

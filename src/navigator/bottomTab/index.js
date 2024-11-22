@@ -1,9 +1,9 @@
 import React from 'react';
-import {Image, Text, View} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Icons} from '../../assets';
+import { Image, Text, View } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Icons } from '../../assets';
 import colors from '../../theme/colors';
-import {ScreenNames} from '../screenNames';
+import { ScreenNames } from '../screenNames';
 import Home from '../../screens/home';
 import Category from '../../screens/categories';
 import Cart from '../../screens/cart';
@@ -13,8 +13,8 @@ const Tab = createBottomTabNavigator();
 const BottomTab = () => {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
           switch (route.name) {
@@ -38,11 +38,11 @@ const BottomTab = () => {
           return (
             <Image
               source={iconName}
-              style={{width: 40, height: 30, resizeMode: 'contain'}}
+              style={{ width: 40, height: 30, resizeMode: 'contain' }}
             />
           );
         },
-        tabBarLabel: ({focused, color}) => {
+        tabBarLabel: ({ focused, color }) => {
           let labelStyle = {
             fontSize: 12,
             color: focused ? colors.violet : colors.inactiveTabColor,
@@ -71,21 +71,25 @@ const BottomTab = () => {
           paddingBottom: 5,
           height: 65,
         },
-      })}>
+      })}
+    >
       <Tab.Screen
         component={Home}
         name={ScreenNames.Home}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Tab.Screen
         component={Category}
         name={ScreenNames.Category}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Tab.Screen
         component={Cart}
         name={ScreenNames.Cart}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          tabBarStyle: { display: 'none' }, 
+        }}
       />
     </Tab.Navigator>
   );

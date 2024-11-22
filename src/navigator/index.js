@@ -10,6 +10,7 @@ import Details from '../screens/details';
 import { ScreenNames } from './screenNames';
 import BottomTab from './bottomTab';
 import Map from '../screens/map';
+import Settings from '../screens/settings';
 
 const Stack =createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ const RootNavigator = () => {
         <Stack.Screen name={ScreenNames.Details}  component={Details}/>
         <Stack.Screen name={ScreenNames.Cart}  component={Cart}/>
         <Stack.Screen name={ScreenNames.Map}  component={Map}/>
+        <Stack.Screen name={ScreenNames.Settings}  component={Settings}/>
         <Stack.Screen
             component={BottomTab}
             name={ScreenNames.BottomTab}

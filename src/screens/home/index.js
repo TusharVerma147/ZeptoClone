@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import colors from '../../theme/colors';
 import {Icons} from '../../assets';
 import AppWrapper from '../../components/appWrapper';
@@ -161,10 +162,11 @@ const Home = ({navigation}) => {
 };
 
 const AppHeader = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.headerparent}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity    onPress={() => navigation.navigate('Settings')}>
           <Image source={Icons.accountwhite} style={styles.account} />
         </TouchableOpacity>
         <View>

@@ -9,6 +9,7 @@ const ScreenNames = {
     Cart:'Cart',
     BottomTab: 'BottomTab',
     Category:'Category',
+    Settings:'Settings',
     Map:'Map'
   };
   

@@ -32,7 +32,13 @@ const Icons = {
   left: require('./icons/left.png'),
 cart: require('./icons/cart+.png'),
 bagempt: require('./icons/bagempt.png'),
-   
+faqs: require('./icons/chatbox.png'),
+location: require('./icons/location.png'),
+refund: require('./icons/refund.png'),
+gifts: require('./icons/gift.png'),
+new: require('./icons/new.png'),
+info: require('./icons/information.png'),
+
 
      
 
@@ -63,6 +69,7 @@ bagempt: require('./icons/bagempt.png'),
     fan: require('./images/fan.png'),
     clean: require('./images/clean1.png'),
     table: require('./images/table.png'),
+  
   };
   
   export {Icons, Images};
