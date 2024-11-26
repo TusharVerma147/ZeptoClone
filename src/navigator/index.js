@@ -11,6 +11,8 @@ import { ScreenNames } from './screenNames';
 import BottomTab from './bottomTab';
 import Map from '../screens/map';
 import Settings from '../screens/settings';
+import MailLogin from '../screens/maillogin';
+import SignUp from '../screens/signUp/signup';
 
 const Stack =createNativeStackNavigator();
 
@@ -24,6 +26,8 @@ const RootNavigator = () => {
     initialRouteName={ScreenNames.Splash}>
         <Stack.Screen name={ScreenNames.Splash}  component={Splash}/>
         <Stack.Screen name={ScreenNames.Login}  component={Login}/>
+        <Stack.Screen name={ScreenNames.MailLogin}  component={MailLogin}/>
+        <Stack.Screen name={ScreenNames.SignUp}  component={SignUp}/>
         <Stack.Screen name={ScreenNames.Details}  component={Details}/>
         <Stack.Screen name={ScreenNames.Cart}  component={Cart}/>
         <Stack.Screen name={ScreenNames.Map}  component={Map}/>

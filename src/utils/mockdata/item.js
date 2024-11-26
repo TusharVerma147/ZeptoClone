@@ -29,7 +29,7 @@ const products = [
     price: 60,
     discounted: 45,
     image:
-      'https://kazeliving.com/cdn/shop/files/3d85c28c-62e3-4213-8e62-1346b66ad1c1.jpg?v=1729921186&width=480',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcLs4komf8f3GDZVTvOdeKSugqkuSOyCdCDQ&s',
     description:'Fresh and pesticide-free, this organic spinach is a nutrient-packed leafy green, ideal for salads, smoothies, or as a side dish in your meals.'
   },
   {

@@ -1,5 +1,5 @@
 import {View, Text, StatusBar, StyleSheet, Image} from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {Icons} from '../../assets';
 import colors from '../../theme/colors';
 import CustomButton from '../../components/customButton';
@@ -10,7 +10,15 @@ import {
 import Animated, {FadeInLeft, FadeInRight} from 'react-native-reanimated';
 
 
+
+
+
+
+
+
 const Login = ({navigation}) => {
+
+
   return (
     <>
       <StatusBar barStyle={'light-content'} />
@@ -22,13 +30,16 @@ const Login = ({navigation}) => {
           
           <Animated.View entering={FadeInLeft.delay(800).duration(500)}>
             <Image style={styles.exclude} source={Icons.exclude} />
-          </Animated.View>x
+          </Animated.View>
+        
+      
         </View>
         <View style={styles.bottom}>
           <CustomButton
             icon={Icons.google}
             title="SignIn with Google"
             onPress={() => navigation.navigate('Map')}
+            // onPress={()=>signIn()}
             textStyle={{fontWeight: '700'}}
             borderRadius={50}
             backgroundColor={colors.white}

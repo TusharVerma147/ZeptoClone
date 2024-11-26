@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     width: width / 4.5,
   },
   clock: {
-    height: 20,
+    height: 20,  
     width: 20,
     marginHorizontal: 3,
   },

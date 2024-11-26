@@ -117,8 +117,8 @@ const Home = ({navigation}) => {
         <AppBody />
         <AppFooter />
       </ScrollView>
-{/* 
-      <RBSheet
+
+      {/* <RBSheet
         ref={bottomSheetRef}
         closeOnPressMask
         paddingHorizontal={20}
@@ -139,7 +139,7 @@ const Home = ({navigation}) => {
           },
         }}>
         <View style={{alignItems: 'center'}}>
-          <Image source={Icons.location} style={styles.location} />
+          <Image source={Icons.location1} style={styles.location} />
           <Text style={styles.locationtext}>Your device location is off</Text>
           <Text style={styles.locationsubtext}>
             Please enable location permission for better delivery experience

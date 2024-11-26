@@ -8,20 +8,41 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Splash = ({navigation}) => {
 
-   useEffect(()=>{
-    setTimeout(()=>{
-   AsyncStorage.getItem('key').then((result)=>{
-    if(result){
-        navigation.replace('Home')
-    }
-    else{
-        navigation.replace('Login')
-    }
-   }).catch((err)=>{
-      console.log(err)
-   });
-    },2000)
-   },[]);
+  //  useEffect(()=>{
+  //   setTimeout(()=>{
+  //  AsyncStorage.getItem('key').then((result)=>{
+  //   if(result){
+  //       navigation.replace('BottomTab')
+  //   }
+  //   else{
+  //       navigation.replace('Login')
+  //   }
+  //  }).catch((err)=>{
+  //     console.log(err)
+  //  });
+  //   },2000)
+  //  },[]);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const result = await AsyncStorage.getItem('key');
+        console.log('result-->', result);
+        if (result === 'true') {
+          navigation.replace('BottomTab'); 
+        } else {
+          navigation.replace('MailLogin'); 
+        }
+      } catch (err) {
+        console.log(err);
+        navigation.replace('MailLogin'); 
+      }
+    };
+
+    const timer = setTimeout(checkLoginStatus, 2000); 
+
+    return () => clearTimeout(timer); 
+  }, [navigation]);
 
   return (
     <View style={styles.container}>

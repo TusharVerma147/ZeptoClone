@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "618497774501",
+    "project_id": "zepto-1c135",
+    "storage_bucket": "zepto-1c135.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618497774501:android:f99166697951975aef0e4c",
+        "android_client_info": {
+          "package_name": "com.zepto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "618497774501-knq282thiio2qdckfsnpr5d88lj5a08t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrTF1u1gjqM7A9qXb6CX5yPoe4lnA2Wg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "618497774501-knq282thiio2qdckfsnpr5d88lj5a08t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "618497774501-6drc4qt2vboocum8tia6k5ph658vj5f6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.Zepto"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

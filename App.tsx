@@ -1,11 +1,35 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, ActivityIndicator } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import StackRoute from './src/navigator'
 import { Provider } from 'react-redux'
 import { Store } from './src/redux/Store'
+import auth from '@react-native-firebase/auth';
 
 const App = () => {
+
+
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+   
+    const unsubscribe = auth().onAuthStateChanged(user => {
+      setUser(user);
+      if (initializing) setInitializing(false); 
+    });
+    
+    return unsubscribe; 
+  }, [initializing]);
+
+  
+  if (initializing) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
   return (
    <Provider store={Store}>  
     <StackRoute/>

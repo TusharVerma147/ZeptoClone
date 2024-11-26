@@ -1,8 +1,10 @@
 import React from 'react';
-import {StyleSheet, Text, View, SectionList, StatusBar, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, SectionList, Image, TouchableOpacity} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
+import auth from '@react-native-firebase/auth'; 
 import colors from '../../theme/colors';
-import { Icons, Images } from '../../assets';
+import { Icons } from '../../assets';
 import AppHeader from '../../components/appHeader';
 
 const DATA = [
@@ -48,39 +50,49 @@ const DATA = [
   },
 ];
 
-const Settings = () => (
+const Settings = ({ navigation }) => {
 
+  const handleLogout = async () => {
+    try {
+      await auth().signOut();
+      await AsyncStorage.removeItem('key'); // Remove the value from AsyncStorage
+      navigation.navigate('MailLogin'); // Navigate to the login screen after logout
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
     <View style={styles.container}>
       <AppHeader title={'Settings'}/>
       <SectionList
-      style={{}}
         sections={DATA}
         keyExtractor={(item, index) => item + index}
-        // renderItem={({item}) => (
-        //   <View style={styles.item}>
-        //     <Text style={styles.title}>{item}</Text>
-        //   </View>
-        // )}
         renderItem={() => null}
         renderSectionHeader={({section: {title, image}}) => (
           <View style={styles.item}>
-        <Image source={image} style={styles.img} />
-          <Text style={styles.title}>{title}</Text>
+            <Image source={image} style={styles.img} />
+            <Text style={styles.title}>{title}</Text>
           </View>
         )}
       />
-<View style={styles.log}>
-
-<TouchableOpacity style={{borderColor: colors.lightgrey,
-    backgroundColor: colors.white,borderWidth:1, borderRadius:10, marginBottom:20}} >
+      <View style={styles.log}>
+        <TouchableOpacity 
+          onPress={handleLogout} // Call handleLogout on press
+          style={{
+            borderColor: colors.lightgrey,
+            backgroundColor: colors.white,
+            borderWidth: 1,
+            borderRadius: 10,
+            marginBottom: 20
+          }} 
+        >
           <Text style={styles.logText}>Log Out</Text>
         </TouchableOpacity>
-</View>
-      
-
+      </View>
     </View>
-
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -90,39 +102,33 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: colors.white,
     padding: 20,
-    borderBottomWidth:1,
-    flexDirection:'row',
-    gap:10,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    gap: 10,
     borderBottomColor: colors.lightgrey,
-    alignItems:'center',
-flex:2
-
+    alignItems: 'center',
+    flex: 2
   },
-  img:{
-      height: 35,
-      width: 30,
-      tintColor:colors.violet,
-      resizeMode:'contain'
-  },
-  header: {
-    fontSize: 20,
-    backgroundColor: '#fff',
+  img: {
+    height: 35,
+    width: 30,
+    tintColor: colors.violet,
+    resizeMode: 'contain'
   },
   title: {
     fontSize: 20,
   },
-  log:{
-
-   marginVertical:20, 
-    alignItems:'center',
-    justifyContent:'center',
+  log: {
+    marginVertical: 20, 
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  logText:{
+  logText: {
     color: colors.pink,
     textAlign: 'center',
     padding: 10,
-    fontWeight:'500',
-    fontSize:20
+    fontWeight: '500',
+    fontSize: 20
   }
 });
 

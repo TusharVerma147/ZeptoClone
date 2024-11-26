@@ -73,7 +73,7 @@ const Cart = ({navigation}) => {
       <StatusBar barStyle={'dark-content'} />
       <AppHeader title="Your Cart" alignment="auto" />
 
-      <View style={styles.content}>
+      <View >
         {cartItems.length > 0 ? (
           <FlatList
             data={cartItems}
@@ -95,9 +95,7 @@ const Cart = ({navigation}) => {
             />
           </View>
         )}
-        <View>
-          <Text>tushar</Text>
-        </View>
+  
       </View>
 
       {cartItems.length > 0 && (
@@ -124,19 +122,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.greyish,
+    backgroundColor:"#fff"
   },
-  content: {
-    flex: 1,   
-    paddingHorizontal: 20,
-    paddingBottom: 100,
-    marginBottom: 30,
-    marginTop: 10,
-  },
+  // content: {
+  //   flex: 1,   
+  //   paddingHorizontal: 20,
+  //   paddingBottom: 100,
+  //   marginBottom: 30,
+  //   marginTop: 10,
+  // },
   flat: {
-    paddingHorizontal: 10,
-    paddingVertical: 20,
+    // paddingHorizontal: 10,
+    // paddingVertical: 20,
+    padding:20,
     borderRadius: 10,
     backgroundColor: colors.white,
+    margin:5,
+    // borderBottomWidth:2,
+    borderBottomColor:'#ffff'
   },
   emptycart: {
     justifyContent: 'center',
@@ -208,7 +211,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: colors.white,
+    backgroundColor: colors.greyish,
      flexDirection:'row',
     paddingTop: 10,
     justifyContent: 'space-evenly',

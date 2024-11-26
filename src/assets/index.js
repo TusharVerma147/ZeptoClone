@@ -5,7 +5,7 @@ const Icons = {
     google: require('./icons/search.png'),
     account: require('./icons/account.png'),
     writing: require('./icons/writing.png'),
-    location: require('./icons/location.jpeg'),
+    location1: require('./icons/location.jpeg'),
     search: require('./icons/searchicon.png'),
     writingwhite: require('./icons/writingwhite.png'),
     accountwhite: require('./icons/account.png'),
@@ -38,6 +38,11 @@ refund: require('./icons/refund.png'),
 gifts: require('./icons/gift.png'),
 new: require('./icons/new.png'),
 info: require('./icons/information.png'),
+zeptooo: require('./icons/zeptoooo.png'),
+mail: require('./icons/mail.png'),
+pass: require('./icons/pass.png'),
+eye: require('./icons/eye.png'),
+eyeclose: require('./icons/eyeclose.png'),
 
 
      

@@ -2,14 +2,22 @@ import React from 'react';
 import { View, Text, Image, FlatList, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import colors from '../../theme/colors';
 import { Icons, Images } from '../../assets';
+import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, incrementQuantity, decrementQuantity } from '../../redux/CartSlice';
 
 
 const width = Dimensions.get('window').width;
 const OtherProducts = ({ data }) => {
+
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const cartStore = useSelector(state => state.cart);
+
+
+  const gotoDetail = item => {
+    navigation.navigate('Details', {item});
+  };
 
   const renderGridCategory = ({ item, index }) => {
     const isAddedToCart = cartStore.find(grocery => grocery.id === item.id);
@@ -27,7 +35,9 @@ const OtherProducts = ({ data }) => {
     };
 
     return (
-      <View style={styles.renderproduct}>
+      < TouchableOpacity 
+      onPress={() => gotoDetail(item)}
+      style={styles.renderproduct}>
         <Image source={{ uri: item.image }} style={styles.itemimage} />
         <View style={styles.name}>
           <Text numberOfLines={1} style={styles.des}>
@@ -58,7 +68,7 @@ const OtherProducts = ({ data }) => {
             </Text>
           </View>
         )}
-      </View>
+      </TouchableOpacity>
     );
   };
 
