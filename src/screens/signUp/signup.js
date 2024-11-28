@@ -198,12 +198,14 @@ const styles = StyleSheet.create({
   },
   logintext:{
     color:colors.zeptored,
-    fontSize:responsiveFontSize(3.3),
+    fontSize:responsiveFontSize(4),
     textAlign:'center',
-    textShadowColor: colors.zeptored,
-  textShadowOffset: {width: -1, height: 1},
-  textShadowRadius: 10,
-  fontWeight:'500'
+  //   textShadowColor: colors.zeptored,
+  // textShadowOffset: {width: -1, height: 10},
+  // textShadowRadius: 20,
+  fontWeight:'700',
+  letterSpacing: 1.5,
+  marginBottom: 5
   }
 }); 
 

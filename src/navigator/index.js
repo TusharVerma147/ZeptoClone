@@ -13,6 +13,7 @@ import Map from '../screens/map';
 import Settings from '../screens/settings';
 import MailLogin from '../screens/maillogin';
 import SignUp from '../screens/signUp/signup';
+import Payment from '../screens/payment';
 
 const Stack =createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ const RootNavigator = () => {
         <Stack.Screen name={ScreenNames.Cart}  component={Cart}/>
         <Stack.Screen name={ScreenNames.Map}  component={Map}/>
         <Stack.Screen name={ScreenNames.Settings}  component={Settings}/>
+        <Stack.Screen name={ScreenNames.Payment}  component={Payment}/>
         <Stack.Screen
             component={BottomTab}
             name={ScreenNames.BottomTab}

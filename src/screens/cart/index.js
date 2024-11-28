@@ -9,6 +9,7 @@ import {
   FlatList,
 } from 'react-native';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 import colors from '../../theme/colors';
 import AppHeader from '../../components/appHeader';
 import {Icons} from '../../assets';
@@ -22,7 +23,8 @@ import {
 
 const width = Dimensions.get('window').width;
 
-const Cart = ({navigation}) => {
+const Cart = () => {
+  const navigation = useNavigation();
   const cartItems = useSelector(state => state.cart);
   const dispatch = useDispatch();
 
@@ -40,7 +42,7 @@ const Cart = ({navigation}) => {
 
   const renderCartItem = ({item}) => (
     <View style={styles.cartItem}>
-      <View style={{flexDirection: 'row', alignItems:'center'}}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Image source={{uri: item.image}} style={styles.cartItemImage} />
         <View>
           <Text style={styles.cartItemName}>{item.name}</Text>
@@ -48,7 +50,7 @@ const Cart = ({navigation}) => {
           <Text style={styles.cartItemQuantity}>{item.grams}g</Text>
         </View>
       </View>
-      <View style={{flexDirection: 'row',gap:20, alignItems:'center'}}>
+      <View style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
         <View style={styles.removecart}>
           <TouchableOpacity onPress={() => handleDecrement(item)}>
             <Text style={styles.removecarttext}>-</Text>
@@ -71,9 +73,9 @@ const Cart = ({navigation}) => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <AppHeader title="Your Cart" alignment="auto" />
+      <AppHeader title="Your Cart" />
 
-      <View >
+      <View>
         {cartItems.length > 0 ? (
           <FlatList
             data={cartItems}
@@ -95,19 +97,17 @@ const Cart = ({navigation}) => {
             />
           </View>
         )}
-  
       </View>
 
       {cartItems.length > 0 && (
         <View style={styles.footerview}>
-          
-          
           <View>
             <Text style={styles.topay}>To Pay</Text>
             <Text style={styles.total}>₹{totalAmount}</Text>
           </View>
-          <TouchableOpacity style={styles.footer}>
-            {/* <Image source={Icons.bag} style={styles.clock} /> */}
+          <TouchableOpacity
+            style={styles.footer}
+            onPress={() => navigation.navigate('Payment', {totalAmount})}>
             <Text style={styles.footertext}>Click to Pay</Text>
           </TouchableOpacity>
         </View>
@@ -122,10 +122,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.greyish,
-    backgroundColor:"#fff"
+    backgroundColor: '#fff',
   },
   // content: {
-  //   flex: 1,   
+  //   flex: 1,
   //   paddingHorizontal: 20,
   //   paddingBottom: 100,
   //   marginBottom: 30,
@@ -134,12 +134,12 @@ const styles = StyleSheet.create({
   flat: {
     // paddingHorizontal: 10,
     // paddingVertical: 20,
-    padding:20,
+    padding: 20,
     borderRadius: 10,
     backgroundColor: colors.white,
-    margin:5,
+    margin: 5,
     // borderBottomWidth:2,
-    borderBottomColor:'#ffff'
+    borderBottomColor: '#ffff',
   },
   emptycart: {
     justifyContent: 'center',
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
     backgroundColor: colors.white,
-    justifyContent:'space-between'
+    justifyContent: 'space-between',
   },
   cartItemImage: {
     width: 80,
@@ -207,12 +207,12 @@ const styles = StyleSheet.create({
   },
   footerview: {
     position: 'absolute',
-    alignItems:'center',
+    alignItems: 'center',
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: colors.greyish,
-     flexDirection:'row',
+    backgroundColor: colors.greyy,
+    flexDirection: 'row',
     paddingTop: 10,
     justifyContent: 'space-evenly',
   },
@@ -225,20 +225,20 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     flexDirection: 'row',
     marginVertical: 20,
-   paddingHorizontal:50
+    paddingHorizontal: 50,
   },
   footertext: {
     color: colors.white,
     fontSize: 25,
     fontWeight: '700',
   },
-  topay:{
-    color:colors.darkgrey,
-    fontSize:15
+  topay: {
+    color: colors.darkgrey,
+    fontSize: 15,
   },
-  total:{
-    color:colors.black,
-    fontSize:25,
-    fontWeight:'bold'
-  }
+  total: {
+    color: colors.black,
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
 });

@@ -29,6 +29,7 @@ const Category = () => {
         backgroundColor={colors.violet}
         titleColor={colors.white}
         showBackIcon={false}
+        centerTitle={true}
       />
       <ScrollView>
         <View>

@@ -11,6 +11,7 @@ export default {
     lightgrey:'#d3d3d3',
     pink:'#ef4272',
     lightpink:'#feecf1',
-    greyish:'#edecec'
+    greyish:'#edecec',
+    greyy:'#f4f5fa'
    
 }

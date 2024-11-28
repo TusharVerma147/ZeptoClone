@@ -62,7 +62,7 @@ const MailLogin = ({ navigation }) => {
         <Image style={styles.symbol} source={Icons.zeptooo} />
       {/* </View> */}
       <View>
-      <Text style={styles.logintext}>Login</Text>
+      <Text style={styles.logintext}>Signin</Text>
       </View>
 
       <View style={styles.bottom}>
@@ -205,9 +205,11 @@ const styles = StyleSheet.create({
         color:colors.zeptored,
         fontSize:responsiveFontSize(4),
         textAlign:'center',
-        textShadowColor: colors.zeptored,
-      textShadowOffset: {width:-1, height: 3},
-      textShadowRadius: 8,
-      fontWeight:'500'
+      //   textShadowColor: colors.zeptored,
+      // textShadowOffset: {width:-1, height: 3},
+      // textShadowRadius: 8,
+      fontWeight:'700',
+      letterSpacing: 1.5,
+      marginBottom: 5
       }
 });

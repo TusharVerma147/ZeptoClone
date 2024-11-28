@@ -1,6 +1,7 @@
 import Category from "../screens/categories";
 import Details from "../screens/details";
 import MailLogin from "../screens/maillogin";
+import Payment from "../screens/payment";
 import Profile from "../screens/profile";
 import SignUp from "../screens/signUp/signup";
 
@@ -17,6 +18,7 @@ const ScreenNames = {
     MailLogin:'MailLogin',
     SignUp:'SignUp',
     Profile:'Profile',
+    Payment:'Payment',
   };
   
   export {ScreenNames};
