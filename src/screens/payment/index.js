@@ -6,7 +6,7 @@ import {
   SectionList,
   Image,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import {
   SafeAreaProvider,
@@ -21,23 +21,23 @@ import AppHeader from '../../components/appHeader';
 import HomeTitles from '../../components/homeTitle';
 import {useRoute} from '@react-navigation/native';
 import CustomButton from '../../components/customButton';
-import { check } from 'react-native-permissions';
+import {check} from 'react-native-permissions';
+import Toast from 'react-native-simple-toast';
 
 const Payment = ({navigation}) => {
   const route = useRoute();
   const {totalAmount} = route.params;
   const {top: safeTop} = useSafeAreaInsets();
-  console.log("total ---->" , totalAmount);
+  console.log('total ---->', totalAmount);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
   const [isTickVisible, setIsTickVisible] = useState(false);
 
-
   const handlePaymentPress = () => {
-    setIsButtonVisible(true); 
+    setIsButtonVisible(true);
   };
   const handleTickPress = () => {
-    setIsTickVisible(!isTickVisible)
-    setIsButtonVisible(!isButtonVisible); 
+    setIsTickVisible(!isTickVisible);
+    setIsButtonVisible(!isButtonVisible);
   };
 
   return (
@@ -61,128 +61,159 @@ const Payment = ({navigation}) => {
         <Text style={styles.addresstext}>Delivering to</Text>
       </View>
       <ScrollView>
-      <HomeTitles title={'Pay by UPI'} titleFontWeight="500" titleFontSize={18} />
-      <View style={styles.paymentview}>
-        <View
-          style={styles.upisub}>
-          <Image source={Icons.upi} style={styles.upi} />
-          <Text style={styles.upitext}>Pay by any UPI app</Text>
-        </View>
-        <View style={styles.sub}>
-          <View>
-            <TouchableOpacity onPress={handlePaymentPress}>
-            <Image source={Icons.gpay} style={styles.pay}/>
-            </TouchableOpacity>
-            <Text style={styles.paytext}>GPay</Text>
+        <HomeTitles
+          title={'Pay by UPI'}
+          titleFontWeight="500"
+          titleFontSize={18}
+        />
+        <View style={styles.paymentview}>
+          <View style={styles.upisub}>
+            <Image source={Icons.upi} style={styles.upi} />
+            <Text style={styles.upitext}>Pay by any UPI app</Text>
           </View>
-          <View>
-            <TouchableOpacity onPress={handlePaymentPress}>
-            <Image source={Icons.phonepe} style={styles.pay} />
-            </TouchableOpacity>
-            <Text style={styles.paytext}>PhonePe</Text>
-          </View>
-          <View>
-            <TouchableOpacity onPress={handlePaymentPress}>
-            <Image source={Icons.paytm} style={styles.pay} />
-            </TouchableOpacity>
-            <Text style={styles.paytext}>Paytm</Text>
-          </View>
-        </View>
-      </View>
-      <HomeTitles title={'Netbanking'} titleFontWeight="500" titleFontSize={18}  />
-      <View style={styles.paymentview}>
-      <View style={styles.sub1}>
-          <View>
-            <TouchableOpacity onPress={handlePaymentPress}>
-            <Image source={Icons.sbi} style={styles.pay} />
-            </TouchableOpacity>
-            <Text style={styles.paytext}>SBI</Text>
-          </View>
-          <View>
-            <TouchableOpacity onPress={handlePaymentPress}>
-            <Image source={Icons.hdfc} style={styles.pay} />
-            </TouchableOpacity>
-            <Text style={styles.paytext}>HDFC</Text>
-          </View>
-          <View>
-            <TouchableOpacity onPress={handlePaymentPress}>
-            <Image source={Icons.ici} style={styles.pay} />
-            </TouchableOpacity>
-            <Text style={styles.paytext}>ICICI</Text>
-          </View>
-          <View>
-            <TouchableOpacity onPress={handlePaymentPress}>
-            <Image source={Icons.axis} style={styles.pay} />
-            </TouchableOpacity>
-            <Text style={styles.paytext}>Axis</Text>
+          <View style={styles.sub}>
+            <View>
+              <TouchableOpacity onPress={handlePaymentPress}>
+                <Image source={Icons.gpay} style={styles.pay} />
+              </TouchableOpacity>
+              <Text style={styles.paytext}>GPay</Text>
+            </View>
+            <View>
+              <TouchableOpacity onPress={handlePaymentPress}>
+                <Image source={Icons.phonepe} style={styles.pay} />
+              </TouchableOpacity>
+              <Text style={styles.paytext}>PhonePe</Text>
+            </View>
+            <View>
+              <TouchableOpacity onPress={handlePaymentPress}>
+                <Image source={Icons.paytm} style={styles.pay} />
+              </TouchableOpacity>
+              <Text style={styles.paytext}>Paytm</Text>
+            </View>
           </View>
         </View>
-        <View
-          style={styles.upisub1}>
-          <Image source={Icons.bank} style={styles.card} />
-          <Text style={styles.upitext}>More Banks</Text>
-        </View>
-        
-      </View>
-      <HomeTitles title={'Cards'} titleFontWeight="500" titleFontSize={18}  />
-      <View style={styles.paymentview}>
-        <View
-          style={styles.upisub}>
-          <Image source={Icons.card} style={styles.card} />
-          <Text style={styles.upitext}>Credit / Debit Cards</Text>
-        </View>
-        <View style={styles.sub}>
-          <View>
-            <TouchableOpacity onPress={handlePaymentPress}>
-            <Image source={Icons.visa} style={styles.pay} />
-            </TouchableOpacity>
-            <Text style={styles.paytext}>Visa</Text>
+        <HomeTitles
+          title={'Netbanking'}
+          titleFontWeight="500"
+          titleFontSize={18}
+        />
+        <View style={styles.paymentview}>
+          <View style={styles.sub1}>
+            <View>
+              <TouchableOpacity onPress={handlePaymentPress}>
+                <Image source={Icons.sbi} style={styles.pay} />
+              </TouchableOpacity>
+              <Text style={styles.paytext}>SBI</Text>
+            </View>
+            <View>
+              <TouchableOpacity onPress={handlePaymentPress}>
+                <Image source={Icons.hdfc} style={styles.pay} />
+              </TouchableOpacity>
+              <Text style={styles.paytext}>HDFC</Text>
+            </View>
+            <View>
+              <TouchableOpacity onPress={handlePaymentPress}>
+                <Image source={Icons.ici} style={styles.pay} />
+              </TouchableOpacity>
+              <Text style={styles.paytext}>ICICI</Text>
+            </View>
+            <View>
+              <TouchableOpacity onPress={handlePaymentPress}>
+                <Image source={Icons.axis} style={styles.pay} />
+              </TouchableOpacity>
+              <Text style={styles.paytext}>Axis</Text>
+            </View>
           </View>
-          <View>
-            <TouchableOpacity onPress={handlePaymentPress}>
-            <Image source={Icons.master} style={styles.pay} />
-            </TouchableOpacity>
-            <Text style={styles.paytext}>MasterCard</Text>
-          </View>
-          <View>
-          <TouchableOpacity onPress={handlePaymentPress}>
-            <Image source={Icons.rupay} style={styles.pay} />
-            </TouchableOpacity>
-            <Text style={styles.paytext}>RuPay</Text>
-          </View>
-          <View>
-          <TouchableOpacity onPress={handlePaymentPress}>
-            <Image source={Icons.paypal} style={styles.pay} />
-            </TouchableOpacity>
-            <Text style={styles.paytext}>PayPal</Text>
+          <View style={styles.upisub1}>
+            <Image source={Icons.bank} style={styles.card} />
+            <Text style={styles.upitext}>More Banks</Text>
           </View>
         </View>
-      </View>
-      <HomeTitles title={'Pay On Delivery'} titleFontWeight="500" titleFontSize={18} />
-      <View style={styles.paymentview}>
-        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-        <View style={styles.upisub1}>
-        <Image source={Icons.cod} style={styles.upi}/>
-        <Text style={styles.upitext}>Cash On Delivery</Text>
+        <HomeTitles title={'Cards'} titleFontWeight="500" titleFontSize={18} />
+        <View style={styles.paymentview}>
+          <View style={styles.upisub}>
+            <Image source={Icons.card} style={styles.card} />
+            <Text style={styles.upitext}>Credit / Debit Cards</Text>
+          </View>
+          <View style={styles.sub}>
+            <View>
+              <TouchableOpacity onPress={handlePaymentPress}>
+                <Image source={Icons.visa} style={styles.pay} />
+              </TouchableOpacity>
+              <Text style={styles.paytext}>Visa</Text>
+            </View>
+            <View>
+              <TouchableOpacity onPress={handlePaymentPress}>
+                <Image source={Icons.master} style={styles.pay} />
+              </TouchableOpacity>
+              <Text style={styles.paytext}>MasterCard</Text>
+            </View>
+            <View>
+              <TouchableOpacity onPress={handlePaymentPress}>
+                <Image source={Icons.rupay} style={styles.pay} />
+              </TouchableOpacity>
+              <Text style={styles.paytext}>RuPay</Text>
+            </View>
+            <View>
+              <TouchableOpacity onPress={handlePaymentPress}>
+                <Image source={Icons.paypal} style={styles.pay} />
+              </TouchableOpacity>
+              <Text style={styles.paytext}>PayPal</Text>
+            </View>
+          </View>
         </View>
-        <TouchableOpacity style={[styles.check, {backgroundColor:isTickVisible ? colors.zeptored : colors.white, borderWidth: isTickVisible ? 0 :1, borderColor: isTickVisible ? 'none' : colors.lightgrey}]} onPress={handleTickPress}>
-          { isTickVisible &&   <Text style={styles.tick}>✓</Text>}
-        </TouchableOpacity>
+        <HomeTitles
+          title={'Pay On Delivery'}
+          titleFontWeight="500"
+          titleFontSize={18}
+        />
+        <View style={styles.paymentview}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <View style={styles.upisub1}>
+              <Image source={Icons.cod} style={styles.upi} />
+              <Text style={styles.upitext}>Cash On Delivery</Text>
+            </View>
+            <TouchableOpacity
+              style={[
+                styles.check,
+                {
+                  backgroundColor: isTickVisible
+                    ? colors.zeptored
+                    : colors.white,
+                  borderWidth: isTickVisible ? 0 : 1,
+                  borderColor: isTickVisible ? 'none' : colors.lightgrey,
+                },
+              ]}
+              onPress={handleTickPress}>
+              {isTickVisible && <Text style={styles.tick}>✓</Text>}
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.addresstext}>Pay by Cash/UPI on delivery</Text>
         </View>
-        <Text style={styles.addresstext}>Pay by Cash/UPI on delivery</Text>
-      </View>
       </ScrollView>
       {isButtonVisible && (
-        <View style={styles.footerview}> 
-        <CustomButton
-          title="Proceed to Pay"
-          backgroundColor={colors.pink}
-          textColor={colors.white}
-          borderRadius={15}
-          onPress={() => {
-            console.log('Proceeding to Pay');
-          }}
-        />
+        <View style={styles.footerview}>
+          <CustomButton
+            title="Proceed to Pay"
+            backgroundColor={colors.pink}
+            textColor={colors.white}
+            borderRadius={15}
+            onPress={() => {
+              Toast.showWithGravity(
+                'This is a long toast at the top.',
+                Toast.SHORT,
+                Toast.CENTER,
+                {
+                  // backgroundColor: colors.zeptored,
+                }
+              );
+            }}
+          />
         </View>
       )}
     </View>
@@ -218,7 +249,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderWidth: 1,
     borderColor: colors.lightgrey,
-    margin:10,
+    margin: 10,
     borderRadius: 10,
     padding: 20,
   },
@@ -242,14 +273,14 @@ const styles = StyleSheet.create({
     borderColor: colors.lightgrey,
     borderWidth: 1,
     marginBottom: 10,
-    paddingHorizontal:10,
+    paddingHorizontal: 10,
   },
-  upisub:{
+  upisub: {
     flexDirection: 'row',
     borderBottomColor: colors.lightgrey,
     borderBottomWidth: 1,
   },
-  upisub1:{
+  upisub1: {
     flexDirection: 'row',
     marginTop: 10,
   },
@@ -266,7 +297,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginHorizontal: 10,
     marginTop: 10,
-    fontWeight:'400'
+    fontWeight: '400',
   },
   pay: {
     height: 50,
@@ -281,28 +312,29 @@ const styles = StyleSheet.create({
   paytext: {
     textAlign: 'center',
     paddingTop: 5,
-    paddingBottom:5
+    paddingBottom: 5,
   },
   footerview: {
-    marginTop:10,
+    marginTop: 10,
     backgroundColor: colors.greyy,
     paddingTop: 20,
-    paddingHorizontal:20,
+    paddingHorizontal: 20,
     paddingBottom: 30,
     paddingVertical: 20,
-    backgroundColor:colors.white
+    backgroundColor: colors.white,
   },
-  check:{
-    borderRadius:20,
-    backgroundColor:colors.zeptored,
-     height:25,width:25,
-     justifyContent:'center',
-     alignItems:'center'
+  check: {
+    borderRadius: 20,
+    backgroundColor: colors.zeptored,
+    height: 25,
+    width: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  tick:{
-    fontSize:15,
-    color:colors.white
-  }
+  tick: {
+    fontSize: 15,
+    color: colors.white,
+  },
 });
 
 export default Payment;

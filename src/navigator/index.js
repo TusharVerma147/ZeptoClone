@@ -12,7 +12,7 @@ import BottomTab from './bottomTab';
 import Map from '../screens/map';
 import Settings from '../screens/settings';
 import MailLogin from '../screens/maillogin';
-import SignUp from '../screens/signUp/signup';
+import SignUp from '../screens/signUp';
 import Payment from '../screens/payment';
 
 const Stack =createNativeStackNavigator();

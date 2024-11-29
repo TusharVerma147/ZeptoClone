@@ -56,7 +56,6 @@ const Settings = ({ navigation }) => {
     try {
       await auth().signOut();
       await AsyncStorage.removeItem('key'); // Remove the value from AsyncStorage
-      // navigation.navigate('MailLogin'); // Navigate to the login screen after logout
      navigation.reset({
         index: 0,
         routes: [{ name: 'MailLogin' }]

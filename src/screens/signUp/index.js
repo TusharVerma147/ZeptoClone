@@ -3,32 +3,34 @@ import {
   Text,
   StatusBar,
   StyleSheet,
+  Image,
   TextInput,
   Alert,
-  Image,
   Dimensions,
   TouchableOpacity,
-  KeyboardAvoidingView,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import auth from '@react-native-firebase/auth';
-import CustomButton from '../../components/customButton';
+import React, {useState, useEffect} from 'react';
+import {Icons} from '../../assets';
 import colors from '../../theme/colors';
-import  {vh} from '../../utils/dimensions';
+import CustomButton from '../../components/customButton';
 import {
   responsiveFontSize,
+  responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-simple-toast';
+import  {vh} from '../../utils/dimensions';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
-import { Icons } from '../../assets';
 
 const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
-const MailLogin = ({ navigation }) => {
+const SignUp = ({navigation}) => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [nameError, setNameError] = useState(null);
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -64,19 +66,30 @@ const MailLogin = ({ navigation }) => {
       const googleCredential = auth.GoogleAuthProvider.credential(response?.data?.idToken);
       await auth().signInWithCredential(googleCredential);
       await AsyncStorage.setItem('key', 'true');
-      Alert.alert('User  signed in successfully!');
+      // Alert.alert('User  signed in successfully!');
+      Toast.show('User  logged in successfully');
       navigation.navigate('BottomTab');
     } catch (error) {
       console.error(error);
       Alert.alert('Error signing in: ', error.message);
     }
   };
-  const validateLogin = () =>{
+
+  const validateSignUp = () => {
     let flag = true;
-    if (!email || !password) {
-      Alert.alert('Please fill the user credentials');
+
+    if (!name || !email || !password) {
+      Alert.alert('Please fill all the fields');
       return;
     }
+
+    if (name.length < 2) {
+      setNameError('Name must be at least 2 characters long');
+      flag = false;
+    } else {
+      setNameError(null);
+    }
+
     const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
     if (!specialCharacterRegex.test(password)) {
       setPasswordError('Password must contain at least one special symbol');
@@ -84,6 +97,7 @@ const MailLogin = ({ navigation }) => {
     } else {
       setPasswordError(null);
     }
+
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       setEmailError('Invalid email address');
@@ -91,26 +105,23 @@ const MailLogin = ({ navigation }) => {
     } else {
       setEmailError(null);
     }
-    if(flag){
-      handleLogin();
-    }
-  }
 
-  const handleLogin = async () => {
+    if (flag) {
+      handleSignUp();
+    }
+  };
+
+  const handleSignUp = async () => {
     try {
-      await auth().signInWithEmailAndPassword(email, password);
-      await AsyncStorage.setItem('key', 'true');
-      // Alert.alert('Success', 'User  logged in successfully!');
-      Toast.show('User  logged in successfully');
-      navigation.replace('BottomTab');
+      const userCredential = await auth().createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+
+      Toast.show('User  Registered successfully');
+      navigation.navigate('MailLogin');
     } catch (error) {
-      if (error.code === 'auth/user-not-found') {
-        setEmailError( "Can't find Account ","The email that you entered doesn't have an account associated with it.");
-      } else {
-        console.log(error.message)
-        Alert.alert('Error', error.message);
-        
-      }
+      Alert.alert('Error', error.message);
     }
   };
 
@@ -123,27 +134,54 @@ const MailLogin = ({ navigation }) => {
       <StatusBar barStyle={'light-content'} backgroundColor={colors.violet} />
       <View style={styles.container}>
         <View style={styles.header}>
-        <Image style={styles.symbol} source={Icons.zeptooo} />
+          <Image style={styles.symbol} source={Icons.zeptooo} />
         </View>
         <View style={styles.bottom}>
-        <Text style={styles.logintext}>Signin</Text>
+          <Text style={styles.logintext}>Sign Up</Text>
+
+          <View style={styles.input}>
+            <Image style={styles.clock} source={Icons.user} />{' '}
+            <TextInput
+              style={{flex: 1}}
+              value={name}
+              onChangeText={text => {
+                setName(text), setNameError('');
+              }}
+              placeholder="Name"
+            />
+          </View>
+          {nameError ? (
+            <Text style={styles.error}>{nameError}</Text>
+          ) : (
+            <View style={{height: width / 20}}></View>
+          )}
+
           <View style={styles.input}>
             <Image style={styles.clock} source={Icons.mail} />
             <TextInput
-              style={{ flex: 1 }}
+              style={{flex: 1}}
               value={email}
-              onChangeText={(text) => {setEmail(text), setEmailError('')}}
+              onChangeText={text => {
+                setEmail(text), setEmailError('');
+              }}
               placeholder="Email"
               autoCapitalize="none"
             />
           </View>
-          {emailError ? <Text style={styles.error}>{emailError}</Text>:<View style={{height:width / 20}}></View>}
+          {emailError ? (
+            <Text style={styles.error}>{emailError}</Text>
+          ) : (
+            <View style={{height: width / 20}}></View>
+          )}
+
           <View style={styles.input}>
             <Image style={styles.clock} source={Icons.pass} />
             <TextInput
-              style={{ flex: 1 }}
+              style={{flex: 1}}
               value={password}
-              onChangeText={(text) => {setPassword(text), setPasswordError('')}}
+              onChangeText={text => {
+                setPassword(text), setPasswordError('');
+              }}
               placeholder="Password"
               secureTextEntry={!passwordVisible}
             />
@@ -154,16 +192,20 @@ const MailLogin = ({ navigation }) => {
               />
             </TouchableOpacity>
           </View>
-          {passwordError ? <Text style={styles.error}>{passwordError}</Text>:
-          <View style={{height:width / 20}}></View>}
+          {passwordError ? (
+            <Text style={styles.error}>{passwordError}</Text>
+          ) : (
+            <View style={{height: width / 20}}></View>
+          )}
+
           <CustomButton
-            title="Login"
-            style={{ marginTop: 5 }}
-            textStyle={{ fontWeight: '700' }}
+            title="Sign Up"
+            style={{marginTop: 10}}
+            textStyle={{fontWeight: '700'}}
             borderRadius={50}
             backgroundColor={colors.reddish}
             textColor={colors.white}
-            onPress={validateLogin}
+            onPress={validateSignUp}
           />
           <View style={styles.divideview}>
             <View style={styles.orview}></View>
@@ -179,15 +221,16 @@ const MailLogin = ({ navigation }) => {
             backgroundColor={colors.white}
             textColor={colors.black}
           />
-          <View style={styles.footer}>
-            <Text style={styles.bytext}>Don't have an account?</Text>
-            <View style={styles.policy}>
-              <Text
-                onPress={() => navigation.navigate('SignUp')}
-                style={styles.termstext}>
-                Sign Up
-              </Text>
-            </View>
+        </View>
+
+        <View style={styles.footer}>
+          <Text style={styles.bytext}>Already have an account?</Text>
+          <View style={styles.policy}>
+            <Text
+              onPress={() => navigation.navigate('MailLogin')}
+              style={styles.termstext}>
+              Login
+            </Text>
           </View>
         </View>
       </View>
@@ -195,12 +238,13 @@ const MailLogin = ({ navigation }) => {
   );
 };
 
-export default MailLogin;
+export default SignUp;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.violet,
+    paddingTop: 10,
     paddingHorizontal: 20,
     justifyContent: 'center',
   },
@@ -209,12 +253,12 @@ const styles = StyleSheet.create({
   },
   symbol: {
     width: width / 1.5,
-    height: vh(300),
+    height: vh(200),
     alignSelf: 'center',
     resizeMode: 'contain',
   },
   bottom: {
-    flex:0.8
+    flex: 0.8,
   },
   input: {
     height: vh(50),
@@ -230,11 +274,15 @@ const styles = StyleSheet.create({
   error: {
     color: colors.zeptored,
     fontSize: responsiveFontSize(1.8),
-    height:30,
-    marginTop:0.4
+    height: 30,
+    marginTop: 0.4,
+  },
+  policy: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   footer: {
-    marginTop: vh(60),
+    marginTop: vh(100),
     marginBottom: 30,
   },
   bytext: {
@@ -244,10 +292,23 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   termstext: {
-    color: colors.zeptored,
+    color: colors.reddish,
     textAlign: 'center',
     fontSize: responsiveFontSize(2),
     fontWeight: '500',
+  },
+  andtext: {
+    color: colors.white,
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2),
+    fontWeight: '500',
+    marginHorizontal: 3,
+  },
+  exclude: {
+    alignSelf: 'center',
+    height: responsiveWidth(50),
+    width: responsiveWidth(50),
+    resizeMode: 'contain',
   },
   clock: {
     height: 30,

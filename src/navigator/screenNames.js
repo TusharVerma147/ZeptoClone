@@ -3,7 +3,7 @@ import Details from "../screens/details";
 import MailLogin from "../screens/maillogin";
 import Payment from "../screens/payment";
 import Profile from "../screens/profile";
-import SignUp from "../screens/signUp/signup";
+import SignUp from "../screens/signUp";
 
 const ScreenNames = {
     Home: 'Home',

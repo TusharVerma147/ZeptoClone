@@ -3720,6 +3720,7 @@ __metadata:
     react-native-responsive-dimensions: ^3.1.1
     react-native-safe-area-context: ^4.14.0
     react-native-screens: ^4.0.0
+    react-native-simple-toast: ^3.3.1
     react-native-toast-message: ^2.2.1
     react-redux: ^9.1.2
     react-test-renderer: 18.3.1
@@ -9066,6 +9067,16 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 9da0f394fa26b7ec30f52fc758d6289b7e5123c7e6446bbce654ae31e07ab6d5488e51c0882a906cddc305b18e3cc96f9bc5631671f4fded38da5ef138b53cfa
+  languageName: node
+  linkType: hard
+
+"react-native-simple-toast@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "react-native-simple-toast@npm:3.3.1"
+  peerDependencies:
+    react: "*"
+    react-native: ">=0.71.0"
+  checksum: 0f535a469b9519f761ee0224828df8e531fb92ad5e9accefdc04aafcd896da4c6fead488fe6911ccc11592f325707499f4b696768afd8c20cefe06fa6cdac50f
   languageName: node
   linkType: hard
 

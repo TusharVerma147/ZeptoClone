@@ -86,8 +86,7 @@ target 'Zepto' do
 
    # Add Google Sign-In and Firebase pods here
    pod 'RNGoogleSignin', :path => '../node_modules/@react-native-google-signin/google-signin'
-   pod 'Firebase/Core', '~> 6.3.0'
-   pod 'Firebase/Auth', '~> 6.3.0'
+  
 
   target 'ZeptoTests' do
     inherit! :complete

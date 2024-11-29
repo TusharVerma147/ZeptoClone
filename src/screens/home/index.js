@@ -109,7 +109,7 @@ const Home = ({navigation}) => {
 
   return (
     <AppWrapper>
-      <StatusBar barStyle={'dark-content'} />
+      <StatusBar barStyle={'dark-content'} backgroundColor={colors.white} />
 
       <AppHeader />
 
@@ -268,7 +268,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     justifyContent: 'space-between',
-    // marginBottom:10
   },
   account: {
     height: 40,

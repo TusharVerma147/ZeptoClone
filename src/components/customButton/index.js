@@ -2,6 +2,7 @@ import React from 'react';
 import {TouchableOpacity, Text, Image} from 'react-native';
 import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import colors from '../../theme/colors';
+import { vh } from '../../utils/dimensions';
 
 const CustomButton = ({
   onPress,
@@ -35,7 +36,7 @@ const styles = {
   button: {
     flexDirection: 'row',
     backgroundColor: colors.white,
-    padding: 15,
+    padding: vh(15),
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,

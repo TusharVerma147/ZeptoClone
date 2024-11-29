@@ -38,11 +38,13 @@ const Login = ({navigation}) => {
   const onGoogleButtonPress = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      const {idToken} = await GoogleSignin.signIn();
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      const response = await GoogleSignin.signIn();
+      console.log("id token", response)
+      const googleCredential = auth.GoogleAuthProvider.credential(response?.data?.idToken);
       await auth().signInWithCredential(googleCredential);
       await AsyncStorage.setItem('key', 'true');
-      Alert.alert('User  signed in successfully!');
+      // Alert.alert('User  signed in successfully!');
+      Toast.show('User  logged in successfully');
       navigation.navigate('BottomTab');
     } catch (error) {
       console.error(error);

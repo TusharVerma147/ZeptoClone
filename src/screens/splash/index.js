@@ -3,8 +3,8 @@ import React, {useEffect} from 'react';
 import colors from '../../theme/colors';
 import {Icons} from '../../assets';
 import {responsiveWidth} from 'react-native-responsive-dimensions';
-import AppWrapper from '../../components/appWrapper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Animated, {FadeInLeft, FadeInRight} from 'react-native-reanimated';
 
 const Splash = ({navigation}) => {
   // useEffect(() => {
@@ -22,7 +22,7 @@ const Splash = ({navigation}) => {
   //         console.log(err);
   //       });
   //   }, 2000);
-  // }, []);
+  // }, [navigation]);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -48,7 +48,10 @@ const Splash = ({navigation}) => {
   return (
     <View style={styles.container}>
       <StatusBar hidden />
-      <Image style={styles.splashicon} source={Icons.symbol} />
+      <Animated.View entering={FadeInLeft.delay(200).duration(600)}>
+      <Image style={styles.splashicon} source={Icons.zeptoicon} />
+      </Animated.View>
+      
     </View>
   );
 };
@@ -63,7 +66,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   splashicon: {
-    width: responsiveWidth(80),
-    height: 200,
+    width: responsiveWidth(100),
+    height: 400,
+    resizeMode:'contain'
   },
 });
