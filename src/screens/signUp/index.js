@@ -68,7 +68,7 @@ const SignUp = ({navigation}) => {
       await AsyncStorage.setItem('key', 'true');
       // Alert.alert('User  signed in successfully!');
       Toast.show('User  logged in successfully');
-      navigation.navigate('BottomTab');
+      navigation.replace('BottomTab');
     } catch (error) {
       console.error(error);
       Alert.alert('Error signing in: ', error.message);

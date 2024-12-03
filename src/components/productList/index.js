@@ -32,6 +32,7 @@ const ProductList = ({data}) => {
   const dispatch = useDispatch();
   const cartStore = useSelector(state => state.cart);
 
+
   const renderProducts = ({item, index}) => {
     
 
@@ -48,6 +49,10 @@ const ProductList = ({data}) => {
     const handleDecrement = () => {
       dispatch(decrementQuantity(item));
     };
+
+
+
+
 
     return (
       <TouchableOpacity

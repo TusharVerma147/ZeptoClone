@@ -17,13 +17,14 @@ const AppHeader = ({
   titlesize =25,
   backWidth=30,
   backheight=30,
-  self='center'
+  self='center',
+  uppercolor= colors.white
 }) => {
   const navigation = useNavigation();
   
   return (
-    <View style={[styles.header, { backgroundColor }]}>
-      <StatusBar  backgroundColor={colors.white}/>
+    <View style={[styles.header, { backgroundColor}]}>
+      <StatusBar  backgroundColor={uppercolor}/>
       <View style={[styles.titleContainer, centerTitle && styles.centeredTitleContainer]}>
         {showBackIcon && !centerTitle && (
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backContainer}>
@@ -54,11 +55,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.lightgrey,
     paddingHorizontal: 10,
-   paddingTop: Platform.OS==="android"?20: 50, 
+    paddingTop: Platform.OS==="android"?20: 50, 
     paddingBottom: 20,
   },
   backContainer: {
-    marginRight: 10, 
+    marginRight: 10,
+    marginTop:Platform.OS==="android"?3: 1, 
   },
   back: {
     height: 30,

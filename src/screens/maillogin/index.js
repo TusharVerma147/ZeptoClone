@@ -64,8 +64,9 @@ const MailLogin = ({ navigation }) => {
       const googleCredential = auth.GoogleAuthProvider.credential(response?.data?.idToken);
       await auth().signInWithCredential(googleCredential);
       await AsyncStorage.setItem('key', 'true');
-      Alert.alert('User  signed in successfully!');
-      navigation.navigate('BottomTab');
+      // Alert.alert('User  signed in successfully!');
+      Toast.show('User  logged in successfully!');
+      navigation.replace('BottomTab');
     } catch (error) {
       console.error(error);
       Alert.alert('Error signing in: ', error.message);

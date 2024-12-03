@@ -23,81 +23,54 @@ import {
   responsiveWidth,
   responsiveHeight,
 } from 'react-native-responsive-dimensions';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import CustomButton from '../../components/customButton';
 import axios from 'axios';
 import Carousel from 'react-native-reanimated-carousel';
 import HomeTitles from '../../components/homeTitle';
 import {products, trending_products} from '../../utils/mockdata/item';
 import ProductList from '../../components/productList';
+import {vh, vw} from '../../utils/dimensions';
+import key from '../../apis/api';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const Home = ({navigation}) => {
   const [userLocation, setuserLocation] = useState([]);
   const [address, setAddress] = useState('');
+  console.log('address--->', address);
+
   const bottomSheetRef = useRef(null);
 
   useEffect(() => {
-    // requestLocationPermission();
+    requestLocationPermission();
 
     if (bottomSheetRef.current) {
       bottomSheetRef.current.open();
     }
   }, []);
 
-  
-
-  // const requestLocationPermission = async () => {
-  //   if (Platform.OS === 'android') {
-  //     try {
-  //       const granted = await PermissionsAndroid.request(
-  //         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  //         {
-  //           title: 'Zepto',
-  //           message:
-  //             'This app needs access to your location to provide location-based features.',
-  //           buttonNeutral: 'Ask Me Later',
-  //           buttonNegative: 'Cancel',
-  //           buttonPositive: 'OK',
-  //         },
-  //       );
-  //       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //         getCurrentLocation();
-  //       } else {
-  //         console.log('Location permission denied');
-  //       }
-  //     } catch (err) {
-  //       console.warn(err);
-  //     }
-  //   } else {
-  //     const permission = Platform.OS === 'android' ? PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION : PERMISSIONS.IOS.LOCATION_WHEN_IN_USE;
-  //     const result = await request(permission);
-
-  //     if (result === RESULTS.GRANTED) {
-  //       getCurrentLocation();
-  //     } else {
-  //       Alert.alert(
-  //         'Permission Denied',
-  //         'Location permission is required for this feature.',
-  //       );
-  //     }
-  //   }
-  // };
-
   const getCurrentLocation = () => {
+    console.log('Fetch location');
     Geolocation.getCurrentPosition(
       async position => {
         console.log('Position:', position);
         if (position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          // console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
           setuserLocation({
             latitude: position.coords?.latitude,
             longitude: position.coords?.longitude,
           });
-          const {data} = await axios.get(``);
-          //
+          const response = await axios.get(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${key}`,
+          );
+          const data = response.data;
+          // console.log(response);
+          setAddress(data.results[0]?.formatted_address);
         }
       },
       error => {
@@ -107,18 +80,59 @@ const Home = ({navigation}) => {
     );
   };
 
+  const requestLocationPermission = async () => {
+    try {
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Zepto',
+            message:
+              'This app needs access to your location to provide location-based features.',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          // console.log('You can use the location');
+          getCurrentLocation();
+        } else {
+          console.log('Location permission denied');
+        }
+      } else if (Platform.OS === 'ios') {
+        const result = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+
+        if (result === RESULTS.GRANTED) {
+          console.log('You can use the location');
+          getCurrentLocation();
+        } else {
+          const requestResult = await request(
+            PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+          );
+          if (requestResult === RESULTS.GRANTED) {
+            // console.log('You can use the location');
+            getCurrentLocation();
+          } else {
+            console.log('Location permission denied');
+          }
+        }
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   return (
     <AppWrapper>
       <StatusBar barStyle={'dark-content'} backgroundColor={colors.white} />
-
-      <AppHeader />
-
+      <AppHeader add={address} />
       <ScrollView style={styles.content}>
         <AppBody />
-        <AppFooter />
       </ScrollView>
-
-      {/* <RBSheet
+      {/* 
+      <RBSheet
         ref={bottomSheetRef}
         closeOnPressMask
         paddingHorizontal={20}
@@ -161,12 +175,12 @@ const Home = ({navigation}) => {
   );
 };
 
-const AppHeader = () => {
+const AppHeader = ({add}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.headerparent}>
       <View style={styles.header}>
-        <TouchableOpacity    onPress={() => navigation.navigate('Settings')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
           <Image source={Icons.accountwhite} style={styles.account} />
         </TouchableOpacity>
         <View>
@@ -174,11 +188,12 @@ const AppHeader = () => {
             <Text style={styles.deliverytext}>Delivering In</Text>
             <Text style={styles.min}>10 Min</Text>
           </View>
-          <Text style={styles.address}>Home - 1st floor</Text>
+          <Text style={styles.address}>{`${add.slice(0, 50)}`}</Text>
+          {/* <Text style={styles.address}>Home - 1st Floor</Text> */}
         </View>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Image source={Icons.writingwhite} style={styles.account} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View
         style={{
@@ -214,6 +229,8 @@ const AppBody = () => {
     <View style={styles.flat}>
       <View>
         <Carousel
+          backgroundColor={'red'}
+          borderWidth={1}
           loop
           width={width}
           height={width / 2}
@@ -221,8 +238,7 @@ const AppBody = () => {
           autoPlayInterval={2000}
           data={banners}
           renderItem={({item}) => (
-            <View
-              style={{ alignItems: 'center', }}>
+            <View style={{alignItems: 'center'}}>
               <Image source={item.source} style={styles.banner} />
             </View>
           )}
@@ -237,7 +253,7 @@ const AppBody = () => {
         />
         <ProductList data={products} />
       </View>
-       <Image source={Icons.freshdeal} style={styles.freshdeal} />
+      <Image source={Icons.freshdeal} style={styles.freshdeal} />
       <View>
         <HomeTitles
           title={'Trending Products'}
@@ -246,53 +262,58 @@ const AppBody = () => {
           iconSource={Icons.forward1}
         />
         <ProductList data={trending_products} />
-      </View> 
+      </View>
     </View>
   );
-};
-
-const AppFooter = () => {
-  return <View>{/* <FlatList/> */}</View>;
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
   headerparent: {
-    paddingTop: 10,
-    gap: 10,
+    paddingTop: width / 25,
+    // backgroundColor:'red'
   },
 
   header: {
     flexDirection: 'row',
+    paddingLeft: 10,
+    // backgroundColor:'green',
+    paddingRight: 30,
     alignItems: 'center',
-    paddingHorizontal: 10,
-    justifyContent: 'space-between',
+    paddingVertical: 10,
   },
   account: {
-    height: 40,
-    width: 40,
+    height: 60,
+    width: 60,
     tintColor: colors.violet,
   },
   delivery: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   deliverytext: {
     color: colors.black,
-    fontSize: responsiveFontSize(3),
+    fontSize: responsiveFontSize(2.5),
     fontWeight: '700',
-    marginHorizontal: 3,
+    marginLeft: 10,
+    // marginTop:15,
+    // backgroundColor:'green'
   },
   min: {
     color: colors.violet,
-    fontSize: responsiveFontSize(3),
+    fontSize: responsiveFontSize(2.5),
     fontWeight: '700',
+    marginLeft: 3,
+    // marginTop:15
   },
   address: {
     color: colors.black,
     fontSize: responsiveFontSize(2),
     fontWeight: '600',
     textAlign: 'center',
+    marginLeft: 10,
+    marginRight: 20,
   },
   location: {
     height: 200,
@@ -320,6 +341,7 @@ const styles = StyleSheet.create({
     height: width / 2,
     resizeMode: 'stretch',
     borderRadius: 20,
+    alignSelf: 'center',
   },
   flat: {
     marginTop: 10,
