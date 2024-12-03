@@ -37,10 +37,11 @@ import key from '../../apis/api';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const Home = ({navigation}) => {
+const Home = () => {
   const [userLocation, setuserLocation] = useState([]);
   const [address, setAddress] = useState('');
   console.log('address--->', address);
+  
 
   const bottomSheetRef = useRef(null);
 
@@ -51,6 +52,8 @@ const Home = ({navigation}) => {
       bottomSheetRef.current.open();
     }
   }, []);
+
+ 
 
   const getCurrentLocation = () => {
     console.log('Fetch location');
@@ -129,7 +132,7 @@ const Home = ({navigation}) => {
       <StatusBar barStyle={'dark-content'} backgroundColor={colors.white} />
       <AppHeader add={address} />
       <ScrollView style={styles.content}>
-        <AppBody />
+        <AppBody/>
       </ScrollView>
       {/* 
       <RBSheet
@@ -175,7 +178,10 @@ const Home = ({navigation}) => {
   );
 };
 
-const AppHeader = ({add}) => {
+const AppHeader = ({add,}) => {
+  const gotoSearchPage = () =>{
+    navigation.navigate('Search');
+  }
   const navigation = useNavigation();
   return (
     <View style={styles.headerparent}>
@@ -196,20 +202,12 @@ const AppHeader = ({add}) => {
         </TouchableOpacity> */}
       </View>
       <View
-        style={{
-          marginHorizontal: 15,
-          borderRadius: 10,
-          flexDirection: 'row',
-          alignItems: 'center',
-          borderWidth: 1.5,
-          borderColor: 'grey',
-          paddingHorizontal: 10,
-          marginVertical: 10,
-        }}>
-        <Image source={Icons.search} style={{height: 20, width: 20}} />
+        style={styles.search}>
+        <Image source={Icons.search} style={styles.searchicon} />
         <TextInput
           placeholder="Search"
-          style={{padding: 15, fontSize: 15, color: colors.black, flex: 1}}
+          style={styles.searchInput}
+          onFocus={gotoSearchPage}
         />
       </View>
     </View>
@@ -332,6 +330,25 @@ const styles = StyleSheet.create({
     color: colors.black,
     textAlign: 'center',
     fontSize: responsiveFontSize(1.8),
+  },
+  search:{
+    marginHorizontal: 15,
+          borderRadius: 10,
+          flexDirection: 'row',
+          alignItems: 'center',
+          borderWidth: 1.5,
+          borderColor: 'grey',
+          paddingHorizontal: 10,
+          marginVertical: 10,
+ },
+  searchicon:{
+    height: 20, width: 20
+  },
+  searchInput: {
+    padding: 15,
+   fontSize: 15,
+    color: colors.black,
+    flex: 1,
   },
   content: {
     flex: 1,

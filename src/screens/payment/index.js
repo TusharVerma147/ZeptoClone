@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  SectionList,
   Image,
   TouchableOpacity,
   ScrollView,
@@ -12,16 +11,12 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import auth from '@react-native-firebase/auth';
 import colors from '../../theme/colors';
 import {Icons} from '../../assets';
 import AppHeader from '../../components/appHeader';
 import HomeTitles from '../../components/homeTitle';
 import {useRoute} from '@react-navigation/native';
 import CustomButton from '../../components/customButton';
-import {check} from 'react-native-permissions';
 import Toast from 'react-native-simple-toast';
 
 const Payment = ({navigation}) => {

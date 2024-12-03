@@ -3,6 +3,7 @@ import Details from "../screens/details";
 import MailLogin from "../screens/maillogin";
 import Payment from "../screens/payment";
 import Profile from "../screens/profile";
+import Search from "../screens/search";
 import SignUp from "../screens/signUp";
 
 const ScreenNames = {
@@ -10,6 +11,7 @@ const ScreenNames = {
     Login: 'Login',
     Splash: 'Splash',
     Details:'Details',
+    Search:'Search',
     Cart:'Cart',
     BottomTab: 'BottomTab',
     Category:'Category',

@@ -9,30 +9,33 @@ import {
   Dimensions,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Modal,
+  Pressable,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import CustomButton from '../../components/customButton';
 import colors from '../../theme/colors';
-import  {vh} from '../../utils/dimensions';
-import {
-  responsiveFontSize,
-} from 'react-native-responsive-dimensions';
+import {vh} from '../../utils/dimensions';
+import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-simple-toast';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-
-import { Icons } from '../../assets';
+import {Icons} from '../../assets';
 
 const width = Dimensions.get('window').width;
 
-const MailLogin = ({ navigation }) => {
+const MailLogin = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetEmailError, setResetEmailError] = useState(null);
+  const [resetPasswordEmailSent, setResetPasswordEmailSent] = useState(false);
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -46,7 +49,6 @@ const MailLogin = ({ navigation }) => {
     const subscriber = auth().onAuthStateChanged(user => {
       if (user) {
         console.log('User  is signed in: ', user);
-
         navigation.navigate('BottomTab');
       } else {
         console.log('User  is not signed in');
@@ -60,11 +62,12 @@ const MailLogin = ({ navigation }) => {
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
-      console.log("id token", response)
-      const googleCredential = auth.GoogleAuthProvider.credential(response?.data?.idToken);
+      console.log('id token', response);
+      const googleCredential = auth.GoogleAuthProvider.credential(
+        response?.data?.idToken,
+      );
       await auth().signInWithCredential(googleCredential);
       await AsyncStorage.setItem('key', 'true');
-      // Alert.alert('User  signed in successfully!');
       Toast.show('User  logged in successfully!');
       navigation.replace('BottomTab');
     } catch (error) {
@@ -72,7 +75,8 @@ const MailLogin = ({ navigation }) => {
       Alert.alert('Error signing in: ', error.message);
     }
   };
-  const validateLogin = () =>{
+
+  const validateLogin = () => {
     let flag = true;
     if (!email || !password) {
       Alert.alert('Please fill the user credentials');
@@ -92,25 +96,25 @@ const MailLogin = ({ navigation }) => {
     } else {
       setEmailError(null);
     }
-    if(flag){
+    if (flag) {
       handleLogin();
     }
-  }
+  };
 
   const handleLogin = async () => {
     try {
       await auth().signInWithEmailAndPassword(email, password);
       await AsyncStorage.setItem('key', 'true');
-      // Alert.alert('Success', 'User  logged in successfully!');
       Toast.show('User  logged in successfully');
       navigation.replace('BottomTab');
     } catch (error) {
       if (error.code === 'auth/user-not-found') {
-        setEmailError( "Can't find Account ","The email that you entered doesn't have an account associated with it.");
+        setEmailError(
+          "Can't find Account. The email that you entered doesn't have an account associated with it.",
+        );
       } else {
-        console.log(error.message)
+        console.log(error.message);
         Alert.alert('Error', error.message);
-        
       }
     }
   };
@@ -119,32 +123,58 @@ const MailLogin = ({ navigation }) => {
     setPasswordVisible(!passwordVisible);
   };
 
+  const handleForgotPassword = async () => {
+    if (!resetEmail) {
+      setResetEmailError('Please enter your email address');
+      return;
+    }
+
+    try {
+      await auth().sendPasswordResetEmail(resetEmail);
+      console.log('Password reset email sent!');
+      Toast.show('Password reset email sent!');
+      setModalVisible(false);
+      setResetEmail('');
+    } catch (error) {
+      console.log('Error sending reset email:', error);
+      setResetEmailError('Error sending reset password email');
+    }
+  };
+
   return (
     <>
       <StatusBar barStyle={'light-content'} backgroundColor={colors.violet} />
       <View style={styles.container}>
         <View style={styles.header}>
-        <Image style={styles.symbol} source={Icons.zeptooo} />
+          <Image style={styles.symbol} source={Icons.zeptooo} />
         </View>
         <View style={styles.bottom}>
-        <Text style={styles.logintext}>Signin</Text>
+          <Text style={styles.logintext}>Signin</Text>
           <View style={styles.input}>
             <Image style={styles.clock} source={Icons.mail} />
             <TextInput
-              style={{ flex: 1 }}
+              style={{flex: 1}}
               value={email}
-              onChangeText={(text) => {setEmail(text), setEmailError('')}}
+              onChangeText={text => {
+                setEmail(text), setEmailError('');
+              }}
               placeholder="Email"
               autoCapitalize="none"
             />
           </View>
-          {emailError ? <Text style={styles.error}>{emailError}</Text>:<View style={{height:width / 20}}></View>}
+          {emailError ? (
+            <Text style={styles.error}>{emailError}</Text>
+          ) : (
+            <View style={{height: width / 20}}></View>
+          )}
           <View style={styles.input}>
             <Image style={styles.clock} source={Icons.pass} />
             <TextInput
-              style={{ flex: 1 }}
+              style={{flex: 1}}
               value={password}
-              onChangeText={(text) => {setPassword(text), setPasswordError('')}}
+              onChangeText={text => {
+                setPassword(text), setPasswordError('');
+              }}
               placeholder="Password"
               secureTextEntry={!passwordVisible}
             />
@@ -155,17 +185,23 @@ const MailLogin = ({ navigation }) => {
               />
             </TouchableOpacity>
           </View>
-          {passwordError ? <Text style={styles.error}>{passwordError}</Text>:
-          <View style={{height:width / 20}}></View>}
+          {passwordError ? (
+            <Text style={styles.error}>{passwordError}</Text>
+          ) : (
+            <View style={{height: width / 20}}></View>
+          )}
           <CustomButton
             title="Login"
-            style={{ marginTop: 5 }}
-            textStyle={{ fontWeight: '700' }}
+            style={{marginTop: 5}}
+            textStyle={{fontWeight: '700'}}
             borderRadius={50}
             backgroundColor={colors.reddish}
             textColor={colors.white}
             onPress={validateLogin}
           />
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <Text style={styles.forgot}>Forgot Password?</Text>
+          </TouchableOpacity>
           <View style={styles.divideview}>
             <View style={styles.orview}></View>
             <Text style={styles.ortext}>or</Text>
@@ -192,6 +228,59 @@ const MailLogin = ({ navigation }) => {
           </View>
         </View>
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(!modalVisible)}>
+        <TouchableWithoutFeedback onPress={() => {setModalVisible(false), setResetEmailError('')}}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Reset Your Password</Text>
+              <Text style={styles.modalText}>
+                Enter your email and you may recieve link to reset password.
+              </Text>
+              <TextInput
+                style={styles.modalInput}
+                placeholder="Enter your email"
+                value={resetEmail}
+                onChangeText={text => {
+                  setResetEmail(text), setResetEmailError('');
+                }}
+                autoCapitalize="none"
+              />
+              {resetEmailError ? (
+                <Text style={styles.error}>{resetEmailError}</Text>
+              ) : (
+                <View style={{height: width / 20}}></View>
+              )}
+              <View style={styles.modalButtons}>
+                <CustomButton
+                  title="Reset"
+                  style={{marginTop: 5}}
+                  textStyle={{fontWeight: '500'}}
+                  borderRadius={5}
+                  backgroundColor={colors.reddish}
+                  textColor={colors.white}
+                  onPress={handleForgotPassword}
+                  padding={vh(10)}
+                />
+                <CustomButton
+                  title="Cancel"
+                  style={{marginTop: 5}}
+                  textStyle={{fontWeight: '500'}}
+                  borderRadius={5}
+                  backgroundColor={colors.grey}
+                  textColor={colors.white}
+                  onPress={() => {setModalVisible(false), setResetEmailError('')}}
+                  padding={vh(10)}
+                />
+              </View>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </>
   );
 };
@@ -215,7 +304,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   bottom: {
-    flex:0.8
+    flex: 0.8,
   },
   input: {
     height: vh(50),
@@ -231,12 +320,11 @@ const styles = StyleSheet.create({
   error: {
     color: colors.zeptored,
     fontSize: responsiveFontSize(1.8),
-    height:30,
-    marginTop:0.4
+    height: 30,
+    marginTop: 0.4,
   },
   footer: {
-    marginTop: vh(60),
-    marginBottom: 30,
+    marginTop: vh(40),
   },
   bytext: {
     color: colors.white,
@@ -269,7 +357,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: vh(20),
+    marginTop: vh(10),
+    marginBottom: vh(30),
   },
   orview: {
     height: 1,
@@ -280,5 +369,51 @@ const styles = StyleSheet.create({
   ortext: {
     fontSize: responsiveFontSize(2),
     color: colors.white,
+  },
+  forgot: {
+    color: colors.zeptored,
+    fontWeight: '700',
+    fontSize: responsiveFontSize(2),
+    textAlign: 'right',
+    marginTop: 5,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    height: width / 1.2,
+    paddingVertical: 20,
+  },
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  modalText: {
+    fontSize: 15,
+    marginVertical: 10,
+    fontWeight: '400',
+    // textAlign: 'center',
+    color: colors.grey,
+  },
+  modalInput: {
+    height: vh(50),
+    borderColor: colors.greyish,
+    borderWidth: 1,
+    width: '100%',
+    marginBottom: 15,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+  },
+  modalButtons: {
+    marginVertical: 10,
+    width: '48%',
+    alignSelf: 'center',
   },
 });

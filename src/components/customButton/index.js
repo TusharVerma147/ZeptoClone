@@ -13,6 +13,7 @@ const CustomButton = ({
   borderRadius,
   textColor,
   backgroundColor,
+  padding=vh(15)
 }) => {
   return (
     <TouchableOpacity
@@ -21,6 +22,7 @@ const CustomButton = ({
         style,
         borderRadius && {borderRadius: borderRadius},
         backgroundColor && {backgroundColor: backgroundColor},
+        padding && {padding: padding},
       ]}
       onPress={onPress}>
       {icon && <Image source={icon} style={styles.icon} />}
