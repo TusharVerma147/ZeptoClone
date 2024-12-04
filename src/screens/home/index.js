@@ -3,14 +3,11 @@ import {
   Text,
   PermissionsAndroid,
   Platform,
-  Alert,
-  StyleSheet,
   Image,
   StatusBar,
   Dimensions,
   TextInput,
   ScrollView,
-  FlatList,
   TouchableOpacity,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
@@ -21,13 +18,11 @@ import AppWrapper from '../../components/appWrapper';
 import Geolocation from '@react-native-community/geolocation';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
-import CustomButton from '../../components/customButton';
 import axios from 'axios';
 import Carousel from 'react-native-reanimated-carousel';
 import HomeTitles from '../../components/homeTitle';
 import {products, trending_products} from '../../utils/mockdata/item';
 import ProductList from '../../components/productList';
-import {vh, vw} from '../../utils/dimensions';
 import key from '../../apis/api';
 import styles from './styles';
 
@@ -65,7 +60,7 @@ const Home = () => {
             longitude: position.coords?.longitude,
           });
           const response = await axios.get(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${key}`,
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${apikey}`,
           );
           const data = response.data;
           // console.log(response);
@@ -111,7 +106,6 @@ const Home = () => {
             PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
           );
           if (requestResult === RESULTS.GRANTED) {
-            // console.log('You can use the location');
             getCurrentLocation();
           } else {
             console.log('Location permission denied');
@@ -191,11 +185,7 @@ const AppHeader = ({add,}) => {
             <Text style={styles.min}>10 Min</Text>
           </View>
           <Text style={styles.address}>{`${add.slice(0, 50)}`}</Text>
-          {/* <Text style={styles.address}>Home - 1st Floor</Text> */}
         </View>
-        {/* <TouchableOpacity>
-          <Image source={Icons.writingwhite} style={styles.account} />
-        </TouchableOpacity> */}
       </View>
       <View
         style={styles.search}>
@@ -232,7 +222,7 @@ const AppBody = () => {
           autoPlayInterval={2000}
           data={banners}
           renderItem={({item}) => (
-            <View style={{alignItems: 'center'}}>
+            <View style={styles.caraouselimageview}>
               <Image source={item.source} style={styles.banner} />
             </View>
           )}

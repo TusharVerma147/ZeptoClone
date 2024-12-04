@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
       borderWidth: 1.5,
       borderColor: 'grey',
       paddingHorizontal: 10,
-      marginVertical: Platform.OS==="ios" ? 0 : 20,
+      marginVertical: Platform.OS==="ios" ? 10: 0,
     },
     searchInput: {
       padding: 15,

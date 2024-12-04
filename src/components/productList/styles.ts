@@ -62,11 +62,7 @@ const styles = StyleSheet.create({
       tintColor: colors.violet,
     },
     cart: {
-      // backgroundColor:'red',
-      // justifyContent: 'center',
-      // alignItems: 'center',
       paddingHorizontal: 10,
-      // marginVertical:20,
       paddingVertical: 5,
       borderRadius: 4,
       borderWidth: 1,
@@ -78,10 +74,7 @@ const styles = StyleSheet.create({
       fontSize: 16,
     },
     removecart: {
-      // justifyContent: 'space-between',
       flexDirection: 'row',
-      // paddingHorizontal: 5,
-      // marginVertical:20,
       paddingVertical: 5,
       borderRadius: 4,
       borderWidth: 1,

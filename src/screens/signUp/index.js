@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StatusBar,
-  StyleSheet,
   Image,
   TextInput,
   Alert,
@@ -13,18 +12,14 @@ import React, {useState, useEffect} from 'react';
 import {Icons} from '../../assets';
 import colors from '../../theme/colors';
 import CustomButton from '../../components/customButton';
-import {
-  responsiveFontSize,
-  responsiveWidth,
-} from 'react-native-responsive-dimensions';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-simple-toast';
-import  {vh} from '../../utils/dimensions';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import styles from './styles';
 
 
 const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+
 
 const SignUp = ({navigation}) => {
   const [name, setName] = useState('');
@@ -153,7 +148,7 @@ const SignUp = ({navigation}) => {
           {nameError ? (
             <Text style={styles.error}>{nameError}</Text>
           ) : (
-            <View style={{height: width / 20}}></View>
+            <View style={styles.noerror}></View>
           )}
 
           <View style={styles.input}>
@@ -171,7 +166,7 @@ const SignUp = ({navigation}) => {
           {emailError ? (
             <Text style={styles.error}>{emailError}</Text>
           ) : (
-            <View style={{height: width / 20}}></View>
+            <View style={styles.noerror}></View>
           )}
 
           <View style={styles.input}>
@@ -195,7 +190,7 @@ const SignUp = ({navigation}) => {
           {passwordError ? (
             <Text style={styles.error}>{passwordError}</Text>
           ) : (
-            <View style={{height: width / 20}}></View>
+            <View style={styles.noerror}></View>
           )}
 
           <CustomButton

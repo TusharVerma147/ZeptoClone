@@ -61,6 +61,8 @@ const Icons = {
   axis: require('./icons/axis.png'),
   bank: require('./icons/netbank.png'),
   cod: require('./icons/cod.png'),
+  star: require('./icons/star.png'),
+  tick: require('./icons/tick.png'),
 };
 const Images = {
   vegetable: require('./images/vegetable.png'),

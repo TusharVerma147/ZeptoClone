@@ -14,6 +14,7 @@ import MailLogin from '../screens/maillogin';
 import SignUp from '../screens/signUp';
 import Payment from '../screens/payment';
 import Search from '../screens/search';
+import Order from '../screens/order';
 
 const Stack =createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ const RootNavigator = () => {
         <Stack.Screen name={ScreenNames.Map}  component={Map}/>
         <Stack.Screen name={ScreenNames.Settings}  component={Settings}/>
         <Stack.Screen name={ScreenNames.Payment}  component={Payment}/>
+        <Stack.Screen name={ScreenNames.Order}  component={Order}/>
         <Stack.Screen name={ScreenNames.Search}  component={Search}/>
         <Stack.Screen
             component={BottomTab}

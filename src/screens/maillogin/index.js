@@ -24,7 +24,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {Icons} from '../../assets';
 import styles from './styles';
 
-const width = Dimensions.get('window').width;
+
 
 const MailLogin = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -165,7 +165,7 @@ const MailLogin = ({navigation}) => {
           {emailError ? (
             <Text style={styles.error}>{emailError}</Text>
           ) : (
-            <View style={{height: width / 20}}></View>
+            <View style={styles.noerror}></View>
           )}
           <View style={styles.input}>
             <Image style={styles.clock} source={Icons.pass} />
@@ -188,7 +188,7 @@ const MailLogin = ({navigation}) => {
           {passwordError ? (
             <Text style={styles.error}>{passwordError}</Text>
           ) : (
-            <View style={{height: width / 20}}></View>
+            <View style={styles.noerror}></View>
           )}
           <CustomButton
             title="Login"
@@ -253,7 +253,7 @@ const MailLogin = ({navigation}) => {
               {resetEmailError ? (
                 <Text style={styles.error}>{resetEmailError}</Text>
               ) : (
-                <View style={{height: width / 20}}></View>
+                <View style={styles.noerror}></View>
               )}
               <View style={styles.modalButtons}>
                 <CustomButton

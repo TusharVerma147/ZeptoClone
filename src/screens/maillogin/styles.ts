@@ -41,6 +41,9 @@ const styles = StyleSheet.create({
       height: 30,
       marginTop: 0.4,
     },
+    noerror:{
+      height:width/20
+    },
     footer: {
       marginTop: vh(40),
     },

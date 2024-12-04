@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   Image,
@@ -33,7 +32,12 @@ const Payment = ({navigation}) => {
   };
   const handleTickPress = () => {
     setIsTickVisible(!isTickVisible);
-    setIsButtonVisible(!isButtonVisible);
+    if(isButtonVisible && !isTickVisible){
+      setIsButtonVisible(true)
+    } else{
+      setIsButtonVisible(!isButtonVisible)
+
+    }
   };
 
   return (
@@ -54,7 +58,7 @@ const Payment = ({navigation}) => {
       />
       <View style={styles.addressview}>
         <Image style={styles.location} source={Icons.location} />
-        <Text style={styles.addresstext}>Delivering to</Text>
+        <Text style={styles.addresstext}>Delivering to Appinventiv</Text>
       </View>
       <ScrollView>
         <HomeTitles
@@ -165,11 +169,7 @@ const Payment = ({navigation}) => {
         />
         <View style={styles.paymentview}>
           <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
+            style={styles.paymentsubview}>
             <View style={styles.upisub1}>
               <Image source={Icons.cod} style={styles.upi} />
               <Text style={styles.upitext}>Cash On Delivery</Text>
@@ -195,19 +195,21 @@ const Payment = ({navigation}) => {
       {isButtonVisible && (
         <View style={styles.footerview}>
           <CustomButton
-            title="Proceed to Pay"
+            title="Click to Pay"
             backgroundColor={colors.pink}
             textColor={colors.white}
             borderRadius={15}
             onPress={() => {
+              
               Toast.showWithGravity(
-                'This is a long toast at the top.',
+                'Payment Successful',
                 Toast.SHORT,
-                Toast.CENTER,
+                Toast.BOTTOM,
                 {
-                  // backgroundColor: colors.zeptored,
+                  backgroundColor: colors.reddish, 
                 }
               );
+              navigation.navigate('Order');  
             }}
           />
         </View>

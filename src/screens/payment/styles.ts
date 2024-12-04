@@ -118,6 +118,11 @@ const styles = StyleSheet.create({
       fontSize: 15,
       color: colors.white,
     },
+    paymentsubview:{
+      flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+    }
   });
 
 

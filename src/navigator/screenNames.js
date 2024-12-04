@@ -13,6 +13,7 @@ const ScreenNames = {
     MailLogin:'MailLogin',
     SignUp:'SignUp',
     Payment:'Payment',
+    Order:'Order',
   };
   
   export {ScreenNames};

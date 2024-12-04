@@ -1,9 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View, SectionList, Image, TouchableOpacity} from 'react-native';
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import { Text, View, SectionList, Image, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import auth from '@react-native-firebase/auth'; 
-import colors from '../../theme/colors';
 import { Icons } from '../../assets';
 import AppHeader from '../../components/appHeader';
 import styles from './styles';
@@ -83,13 +81,7 @@ const Settings = ({ navigation }) => {
       <View style={styles.log}>
         <TouchableOpacity 
           onPress={handleLogout} 
-          style={{
-            borderColor: colors.lightgrey,
-            backgroundColor: colors.white,
-            borderWidth: 1,
-            borderRadius: 10,
-            marginBottom: 20
-          }} 
+          style={styles.logbutton} 
         >
           <Text style={styles.logText}>Log Out</Text>
         </TouchableOpacity>

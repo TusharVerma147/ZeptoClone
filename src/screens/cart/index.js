@@ -1,8 +1,6 @@
 import {
   View,
   Text,
-  Dimensions,
-  StyleSheet,
   Image,
   StatusBar,
   TouchableOpacity,
@@ -22,7 +20,7 @@ import {
 } from '../../redux/CartSlice';
 import styles from './styles';
 
-const width = Dimensions.get('window').width;
+
 
 const Cart = () => {
   const navigation = useNavigation();
@@ -43,7 +41,7 @@ const Cart = () => {
 
   const renderCartItem = ({item}) => (
     <View style={styles.cartItem}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={styles.mainview}>
         <Image source={{uri: item.image}} style={styles.cartItemImage} />
         <View>
           <Text style={styles.cartItemName}>{item.name}</Text>
@@ -51,7 +49,7 @@ const Cart = () => {
           <Text style={styles.cartItemQuantity}>{item.grams}g</Text>
         </View>
       </View>
-      <View style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
+      <View style={styles.itemview}>
         <View style={styles.removecart}>
           <TouchableOpacity onPress={() => handleDecrement(item)}>
             <Text style={styles.removecarttext}>-</Text>
@@ -109,7 +107,7 @@ const Cart = () => {
           <TouchableOpacity
             style={styles.footer}
             onPress={() => navigation.navigate('Payment', {totalAmount})}>
-            <Text style={styles.footertext}>Click to Pay</Text>
+            <Text style={styles.footertext}>Proceed to Pay</Text>
           </TouchableOpacity>
         </View>
       )}

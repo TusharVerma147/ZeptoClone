@@ -1,7 +1,7 @@
 import {StyleSheet, Dimensions, Platform} from 'react-native';
 import colors from '../../theme/colors';
 
-const width = Dimensions.get('window').width;
+
 
 const styles = StyleSheet.create({
     container: {
@@ -31,6 +31,13 @@ const styles = StyleSheet.create({
       marginVertical: 20, 
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    logbutton:{
+      borderColor: colors.lightgrey,
+      backgroundColor: colors.white,
+      borderWidth: 1,
+      borderRadius: 10,
+      marginBottom: 20
     },
     logText: {
       color: colors.pink,
