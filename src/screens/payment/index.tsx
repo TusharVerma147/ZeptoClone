@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -10,42 +10,54 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import colors from '../../theme/colors';
-import {Icons} from '../../assets';
+import { Icons } from '../../assets';
 import AppHeader from '../../components/appHeader';
 import HomeTitles from '../../components/homeTitle';
-import {useRoute} from '@react-navigation/native';
 import CustomButton from '../../components/customButton';
 import Toast from 'react-native-simple-toast';
 import styles from './styles';
 
-const Payment = ({navigation}) => {
-  const route = useRoute();
-  const {totalAmount} = route.params;
-  const {top: safeTop} = useSafeAreaInsets();
+
+interface PaymentRouteParams {
+  totalAmount: number;
+}
+
+type PaymentScreenRouteProp = RouteProp<{ Payment: PaymentRouteParams }, 'Payment'>;
+
+interface PaymentProps {
+  navigation: any; 
+}
+
+const Payment: React.FC<PaymentProps> = ({ navigation }) => {
+  const route = useRoute<PaymentScreenRouteProp>();
+  const { totalAmount } = route.params;
+  const { top: safeTop } = useSafeAreaInsets();
   console.log('total ---->', totalAmount);
-  const [isButtonVisible, setIsButtonVisible] = useState(false);
-  const [isTickVisible, setIsTickVisible] = useState(false);
+  const [isButtonVisible, setIsButtonVisible] = useState<boolean>(false);
+  const [isTickVisible, setIsTickVisible] = useState<boolean>(false);
 
   const handlePaymentPress = () => {
     setIsButtonVisible(true);
   };
+
   const handleTickPress = () => {
     setIsTickVisible(!isTickVisible);
-    if(isButtonVisible && !isTickVisible){
-      setIsButtonVisible(true)
-    } else{
-      setIsButtonVisible(!isButtonVisible)
-
+    if (isButtonVisible && !isTickVisible) {
+      setIsButtonVisible(true);
+    } else {
+      setIsButtonVisible(!isButtonVisible);
     }
   };
 
   return (
     <View
       style={[
-        styles.container /*
-      {paddingTop: safeTop}*/,
-      ]}>
+        styles.container,
+        // { paddingTop: safeTop } 
+      ]}
+    >
       <AppHeader
         title={'Payment Options'}
         subtitle={'To Pay:'}
@@ -61,11 +73,7 @@ const Payment = ({navigation}) => {
         <Text style={styles.addresstext}>Delivering to Appinventiv</Text>
       </View>
       <ScrollView>
-        <HomeTitles
-          title={'Pay by UPI'}
-          titleFontWeight="500"
-          titleFontSize={18}
-        />
+        <HomeTitles title={'Pay by UPI'} titleFontWeight="500" titleFontSize={18} />
         <View style={styles.paymentview}>
           <View style={styles.upisub}>
             <Image source={Icons.upi} style={styles.upi} />
@@ -92,11 +100,8 @@ const Payment = ({navigation}) => {
             </View>
           </View>
         </View>
-        <HomeTitles
-          title={'Netbanking'}
-          titleFontWeight="500"
-          titleFontSize={18}
-        />
+
+        <HomeTitles title={'Netbanking'} titleFontWeight="500" titleFontSize={18} />
         <View style={styles.paymentview}>
           <View style={styles.sub1}>
             <View>
@@ -129,6 +134,7 @@ const Payment = ({navigation}) => {
             <Text style={styles.upitext}>More Banks</Text>
           </View>
         </View>
+
         <HomeTitles title={'Cards'} titleFontWeight="500" titleFontSize={18} />
         <View style={styles.paymentview}>
           <View style={styles.upisub}>
@@ -162,14 +168,10 @@ const Payment = ({navigation}) => {
             </View>
           </View>
         </View>
-        <HomeTitles
-          title={'Pay On Delivery'}
-          titleFontWeight="500"
-          titleFontSize={18}
-        />
+
+        <HomeTitles title={'Pay On Delivery'} titleFontWeight="500" titleFontSize={18} />
         <View style={styles.paymentview}>
-          <View
-            style={styles.paymentsubview}>
+          <View style={styles.paymentsubview}>
             <View style={styles.upisub1}>
               <Image source={Icons.cod} style={styles.upi} />
               <Text style={styles.upitext}>Cash On Delivery</Text>
@@ -178,20 +180,20 @@ const Payment = ({navigation}) => {
               style={[
                 styles.check,
                 {
-                  backgroundColor: isTickVisible
-                    ? colors.zeptored
-                    : colors.white,
+                  backgroundColor: isTickVisible ? colors.zeptored : colors.white,
                   borderWidth: isTickVisible ? 0 : 1,
                   borderColor: isTickVisible ? 'none' : colors.lightgrey,
                 },
               ]}
-              onPress={handleTickPress}>
+              onPress={handleTickPress}
+            >
               {isTickVisible && <Text style={styles.tick}>✓</Text>}
             </TouchableOpacity>
           </View>
           <Text style={styles.addresstext}>Pay by Cash/UPI on delivery</Text>
         </View>
       </ScrollView>
+
       {isButtonVisible && (
         <View style={styles.footerview}>
           <CustomButton
@@ -200,16 +202,15 @@ const Payment = ({navigation}) => {
             textColor={colors.white}
             borderRadius={15}
             onPress={() => {
-              
               Toast.showWithGravity(
                 'Payment Successful',
                 Toast.SHORT,
                 Toast.BOTTOM,
                 {
-                  backgroundColor: colors.reddish, 
+                  backgroundColor: colors.reddish,
                 }
               );
-              navigation.navigate('Order');  
+              navigation.navigate('Order');
             }}
           />
         </View>
@@ -217,7 +218,5 @@ const Payment = ({navigation}) => {
     </View>
   );
 };
-
-
 
 export default Payment;

@@ -1,14 +1,19 @@
-import {View, Text, Image, StatusBar} from 'react-native';
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import { View, Text, Image, StatusBar } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import colors from '../../theme/colors';
 import AppHeader from '../../components/appHeader';
-import {Icons} from '../../assets';
+import { Icons } from '../../assets';
 import CustomButton from '../../components/customButton';
 import styles from './styles';
 
-const Order = () => {
-  const navigation = useNavigation();
+
+type NavigationType = {
+  navigate: (screen: string) => void;
+};
+
+const Order: React.FC = () => {
+  const navigation = useNavigation<NavigationType>();
 
   return (
     <View style={styles.container}>
@@ -19,18 +24,16 @@ const Order = () => {
         backcolor={colors.white}
       />
 
-      <View
-        style={styles.main}>
-        <View
-          style={styles.starview}>
+      <View style={styles.main}>
+        <View style={styles.starview}>
           <Image source={Icons.star} style={styles.star} />
           <Text style={styles.ticktext}>✓</Text>
         </View>
-        <Text style={styles.payment}>Payment Succesfull</Text>
+        <Text style={styles.payment}>Payment Successful</Text>
         <View style={styles.subtext}>
           <Text style={styles.deliverytext}>
-            We've accepted your order and it will be delivered by our  delivery partner
-            within 10 mins
+            We've accepted your order and it will be delivered by our delivery partner
+            within 10 minutes.
           </Text>
           <CustomButton
             backgroundColor={colors.reddish}

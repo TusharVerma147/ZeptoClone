@@ -1,15 +1,27 @@
-import {View, Text, StatusBar, StyleSheet, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {Icons} from '../../assets';
+import React, { useEffect } from 'react';
+import { View, Text, StatusBar, Image, Alert } from 'react-native';
+import { Icons } from '../../assets';
 import colors from '../../theme/colors';
 import CustomButton from '../../components/customButton';
-import Animated, {FadeInLeft,} from 'react-native-reanimated';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import Animated, { FadeInLeft } from 'react-native-reanimated';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-simple-toast';
+import { NavigationProp } from '@react-navigation/native'; 
 import styles from './styles';
 
-const Login = ({navigation}) => {
+type NavigationProps = {
+  navigate: (screen: string) => void;
+  replace: (screen: string) => void;
+};
+
+interface LoginProps {
+  navigation: NavigationProps;
+}
+
+const Login: React.FC<LoginProps> = ({ navigation }) => {
+
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
@@ -21,11 +33,10 @@ const Login = ({navigation}) => {
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(user => {
       if (user) {
-        console.log('User  is signed in: ', user);
-
+        console.log('User is signed in: ', user);
         navigation.navigate('BottomTab');
       } else {
-        console.log('User  is not signed in');
+        console.log('User is not signed in');
       }
     });
 
@@ -36,17 +47,25 @@ const Login = ({navigation}) => {
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
-      console.log("id token", response)
-      const googleCredential = auth.GoogleAuthProvider.credential(response?.data?.idToken);
+      console.log('id token', response);
+  
+      
+      const idToken = response?.data?.idToken;
+      if (!idToken) {
+        throw new Error("Google sign-in did not return an ID token.");
+      }
+  
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       await auth().signInWithCredential(googleCredential);
       await AsyncStorage.setItem('key', 'true');
-      Toast.show('User  logged in successfully');
-      navigation.navigate('BottomTab');
-    } catch (error) {
+      Toast.show('User logged in successfully!', Toast.SHORT);
+      navigation.replace('BottomTab');
+    } catch (error: any) {
       console.error(error);
       Alert.alert('Error signing in: ', error.message);
     }
   };
+
   return (
     <>
       <StatusBar barStyle={'light-content'} />
@@ -63,7 +82,7 @@ const Login = ({navigation}) => {
             icon={Icons.google}
             title="SignIn with Google"
             onPress={onGoogleButtonPress}
-            textStyle={{fontWeight: '700'}}
+            textStyle={{ fontWeight: '700' }}
             borderRadius={50}
             backgroundColor={colors.white}
             textColor={colors.black}
@@ -71,8 +90,8 @@ const Login = ({navigation}) => {
           <CustomButton
             title="Continue"
             onPress={() => navigation.navigate('BottomTab')}
-            style={{marginTop: 20}}
-            textStyle={{fontWeight: '700'}}
+            style={{ marginTop: 20 }}
+            textStyle={{ fontWeight: '700' }}
             borderRadius={50}
             backgroundColor={colors.reddish}
             textColor={colors.white}
@@ -92,4 +111,3 @@ const Login = ({navigation}) => {
 };
 
 export default Login;
-

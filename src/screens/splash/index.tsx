@@ -1,12 +1,17 @@
-import {View, StatusBar, Image} from 'react-native';
-import React, {useEffect} from 'react';
-import {Icons} from '../../assets';
+import React, { useEffect } from 'react';
+import { View, StatusBar, Image } from 'react-native';
+import { Icons } from '../../assets';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Animated, {FadeInLeft} from 'react-native-reanimated';
+import Animated, { FadeInLeft } from 'react-native-reanimated';
 import styles from './styles';
 
-const Splash = ({navigation}) => {
+interface SplashProps {
+  navigation: {
+    replace: (screen: string) => void;
+  };
+}
 
+const Splash: React.FC<SplashProps> = ({ navigation }) => {
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -33,13 +38,10 @@ const Splash = ({navigation}) => {
     <View style={styles.container}>
       <StatusBar hidden />
       <Animated.View entering={FadeInLeft.delay(200).duration(600)}>
-      <Image style={styles.splashicon} source={Icons.zeptoicon} />
+        <Image style={styles.splashicon} source={Icons.zeptoicon} />
       </Animated.View>
-      
     </View>
   );
 };
 
 export default Splash;
-
-

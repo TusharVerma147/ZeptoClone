@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   View,
   Text,
@@ -6,7 +7,6 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import colors from '../../theme/colors';
 import AppHeader from '../../components/appHeader';
@@ -21,17 +21,32 @@ import {
 import styles from './styles';
 
 
+interface CartItem {
+  id: number;
+  name: string;
+  image: string;
+  grams: number;
+  discounted: number;
+  quantity: number;
+}
+
+
+interface RootState {
+  cart: CartItem[];
+}
 
 const Cart = () => {
   const navigation = useNavigation();
-  const cartItems = useSelector(state => state.cart);
+  const cartItems = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
 
-  const handleIncrement = item => {
+
+  const handleIncrement = (item: CartItem) => {
     dispatch(incrementQuantity(item));
   };
 
-  const handleDecrement = item => {
+
+  const handleDecrement = (item: CartItem) => {
     if (item.quantity > 1) {
       dispatch(decrementQuantity(item));
     } else {
@@ -39,7 +54,8 @@ const Cart = () => {
     }
   };
 
-  const renderCartItem = ({item}) => (
+  
+  const renderCartItem = ({item}: {item: CartItem}) => (
     <View style={styles.cartItem}>
       <View style={styles.mainview}>
         <Image source={{uri: item.image}} style={styles.cartItemImage} />
@@ -66,9 +82,11 @@ const Cart = () => {
     </View>
   );
 
+ 
   const totalAmount = cartItems.reduce((total, item) => {
     return total + item.discounted * item.quantity;
   }, 0);
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
@@ -79,7 +97,7 @@ const Cart = () => {
           <FlatList
             data={cartItems}
             renderItem={renderCartItem}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={(item) => item.id.toString()}
             style={styles.flat}
             showsVerticalScrollIndicator={false}
           />
@@ -116,4 +134,3 @@ const Cart = () => {
 };
 
 export default Cart;
-

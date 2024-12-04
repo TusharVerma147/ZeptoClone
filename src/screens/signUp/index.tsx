@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,33 +9,37 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {Icons} from '../../assets';
+import { Icons } from '../../assets';
 import colors from '../../theme/colors';
 import CustomButton from '../../components/customButton';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-simple-toast';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import styles from './styles';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const width = Dimensions.get('window').width;
 
+// Define props type
+interface SignUpProps {
+  navigation: {
+    navigate: (screen: string) => void;
+    replace: (screen: string) => void;
+  };
+}
 
-const SignUp = ({navigation}) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [nameError, setNameError] = useState(null);
-  const [emailError, setEmailError] = useState(null);
-  const [passwordError, setPasswordError] = useState(null);
-  const [passwordVisible, setPasswordVisible] = useState(false);
-
+const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [nameError, setNameError] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId:
-        '618497774501-knq282thiio2qdckfsnpr5d88lj5a08t.apps.googleusercontent.com',
+      webClientId: '618497774501-knq282thiio2qdckfsnpr5d88lj5a08t.apps.googleusercontent.com',
       offlineAccess: true,
     });
   }, []);
@@ -42,29 +47,49 @@ const SignUp = ({navigation}) => {
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(user => {
       if (user) {
-        console.log('User  is signed in: ', user);
-
+        console.log('User is signed in: ', user);
         navigation.navigate('BottomTab');
       } else {
-        console.log('User  is not signed in');
+        console.log('User is not signed in');
       }
     });
 
     return subscriber;
   }, [navigation]);
 
+  // const onGoogleButtonPress = async () => {
+  //   try {
+  //     await GoogleSignin.hasPlayServices();
+  //     const response = await GoogleSignin.signIn();
+  //     console.log('id token', response);
+  //     const googleCredential = auth.GoogleAuthProvider.credential(response?.data?.idToken);
+  //     await auth().signInWithCredential(googleCredential);
+  //     await AsyncStorage.setItem('key', 'true');
+  //     Toast.show('User logged in successfully');
+  //     navigation.replace('BottomTab');
+  //   } catch (error: any) {
+  //     console.error(error);
+  //     Alert.alert('Error signing in: ', error.message);
+  //   }
+  // };
   const onGoogleButtonPress = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
-      console.log("id token", response)
-      const googleCredential = auth.GoogleAuthProvider.credential(response?.data?.idToken);
+      console.log('id token', response);
+  
+      
+      const idToken = response?.data?.idToken;
+      if (!idToken) {
+        throw new Error("Google sign-in did not return an ID token.");
+      }
+  
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       await auth().signInWithCredential(googleCredential);
       await AsyncStorage.setItem('key', 'true');
-      // Alert.alert('User  signed in successfully!');
-      Toast.show('User  logged in successfully');
+      Toast.show('User logged in successfully!', Toast.SHORT);
       navigation.replace('BottomTab');
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       Alert.alert('Error signing in: ', error.message);
     }
@@ -108,14 +133,10 @@ const SignUp = ({navigation}) => {
 
   const handleSignUp = async () => {
     try {
-      const userCredential = await auth().createUserWithEmailAndPassword(
-        email,
-        password,
-      );
-
-      Toast.show('User  Registered successfully');
+      const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+      Toast.show('User Registered successfully!', Toast.SHORT);
       navigation.navigate('MailLogin');
-    } catch (error) {
+    } catch (error: any) {
       Alert.alert('Error', error.message);
     }
   };
@@ -135,9 +156,9 @@ const SignUp = ({navigation}) => {
           <Text style={styles.logintext}>Sign Up</Text>
 
           <View style={styles.input}>
-            <Image style={styles.clock} source={Icons.user} />{' '}
+            <Image style={styles.clock} source={Icons.user} />
             <TextInput
-              style={{flex: 1}}
+              style={{ flex: 1 }}
               value={name}
               onChangeText={text => {
                 setName(text), setNameError('');
@@ -154,7 +175,7 @@ const SignUp = ({navigation}) => {
           <View style={styles.input}>
             <Image style={styles.clock} source={Icons.mail} />
             <TextInput
-              style={{flex: 1}}
+              style={{ flex: 1 }}
               value={email}
               onChangeText={text => {
                 setEmail(text), setEmailError('');
@@ -172,7 +193,7 @@ const SignUp = ({navigation}) => {
           <View style={styles.input}>
             <Image style={styles.clock} source={Icons.pass} />
             <TextInput
-              style={{flex: 1}}
+              style={{ flex: 1 }}
               value={password}
               onChangeText={text => {
                 setPassword(text), setPasswordError('');
@@ -195,8 +216,8 @@ const SignUp = ({navigation}) => {
 
           <CustomButton
             title="Sign Up"
-            style={{marginTop: 10}}
-            textStyle={{fontWeight: '700'}}
+            style={{ marginTop: 10 }}
+            textStyle={{ fontWeight: '700' }}
             borderRadius={50}
             backgroundColor={colors.reddish}
             textColor={colors.white}
@@ -211,7 +232,7 @@ const SignUp = ({navigation}) => {
             icon={Icons.google}
             title="SignIn with Google"
             onPress={onGoogleButtonPress}
-            textStyle={{fontWeight: '700'}}
+            textStyle={{ fontWeight: '700' }}
             borderRadius={50}
             backgroundColor={colors.white}
             textColor={colors.black}
@@ -234,4 +255,3 @@ const SignUp = ({navigation}) => {
 };
 
 export default SignUp;
-

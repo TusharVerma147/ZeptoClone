@@ -1,44 +1,57 @@
+import React from 'react';
 import {
   View,
   Text,
   FlatList,
-  StyleSheet,
-  Dimensions,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
-import React from 'react';
-import colors from '../../theme/colors';
-import {Icons} from '../../assets';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   addProduct,
   removeProduct,
   decrementQuantity,
   incrementQuantity,
 } from '../../redux/CartSlice';
+import { RootState } from '../../redux/store'; 
 import styles from './styles';
-
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const ProductList = ({data}) => {
+
+interface Product {
+  id: string;
+  name: string;
+  image: string;
+  grams: number;
+  price: number;
+  discounted: number;
+  quantity?: number; // Optional quantity if the product is added to the cart
+}
+
+interface CartItem extends Product {
+  quantity: number;
+}
+
+interface ProductListProps {
+  data: Product[]; // Array of Product objects passed as a prop
+}
+
+const ProductList: React.FC<ProductListProps> = ({ data }) => {
   const navigation = useNavigation();
-
-  const gotoDetail = item => {
-    navigation.navigate('Details', {item});
-  };
   const dispatch = useDispatch();
-  const cartStore = useSelector(state => state.cart);
+  const cartStore = useSelector((state: RootState) => state.cart); // Assuming your Redux state has a cart array
 
+  const gotoDetail = (item: Product) => {
+    navigation.navigate('Details', { item });
+  };
 
-  const renderProducts = ({item, index}) => {
-    
+  const renderProducts = ({ item }: { item: Product }) => {
+    const isAddedToCart = cartStore.find((grocery: CartItem) => grocery.id === item.id);
 
-    const isAddedToCart = cartStore.find(grocery => grocery.id === item.id);
-    
     const handleAddToCart = () => {
       dispatch(addProduct(item));
     };
@@ -51,15 +64,11 @@ const ProductList = ({data}) => {
       dispatch(decrementQuantity(item));
     };
 
-
-
-
-
     return (
       <TouchableOpacity
         style={styles.renderproduct}
         onPress={() => gotoDetail(item)}>
-        <Image source={{uri: item.image}} style={styles.itemimage} />
+        <Image source={{ uri: item.image }} style={styles.itemimage} />
         <View style={styles.name}>
           <Text numberOfLines={1} style={styles.des}>
             {item.name}
@@ -81,7 +90,6 @@ const ProductList = ({data}) => {
                 <Text style={styles.removecarttext} onPress={handleIncrement}>+</Text>
               </View>
             )}
-          
           </View>
         </View>
       </TouchableOpacity>

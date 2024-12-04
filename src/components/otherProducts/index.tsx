@@ -1,24 +1,50 @@
 import React from 'react';
-import { View, Text, Image, FlatList, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, incrementQuantity, decrementQuantity } from '../../redux/CartSlice';
+import { RootState } from '../../redux/store'; // Assuming you have a `RootState` defined in your redux store
 import styles from './styles';
 
 const width = Dimensions.get('window').width;
-const OtherProducts = ({ data }) => {
 
+// Define types for the product and cart store
+interface Product {
+  id: string;
+  name: string;
+  image: string;
+  grams: number;
+  price: number;
+  discounted: number;
+  quantity?: number;
+}
+
+interface CartItem extends Product {
+  quantity: number;
+}
+
+interface OtherProductsProps {
+  data: Product[];
+}
+
+const OtherProducts: React.FC<OtherProductsProps> = ({ data }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const cartStore = useSelector(state => state.cart);
+  const cartStore = useSelector((state: RootState) => state.cart); 
 
-
-  const gotoDetail = item => {
-    navigation.navigate('Details', {item});
+  const gotoDetail = (item: Product) => {
+    navigation.navigate('Details', { item });
   };
 
-  const renderGridCategory = ({ item, index }) => {
-    const isAddedToCart = cartStore.find(grocery => grocery.id === item.id);
+  const renderGridCategory = ({ item }: { item: Product }) => {
+    const isAddedToCart = cartStore.find((grocery: CartItem) => grocery.id === item.id);
 
     const handleAddToCart = () => {
       dispatch(addProduct(item));
@@ -33,9 +59,7 @@ const OtherProducts = ({ data }) => {
     };
 
     return (
-      < TouchableOpacity 
-      onPress={() => gotoDetail(item)}
-      style={styles.renderproduct}>
+      <TouchableOpacity onPress={() => gotoDetail(item)} style={styles.renderproduct}>
         <Image source={{ uri: item.image }} style={styles.itemimage} />
         <View style={styles.name}>
           <Text numberOfLines={1} style={styles.des}>
@@ -57,9 +81,7 @@ const OtherProducts = ({ data }) => {
             <Text style={styles.removecarttext} onPress={handleDecrement}>
               -
             </Text>
-
             <Text style={styles.removecarttextdigit}>{isAddedToCart.quantity}</Text>
-
             <Text style={styles.removecarttext} onPress={handleIncrement}>
               +
             </Text>
@@ -73,7 +95,6 @@ const OtherProducts = ({ data }) => {
     <View style={styles.container}>
       <FlatList
         scrollEnabled={false}
-        style={styles.flat}
         ItemSeparatorComponent={() => <View style={styles.separate}></View>}
         numColumns={2}
         data={data}
@@ -82,6 +103,5 @@ const OtherProducts = ({ data }) => {
     </View>
   );
 };
-
 
 export default OtherProducts;

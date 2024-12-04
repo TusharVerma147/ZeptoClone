@@ -1,43 +1,53 @@
+import React, { useState } from 'react';
 import {
   View,
   Text,
   Image,
-  SafeAreaView,
-  StyleSheet,
   ScrollView,
   StatusBar,
-  Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {useRoute} from '@react-navigation/native';
-import {Icons} from '../../assets';
-import colors from '../../theme/colors';
+import { useRoute } from '@react-navigation/native';
+import { Icons } from '../../assets';
 import HomeTitles from '../../components/homeTitle';
 import OtherProducts from '../../components/otherProducts';
-import {other_products} from '../../utils/mockdata/item';
 import { trending_products } from '../../utils/mockdata/item';
-import ProductList from '../../components/productList';
 import AppHeader from '../../components/appHeader';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   addProduct,
   decrementQuantity,
   incrementQuantity,
 } from '../../redux/CartSlice';
 import styles from './styles';
+import { RootState } from '../../redux/store'; 
 
-const width = Dimensions.get('window').width;
 
-const Details = ({navigation}) => {
+interface ProductItem {
+  id: string;
+  name: string;
+  grams: string;
+  price: number;
+  discounted: number;
+  image: string;
+  description: string;
+}
+
+type DetailsScreenRouteProp = {
+  params: {
+    item: ProductItem;
+  };
+};
+
+const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [isOpened, setIsOpened] = useState(false);
-  const route = useRoute();
-  const {item} = route.params;
+  const route = useRoute<DetailsScreenRouteProp>();
+  const { item } = route.params;
 
   const dispatch = useDispatch();
-  const cartStore = useSelector(state => state.cart);
+  const cartStore = useSelector((state: RootState) => state.cart);
 
-  const isAddedToCart = cartStore.find(grocery => grocery.id === item.id);
+  const isAddedToCart = cartStore.find((grocery) => grocery.id === item.id);
 
   const handleAddToCart = () => {
     dispatch(addProduct(item));
@@ -55,16 +65,15 @@ const Details = ({navigation}) => {
     setIsOpened(!isOpened);
   };
 
-
   const hasItemsInCart = cartStore.length > 0;
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <AppHeader  />
+      <AppHeader/>
       <ScrollView>
         <View style={styles.imageview}>
-          <Image source={{uri: item.image}} style={styles.itemimage} />
+          <Image source={{ uri: item.image }} style={styles.itemimage} />
         </View>
         <View style={styles.nameview}>
           <View style={styles.timeview}>
@@ -85,9 +94,11 @@ const Details = ({navigation}) => {
               </TouchableOpacity>
             ) : (
               <View style={styles.removetocart}>
-                <Text style={styles.removetocarttext} onPress={handleDecrement}>-</Text>
+                <Text style={styles.removetocarttext} onPress={handleDecrement}>
+                  -
+                </Text>
                 <Text style={styles.removetocarttext}>
-                  {isAddedToCart.quantity}
+                  {isAddedToCart?.quantity}
                 </Text>
                 <Text style={styles.removetocarttext} onPress={handleIncrement}>
                   +
@@ -99,8 +110,7 @@ const Details = ({navigation}) => {
         <View style={styles.productview}>
           <Text style={styles.producttext}>Product Description</Text>
           <TouchableOpacity
-            onPress={handleDescription}
-            style={styles.toggleButton}>
+            onPress={handleDescription}>
             <Image
               source={isOpened ? Icons.upload : Icons.drop}
               style={styles.clock}
@@ -118,12 +128,14 @@ const Details = ({navigation}) => {
             titleFontSize={23}
             titleFontWeight="500"
           />
-           <OtherProducts data={trending_products} />
+          <OtherProducts data={trending_products} />
         </View>
       </ScrollView>
       {hasItemsInCart && (
         <View style={styles.footerview}>
-          <TouchableOpacity style={styles.footer} onPress={() => navigation.navigate('Cart')}>
+          <TouchableOpacity
+            style={styles.footer}
+            onPress={() => navigation.navigate('Cart')}>
             <Image source={Icons.bag} style={styles.clock} />
             <Text style={styles.footertext}>View cart</Text>
           </TouchableOpacity>
@@ -134,4 +146,3 @@ const Details = ({navigation}) => {
 };
 
 export default Details;
-

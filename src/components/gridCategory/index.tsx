@@ -1,16 +1,28 @@
+import React from 'react';
 import {
   View,
   Text,
   Image,
   FlatList,
   TouchableOpacity,
+  ListRenderItemInfo,
 } from 'react-native';
-import React from 'react';
 import styles from './styles';
 
-const GridCategory = ({data}) => {
-  const renderGridCategory = ({item, index}) => {
-    return (  
+
+interface GridCategoryItem {
+  name: string;
+  image: any; 
+}
+
+interface GridCategoryProps {
+  data: GridCategoryItem[];
+}
+
+const GridCategory: React.FC<GridCategoryProps> = ({ data }) => {
+  
+  const renderGridCategory = ({ item, index }: ListRenderItemInfo<GridCategoryItem>) => {
+    return (
       <TouchableOpacity style={styles.renderproduct}>
         <Image source={item.image} style={styles.itemimage} />
         <View style={styles.name}>
@@ -24,7 +36,6 @@ const GridCategory = ({data}) => {
     <View style={styles.container}>
       <FlatList
         scrollEnabled={false}
-        style={styles.flat}
         ItemSeparatorComponent={() => <View style={styles.separate}></View>}
         numColumns={2}
         data={data}
@@ -33,7 +44,5 @@ const GridCategory = ({data}) => {
     </View>
   );
 };
-
-
 
 export default GridCategory;
