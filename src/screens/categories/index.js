@@ -19,6 +19,7 @@ import {
   snacks,
   household,
 } from '../../utils/mockdata/item';
+import styles from './styles';
 
 const Category = () => {
   return (
@@ -50,9 +51,4 @@ const Category = () => {
 
 export default Category;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.white,
-  },
-});
+

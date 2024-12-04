@@ -3,14 +3,11 @@ import React, {useEffect, useState} from 'react';
 import {Icons} from '../../assets';
 import colors from '../../theme/colors';
 import CustomButton from '../../components/customButton';
-import {
-  responsiveFontSize,
-  responsiveWidth,
-} from 'react-native-responsive-dimensions';
-import Animated, {FadeInLeft, FadeInRight} from 'react-native-reanimated';
+import Animated, {FadeInLeft,} from 'react-native-reanimated';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from './styles';
 
 const Login = ({navigation}) => {
   useEffect(() => {
@@ -43,7 +40,6 @@ const Login = ({navigation}) => {
       const googleCredential = auth.GoogleAuthProvider.credential(response?.data?.idToken);
       await auth().signInWithCredential(googleCredential);
       await AsyncStorage.setItem('key', 'true');
-      // Alert.alert('User  signed in successfully!');
       Toast.show('User  logged in successfully');
       navigation.navigate('BottomTab');
     } catch (error) {
@@ -97,57 +93,3 @@ const Login = ({navigation}) => {
 
 export default Login;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.violet,
-    paddingHorizontal: 20,
-  },
-  symbol: {
-    width: responsiveWidth(80),
-    height: responsiveWidth(60),
-    alignSelf: 'center',
-  },
-  exclude: {
-    alignSelf: 'center',
-    height: responsiveWidth(50),
-    width: responsiveWidth(50),
-    resizeMode: 'contain',
-  },
-  top: {
-    // flex:1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bottom: {
-    justifyContent: 'center',
-    flex: 1,
-    marginTop: 85,
-  },
-  policy: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  footer: {
-    margin: 30,
-  },
-  bytext: {
-    color: colors.white,
-    textAlign: 'center',
-    fontSize: responsiveFontSize(2),
-    fontWeight: '500',
-  },
-  termstext: {
-    color: colors.reddish,
-    textAlign: 'center',
-    fontSize: responsiveFontSize(2),
-    fontWeight: '500',
-  },
-  andtext: {
-    color: colors.white,
-    textAlign: 'center',
-    fontSize: responsiveFontSize(2),
-    fontWeight: '500',
-    marginHorizontal: 3,
-  },
-});

@@ -1,28 +1,12 @@
-import {View, Text, StyleSheet, StatusBar, Image} from 'react-native';
+import {View, StatusBar, Image} from 'react-native';
 import React, {useEffect} from 'react';
-import colors from '../../theme/colors';
 import {Icons} from '../../assets';
-import {responsiveWidth} from 'react-native-responsive-dimensions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Animated, {FadeInLeft, FadeInRight} from 'react-native-reanimated';
+import Animated, {FadeInLeft} from 'react-native-reanimated';
+import styles from './styles';
 
 const Splash = ({navigation}) => {
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     AsyncStorage.getItem('key')
-  //       .then(result => {
-  //         console.log('AsyncStorage result: ', result);
-  //         if (result) {
-  //           navigation.replace('BottomTab');
-  //         } else {
-  //           navigation.replace('Login');
-  //         }
-  //       })
-  //       .catch(err => {
-  //         console.log(err);
-  //       });
-  //   }, 2000);
-  // }, [navigation]);
+
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -58,16 +42,4 @@ const Splash = ({navigation}) => {
 
 export default Splash;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.violet,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  splashicon: {
-    width: responsiveWidth(100),
-    height: 400,
-    resizeMode:'contain'
-  },
-});
+

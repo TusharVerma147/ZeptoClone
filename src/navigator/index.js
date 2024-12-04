@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer,  useNavigationContainerRef, } from '@react-navigation/native';
 import Splash from '../screens/splash';
 import Login from '../screens/login';
-import Home from '../screens/home';
 import Cart from '../screens/cart';
 import Details from '../screens/details';
 import { ScreenNames } from './screenNames';

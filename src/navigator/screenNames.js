@@ -1,10 +1,3 @@
-import Category from "../screens/categories";
-import Details from "../screens/details";
-import MailLogin from "../screens/maillogin";
-import Payment from "../screens/payment";
-import Profile from "../screens/profile";
-import Search from "../screens/search";
-import SignUp from "../screens/signUp";
 
 const ScreenNames = {
     Home: 'Home',
@@ -19,7 +12,6 @@ const ScreenNames = {
     Map:'Map',
     MailLogin:'MailLogin',
     SignUp:'SignUp',
-    Profile:'Profile',
     Payment:'Payment',
   };
   

@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Icons } from '../../assets';
 import colors from '../../theme/colors';
+import styles from './styles';
 
 const AppHeader = ({
   title,
@@ -50,47 +51,6 @@ const AppHeader = ({
   );
 };
 
-const styles = StyleSheet.create({
-  header: {
-    borderBottomWidth: 1,
-    borderBottomColor: colors.lightgrey,
-    paddingHorizontal: 10,
-    paddingTop: Platform.OS==="android"?20: 50, 
-    paddingBottom: 20,
-  },
-  backContainer: {
-    marginRight: 10,
-    marginTop:Platform.OS==="android"?3: 1, 
-  },
-  back: {
-    height: 30,
-    width: 30,
-  },
-  titleContainer: {
-    flexDirection: 'row', 
-  },
-  centeredTitleContainer: {
-    justifyContent: 'center', 
-  },
-  payContainer: {
-    flexDirection: 'row', 
-    alignItems: 'center',
-    marginTop: 5,
-    paddingHorizontal:30
-  },
-  categoryText: {
-    // fontSize: 25,
-    fontWeight: '600',
-  },
-  subtitleText: {
-    fontSize: 16,
-    marginRight: 5, 
-    fontWeight: '500'
-  },
-  toPayLabel: {
-    fontSize: 18,
-    fontWeight: '700'
-  },
-});
+
 
 export default AppHeader;
