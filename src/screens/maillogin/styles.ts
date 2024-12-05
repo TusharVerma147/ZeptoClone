@@ -12,8 +12,14 @@ const styles = StyleSheet.create({
       paddingHorizontal: 20,
       justifyContent: 'center',
     },
+    keyboard:{
+      flex:1
+    },
     header: {
       flex: 0.5,
+    },
+    scroll:{
+      flexGrow:1
     },
     symbol: {
       width: width / 1.5,
@@ -38,7 +44,7 @@ const styles = StyleSheet.create({
     error: {
       color: colors.zeptored,
       fontSize: responsiveFontSize(1.8),
-      height: 30,
+      height: vh(28),
       marginTop: 0.4,
     },
     noerror:{

@@ -12,18 +12,25 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: colors.violet,
-      paddingTop: 10,
       paddingHorizontal: 20,
       justifyContent: 'center',
+      paddingTop:10
+    },
+    keyboard:{
+      flex:1
     },
     header: {
       flex: 0.5,
     },
+    scroll:{
+      flexGrow:1
+    },
     symbol: {
       width: width / 1.5,
-      height: vh(200),
+      height: vh(170),
       alignSelf: 'center',
       resizeMode: 'contain',
+      marginBottom:10,
     },
     bottom: {
       flex: 0.8,
@@ -42,7 +49,7 @@ const styles = StyleSheet.create({
     error: {
       color: colors.zeptored,
       fontSize: responsiveFontSize(1.8),
-      height: 30,
+      height: vh(28),
       marginTop: 0.4,
     },
     noerror:{
@@ -54,7 +61,7 @@ const styles = StyleSheet.create({
     },
     footer: {
       marginTop: vh(100),
-      marginBottom: 30,
+      flex:1
     },
     bytext: {
       color: colors.white,
@@ -94,7 +101,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       fontWeight: '700',
       letterSpacing: 1.8,
-      marginBottom: 10,
+      marginBottom: vh(10),
     },
     divideview: {
       flexDirection: 'row',

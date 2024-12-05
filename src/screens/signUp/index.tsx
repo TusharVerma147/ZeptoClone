@@ -6,8 +6,10 @@ import {
   Image,
   TextInput,
   Alert,
-  Dimensions,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform
 } from 'react-native';
 import { Icons } from '../../assets';
 import colors from '../../theme/colors';
@@ -18,7 +20,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const width = Dimensions.get('window').width;
+
 
 
 interface SignUpProps {
@@ -149,7 +151,13 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
   return (
     <>
       <StatusBar barStyle={'light-content'} backgroundColor={colors.violet} />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboard}
+      >
+        
       <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <Image style={styles.symbol} source={Icons.zeptooo} />
         </View>
@@ -159,7 +167,7 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
           <View style={styles.input}>
             <Image style={styles.clock} source={Icons.user} />
             <TextInput
-              style={{ flex: 1 }}
+              style={styles.keyboard}
               value={name}
               onChangeText={text => {
                 setName(text), setNameError('');
@@ -176,7 +184,7 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
           <View style={styles.input}>
             <Image style={styles.clock} source={Icons.mail} />
             <TextInput
-              style={{ flex: 1 }}
+              style={styles.keyboard}
               value={email}
               onChangeText={text => {
                 setEmail(text), setEmailError('');
@@ -194,7 +202,7 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
           <View style={styles.input}>
             <Image style={styles.clock} source={Icons.pass} />
             <TextInput
-              style={{ flex: 1 }}
+              style={styles.keyboard}
               value={password}
               onChangeText={text => {
                 setPassword(text), setPasswordError('');
@@ -250,7 +258,10 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
             </Text>
           </View>
         </View>
+        </ScrollView>
       </View>
+           
+      </KeyboardAvoidingView>
     </>
   );
 };

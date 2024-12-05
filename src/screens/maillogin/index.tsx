@@ -11,8 +11,7 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Platform,
-  Keyboard,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import CustomButton from '../../components/customButton';
@@ -42,7 +41,6 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [resetEmail, setResetEmail] = useState<string>('');
   const [resetEmailError, setResetEmailError] = useState<string | null>(null);
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -50,21 +48,6 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
         '618497774501-knq282thiio2qdckfsnpr5d88lj5a08t.apps.googleusercontent.com',
       offlineAccess: true,
     });
-
-   
-    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardVisible(true);
-    });
-
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardVisible(false);
-    });
-
-   
-    return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
   }, []);
 
   useEffect(() => {
@@ -88,7 +71,7 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
 
       const idToken = response?.data?.idToken;
       if (!idToken) {
-        throw new Error('Google sign-in did not return an ID token.');
+        throw new Error("Google sign-in did not return an ID token.");
       }
 
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
@@ -174,24 +157,21 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
     <>
       <StatusBar barStyle={'light-content'} backgroundColor={colors.violet} />
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboard}
       >
-        <ScrollView contentContainerStyle={{ flex: 1 }} keyboardShouldPersistTaps="handled">
+        
           <View style={styles.container}>
+          <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
             <View style={styles.header}>
-             
-              {!keyboardVisible && (
-                <Image style={styles.symbol} source={Icons.zeptooo} />
-              )}
+              <Image style={styles.symbol} source={Icons.zeptooo} />
             </View>
-
             <View style={styles.bottom}>
               <Text style={styles.logintext}>Signin</Text>
               <View style={styles.input}>
                 <Image style={styles.clock} source={Icons.mail} />
                 <TextInput
-                  style={{ flex: 1 }}
+                  style={styles.keyboard}
                   value={email}
                   onChangeText={text => {
                     setEmail(text);
@@ -202,11 +182,11 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
                 />
               </View>
               {emailError ? <Text style={styles.error}>{emailError}</Text> : <View style={styles.noerror}></View>}
-              
+
               <View style={styles.input}>
                 <Image style={styles.clock} source={Icons.pass} />
                 <TextInput
-                  style={{ flex: 1 }}
+                  style={styles.keyboard}
                   value={password}
                   onChangeText={text => {
                     setPassword(text);
@@ -230,7 +210,7 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
                 textColor={colors.white}
                 onPress={validateLogin}
               />
-              
+
               <TouchableOpacity onPress={() => setModalVisible(true)}>
                 <Text style={styles.forgot}>Forgot Password?</Text>
               </TouchableOpacity>
@@ -243,14 +223,14 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
 
               <CustomButton
                 icon={Icons.google}
-                title="SignIn with Google"
+                title="Sign in with Google"
                 onPress={onGoogleButtonPress}
                 textStyle={{ fontWeight: '700' }}
                 borderRadius={50}
                 backgroundColor={colors.white}
                 textColor={colors.black}
               />
-              
+
               <View style={styles.footer}>
                 <Text style={styles.bytext}>Don't have an account?</Text>
                 <View>
@@ -260,59 +240,61 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
                 </View>
               </View>
             </View>
+            </ScrollView>
           </View>
-
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => setModalVisible(!modalVisible)}>
-            <TouchableWithoutFeedback onPress={() => { setModalVisible(false); setResetEmailError(''); }}>
-              <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                  <Text style={styles.modalTitle}>Reset Your Password</Text>
-                  <Text style={styles.modalText}>
-                    Enter your email and you may receive a link to reset your password.
-                  </Text>
-                  <TextInput
-                    style={styles.modalInput}
-                    placeholder="Enter your email"
-                    value={resetEmail}
-                    onChangeText={text => {
-                      setResetEmail(text);
-                      setResetEmailError('');
-                    }}
-                    autoCapitalize="none"
-                  />
-                  {resetEmailError ? <Text style={styles.error}>{resetEmailError}</Text> : <View style={styles.noerror}></View>}
-                  <View style={styles.modalButtons}>
-                    <CustomButton
-                      title="Reset"
-                      style={{ marginTop: 5 }}
-                      textStyle={{ fontWeight: '500' }}
-                      borderRadius={5}
-                      backgroundColor={colors.reddish}
-                      textColor={colors.white}
-                      onPress={handleForgotPassword}
-                      padding={vh(10)}
-                    />
-                    <CustomButton
-                      title="Cancel"
-                      style={{ marginTop: 5 }}
-                      textStyle={{ fontWeight: '500' }}
-                      borderRadius={5}
-                      backgroundColor={colors.grey}
-                      textColor={colors.white}
-                      onPress={() => { setModalVisible(false); setResetEmailError(''); }}
-                      padding={vh(10)}
-                    />
-                  </View>
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
-          </Modal>
-        </ScrollView>
+      
       </KeyboardAvoidingView>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(!modalVisible)}
+      >
+        <TouchableWithoutFeedback onPress={() => { setModalVisible(false); setResetEmailError(''); }}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Reset Your Password</Text>
+              <Text style={styles.modalText}>
+                Enter your email and you may receive a link to reset your password.
+              </Text>
+              <TextInput
+                style={styles.modalInput}
+                placeholder="Enter your email"
+                value={resetEmail}
+                onChangeText={text => {
+                  setResetEmail(text);
+                  setResetEmailError('');
+                }}
+                autoCapitalize="none"
+              />
+              {resetEmailError ? <Text style={styles.error}>{resetEmailError}</Text> : <View style={styles.noerror}></View>}
+              <View style={styles.modalButtons}>
+                <CustomButton
+                  title="Reset"
+                  style={{ marginTop: 5 }}
+                  textStyle={{ fontWeight: '500' }}
+                  borderRadius={5}
+                  backgroundColor={colors.reddish}
+                  textColor={colors.white}
+                  onPress={handleForgotPassword}
+                  padding={vh(10)}
+                />
+                <CustomButton
+                  title="Cancel"
+                  style={{ marginTop: 5 }}
+                  textStyle={{ fontWeight: '500' }}
+                  borderRadius={5}
+                  backgroundColor={colors.grey}
+                  textColor={colors.white}
+                  onPress={() => { setModalVisible(false); setResetEmailError(''); }}
+                  padding={vh(10)}
+                />
+              </View>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </>
   );
 };
