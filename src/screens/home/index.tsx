@@ -27,24 +27,19 @@ import key from '../../apis/api';
 import styles from './styles';
 
 const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-const Home = () => {
-  const [userLocation, setuserLocation] = useState([]);
-  const [address, setAddress] = useState('');
-  console.log('address--->', address);
-  
 
-  const bottomSheetRef = useRef(null);
+interface UserLocation {
+  latitude: number;
+  longitude: number;
+}
+
+const Home: React.FC = () => {
+  const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
+  const [address, setAddress] = useState<string>('');
 
   useEffect(() => {
     requestLocationPermission();
-
-    if (bottomSheetRef.current) {
-      bottomSheetRef.current.open();
-    }
   }, []);
-
- 
 
   const getCurrentLocation = () => {
     console.log('Fetch location');
@@ -52,19 +47,17 @@ const Home = () => {
       async position => {
         console.log('Position:', position);
         if (position) {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          // console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-          setuserLocation({
-            latitude: position.coords?.latitude,
-            longitude: position.coords?.longitude,
+          const {latitude, longitude} = position.coords;
+          setUserLocation({
+            latitude,
+            longitude,
           });
+
           const response = await axios.get(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${apikey}`,
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${key}`,
           );
           const data = response.data;
-          // console.log(response);
-          setAddress(data.results[0]?.formatted_address);
+          setAddress(data.results[0]?.formatted_address || '');
         }
       },
       error => {
@@ -90,7 +83,6 @@ const Home = () => {
         );
 
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          // console.log('You can use the location');
           getCurrentLocation();
         } else {
           console.log('Location permission denied');
@@ -99,7 +91,6 @@ const Home = () => {
         const result = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
 
         if (result === RESULTS.GRANTED) {
-          console.log('You can use the location');
           getCurrentLocation();
         } else {
           const requestResult = await request(
@@ -120,59 +111,25 @@ const Home = () => {
   return (
     <AppWrapper>
       <StatusBar barStyle={'dark-content'} backgroundColor={colors.white} />
-      <AppHeader add={address} />
+      <AppHeader address={address} />
       <ScrollView style={styles.content}>
-        <AppBody/>
+        <AppBody />
       </ScrollView>
-      {/* 
-      <RBSheet
-        ref={bottomSheetRef}
-        closeOnPressMask
-        paddingHorizontal={20}
-        height={height / 1.75}
-        draggable={true}
-        openDuration={250}
-        customStyles={{
-          wrapper: {
-            backgroundColor: 'rgba(0,0,0,0.5)',
-          },
-          container: {
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30,
-            // backgroundColor:'red'
-          },
-          draggableIcon: {
-            width: '20%',
-          },
-        }}>
-        <View style={{alignItems: 'center'}}>
-          <Image source={Icons.location1} style={styles.location} />
-          <Text style={styles.locationtext}>Your device location is off</Text>
-          <Text style={styles.locationsubtext}>
-            Please enable location permission for better delivery experience
-          </Text>
-          <CustomButton
-            title="Continue"
-            style={{
-              marginTop: responsiveHeight(3),
-              paddingHorizontal: responsiveWidth(35),
-            }}
-            textStyle={{fontWeight: '700'}}
-            borderRadius={10}
-            backgroundColor={'#DE3163'}
-            textColor={colors.white}
-          />
-        </View>
-      </RBSheet> */}
     </AppWrapper>
   );
 };
 
-const AppHeader = ({add,}) => {
-  const gotoSearchPage = () =>{
-    navigation.navigate('Search');
-  }
+interface AppHeaderProps {
+  address: string;
+}
+
+const AppHeader: React.FC<AppHeaderProps> = ({address}) => {
   const navigation = useNavigation();
+
+  const gotoSearchPage = () => {
+    navigation.navigate('Search');
+  };
+
   return (
     <View style={styles.headerparent}>
       <View style={styles.header}>
@@ -184,11 +141,10 @@ const AppHeader = ({add,}) => {
             <Text style={styles.deliverytext}>Delivering In</Text>
             <Text style={styles.min}>10 Min</Text>
           </View>
-          <Text style={styles.address}>{`${add.slice(0, 50)}`}</Text>
+          <Text style={styles.address}>{`${address.slice(0, 50)}`}</Text>
         </View>
       </View>
-      <View
-        style={styles.search}>
+      <View style={styles.search}>
         <Image source={Icons.search} style={styles.searchicon} />
         <TextInput
           placeholder="Search"
@@ -200,7 +156,7 @@ const AppHeader = ({add,}) => {
   );
 };
 
-const AppBody = () => {
+const AppBody: React.FC = () => {
   const banners = [
     {id: 1, source: Icons.ban1},
     {id: 5, source: Icons.ban6},
@@ -213,8 +169,6 @@ const AppBody = () => {
     <View style={styles.flat}>
       <View>
         <Carousel
-          backgroundColor={'red'}
-          borderWidth={1}
           loop
           width={width}
           height={width / 2}
@@ -252,4 +206,3 @@ const AppBody = () => {
 };
 
 export default Home;
-

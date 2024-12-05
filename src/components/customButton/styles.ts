@@ -4,7 +4,7 @@ import colors from '../../theme/colors';
 import { vh } from '../../utils/dimensions';
 const windowWidth = Dimensions.get('window').width;
 
-const styles = {
+const styles =  StyleSheet.create({
   button: {
     flexDirection: 'row',
     backgroundColor: colors.white,
@@ -21,6 +21,7 @@ const styles = {
     fontWeight: '700',
     fontSize: responsiveFontSize(2.1),
   },
-};
+}
+);
 
 export default styles;

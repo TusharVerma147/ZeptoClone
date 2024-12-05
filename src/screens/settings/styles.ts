@@ -1,5 +1,6 @@
 import {StyleSheet, Dimensions, Platform} from 'react-native';
 import colors from '../../theme/colors';
+import { vh, vw } from '../../utils/dimensions';
 
 
 
@@ -10,13 +11,12 @@ const styles = StyleSheet.create({
     },
     item: {
       backgroundColor: colors.white,
-      padding: 20,
+      padding: vh(20),
       borderBottomWidth: 1,
       flexDirection: 'row',
       gap: 10,
       borderBottomColor: colors.lightgrey,
       alignItems: 'center',
-      flex: 2
     },
     img: {
       height: 35,
@@ -25,10 +25,11 @@ const styles = StyleSheet.create({
       resizeMode: 'contain'
     },
     title: {
-      fontSize: 20,
+      fontSize: vw(20),
     },
     log: {
-      marginVertical: 20, 
+      marginTop: 5, 
+      marginBottom:20,
       alignItems: 'center',
       justifyContent: 'center',
     },

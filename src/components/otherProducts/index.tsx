@@ -10,12 +10,12 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, incrementQuantity, decrementQuantity } from '../../redux/CartSlice';
-import { RootState } from '../../redux/store'; // Assuming you have a `RootState` defined in your redux store
+import { RootState } from '../../redux/store'; 
 import styles from './styles';
 
 const width = Dimensions.get('window').width;
 
-// Define types for the product and cart store
+
 interface Product {
   id: string;
   name: string;

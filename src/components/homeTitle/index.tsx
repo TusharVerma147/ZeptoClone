@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, ImageSourcePropType } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ImageSourcePropType, TextStyle } from 'react-native';
 import colors from '../../theme/colors';
 import styles from './styles';
 
@@ -12,7 +12,7 @@ interface HomeTitlesProps {
   titleColor?: string;
   subtitleColor?: string;
   titleFontSize?: number;
-  titleFontWeight?: string | number; 
+  titleFontWeight?: TextStyle['fontWeight']; 
 }
 
 const HomeTitles: React.FC<HomeTitlesProps> = ({

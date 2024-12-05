@@ -20,7 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const width = Dimensions.get('window').width;
 
-// Define props type
+
 interface SignUpProps {
   navigation: {
     navigate: (screen: string) => void;
@@ -36,6 +36,7 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -230,7 +231,7 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
           </View>
           <CustomButton
             icon={Icons.google}
-            title="SignIn with Google"
+            title="Sign in with Google"
             onPress={onGoogleButtonPress}
             textStyle={{ fontWeight: '700' }}
             borderRadius={50}

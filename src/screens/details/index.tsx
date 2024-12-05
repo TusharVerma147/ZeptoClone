@@ -7,7 +7,7 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import { Icons } from '../../assets';
 import HomeTitles from '../../components/homeTitle';
 import OtherProducts from '../../components/otherProducts';
@@ -32,12 +32,10 @@ interface ProductItem {
   image: string;
   description: string;
 }
-
-type DetailsScreenRouteProp = {
-  params: {
-    item: ProductItem;
-  };
-};
+type DetailsScreenRouteProp = RouteProp<
+  { Details: { item: ProductItem } }, 
+  'Details' 
+>;
 
 const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [isOpened, setIsOpened] = useState(false);
@@ -47,7 +45,7 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
   const dispatch = useDispatch();
   const cartStore = useSelector((state: RootState) => state.cart);
 
-  const isAddedToCart = cartStore.find((grocery) => grocery.id === item.id);
+  const isAddedToCart = cartStore.find((grocery:any) => grocery.id === item.id);
 
   const handleAddToCart = () => {
     dispatch(addProduct(item));

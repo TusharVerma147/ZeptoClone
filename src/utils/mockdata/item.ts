@@ -104,7 +104,7 @@ const products = [
   },
 ];
 
-export const trending_products = [
+ const trending_products = [
   {
     id:111,
     name: 'Fresh Apples',
@@ -206,98 +206,7 @@ export const trending_products = [
        description:"Pure, cold-pressed coconut oil thats perfect for cooking, baking, or as a natural moisturizer. Packed with healthy fats and antioxidants."
   },
 ];
-export const other_products = [
-  {
-    id:121,
-    name: 'Fresh Apples',
-    grams: 1000,
-    price: 180,
-    discounted: 160,
-    image:Images.vegetable,
-       description:'Crisp, sweet, and juicy, these apples are perfect for snacking, making pies, or adding a fresh crunch to your salads.'
-  },
-  {
-    id:122,
-    name: 'Oatmeal',
-    grams: 500,
-    price: 220,
-    discounted: 200,
-    image:Images.dairy,
-       description:'A wholesome, heart-healthy breakfast option, this oatmeal is perfect for a nutritious start to your day. Can be customized with your favorite toppings.'
-  },
-  {
-    id:123,
-    name: 'Bikaneri Bhujia',
-    grams: 500,
-    price: 90,
-    discounted: 75,
-    image:Images.meet,
-       description:'A popular Indian snack, this crispy and spicy Bikaneri Bhujia is the perfect treat for those who love a crunchy, savory snack.'
-  },
-  {
-    id:124,
-    name: 'Cage-Free Eggs',
-    grams: 600,
-    price: 150,
-    discounted: 130,
-    image:Images.masala,
-       description:'These eggs are laid by free-range hens, ensuring you get the freshest, most flavorful eggs. Great for breakfast, baking, or cooking.'
-  },
-  {
-    id:125,
-    name: 'Sourdough Bread',
-    grams: 450,
-    price: 75,
-    discounted: 65,
-    image:Images.package,
-       description:'With a tangy flavor and chewy texture, this sourdough bread is perfect for sandwiches or to pair with your favorite soups and stews.'
-  },
-  {
-    id:126,
-    name: 'Almond Butter',
-    grams: 300,
-    price: 220,
-    discounted: 200,
-    image:Images.pharma,
-       description:'Smooth, creamy, and full of healthy fats, this almond butter is perfect for spreading on toast, adding to smoothies, or using in baking recipes.'
-  },
-  {
-    id:127,
-    name: 'Garlic',
-    grams: 250,
-    price: 55,
-    discounted: 45,
-    image:Images.snacks,
-       description:'Fresh garlic cloves, perfect for adding a bold flavor to any dish. A must-have for cooking, from pastas to stir-fries.'
-  },
-  {
-    id:128,
-    name: 'Greek Yogurt',
-    grams: 500,
-    price: 140,
-    discounted: 120,
-    image:Images.atta,
-       description:'Thick, creamy, and full of probiotics, this Greek yogurt is perfect for smoothies, parfaits, or as a healthy snack with fruit and honey.'
-  },
-  {
-    id:129,
-    name: 'Red Bell Pepper',
-    grams: 300,
-    price: 65,
-    discounted: 55,
-    image:Images.tea,
-       description:'Sweet and vibrant, these red bell peppers are a great addition to salads, stir-fries, or as a crunchy snack on their own.'
-  },
-  {
-    id:130,
-    name: 'Coconut Oil',
-    grams: 500,
-    price: 300,
-    discounted: 270,
-    image:Images.biscuits,
-       description:"Pure, cold-pressed coconut oil thats perfect for cooking, baking, or as a natural moisturizer. Packed with healthy fats and antioxidants."
-  },
-];
+
 const grocery =[
   {
     name:'Fruits & Vegetables',
@@ -406,4 +315,4 @@ const household =[
   },
 ]
 
-export {products, trending_products, other_products, grocery, snacks, beauty, household};
+export {products, trending_products,  grocery, snacks, beauty, household};

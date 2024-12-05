@@ -1,12 +1,24 @@
 import React from 'react';
-import { Text, View, SectionList, Image, TouchableOpacity} from 'react-native';
+import { Text, View, SectionList, Image, TouchableOpacity, ListRenderItemInfo } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import auth from '@react-native-firebase/auth'; 
 import { Icons } from '../../assets';
 import AppHeader from '../../components/appHeader';
 import styles from './styles';
 
-const DATA = [
+type SettingsProps = {
+  navigation: {
+    reset: (options: { index: number, routes: { name: string }[] }) => void;
+  };
+};
+
+type DataItem = {
+  title: string;
+  data: any[];
+  image: any; 
+};
+
+const DATA: DataItem[] = [
   {
     title: 'Orders',
     data: [],
@@ -42,23 +54,18 @@ const DATA = [
     data: [],
     image: Icons.info
   },
-  {
-    title: 'Profile',
-    data: [],
-    image: Icons.account
-  },
 ];
 
-const Settings = ({ navigation }) => {
+const Settings: React.FC<SettingsProps> = ({ navigation }) => {
 
   const handleLogout = async () => {
     try {
       await auth().signOut();
       await AsyncStorage.removeItem('key'); 
-     navigation.reset({
+      navigation.reset({
         index: 0,
         routes: [{ name: 'MailLogin' }]
-   })
+      });
     } catch (error) {
       console.log(error);
     }
@@ -66,12 +73,13 @@ const Settings = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <AppHeader title={'Settings'}/>
+      <AppHeader title={'Settings'} />
       <SectionList
         sections={DATA}
+        bounces={false}
         keyExtractor={(item, index) => item + index}
-        renderItem={() => null}
-        renderSectionHeader={({section: {title, image}}) => (
+        renderItem={() => null} 
+        renderSectionHeader={({ section: { title, image } }: { section: DataItem }) => (
           <View style={styles.item}>
             <Image source={image} style={styles.img} />
             <Text style={styles.title}>{title}</Text>
@@ -89,7 +97,5 @@ const Settings = ({ navigation }) => {
     </View>
   );
 };
-
-
 
 export default Settings;
