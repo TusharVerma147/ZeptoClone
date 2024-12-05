@@ -54,7 +54,11 @@ const OtherProducts: React.FC<OtherProductsProps> = ({ data, flatListRef }) => {
     const isAddedToCart = cartStore.find((grocery: CartItem) => grocery.id === item.id);
 
     const handleAddToCart = () => {
-      dispatch(addProduct(item));
+      const productToAdd = {
+        ...item, 
+        quantity: 1, 
+      };
+      dispatch(addProduct(productToAdd)); 
     };
 
     const handleIncrement = () => {

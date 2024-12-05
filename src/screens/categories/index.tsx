@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Text,
   ScrollView,
   StatusBar,
 } from 'react-native';
@@ -10,7 +9,6 @@ import colors from '../../theme/colors';
 import HomeTitles from '../../components/homeTitle';
 import GridCategory from '../../components/gridCategory';
 import { grocery, beauty, snacks, household } from '../../utils/mockdata/item';
-
 import styles from './styles';
 
 

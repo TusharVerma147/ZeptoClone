@@ -211,7 +211,6 @@ const grocery =[
   {
     name:'Fruits & Vegetables',
     image:Images.vegetable,
-    // image:Icons.ban1
   
   },
   {

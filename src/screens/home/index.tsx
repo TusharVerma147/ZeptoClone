@@ -16,7 +16,6 @@ import colors from '../../theme/colors';
 import {Icons} from '../../assets';
 import AppWrapper from '../../components/appWrapper';
 import Geolocation from '@react-native-community/geolocation';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import axios from 'axios';
 import Carousel from 'react-native-reanimated-carousel';
@@ -130,6 +129,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({address}) => {
     navigation.navigate('Search');
   };
 
+  
+
   return (
     <View style={styles.headerparent}>
       <View style={styles.header}>
@@ -164,7 +165,15 @@ const AppBody: React.FC = () => {
     {id: 3, source: Icons.ban4},
     {id: 4, source: Icons.ban5},
   ];
+  const trendingProductsWithStringId = trending_products.map((product) => ({
+    ...product,
+    id: product.id.toString(), 
+  }));
 
+  const productsWithStringId = products.map((product) => ({
+    ...product,
+    id: product.id.toString(), 
+  }));
   return (
     <View style={styles.flat}>
       <View>
@@ -189,7 +198,7 @@ const AppBody: React.FC = () => {
           onSubtitlePress={() => console.log('Subtitle pressed')}
           iconSource={Icons.forward1}
         />
-        <ProductList data={products} />
+        <ProductList data={productsWithStringId} />
       </View>
       <Image source={Icons.freshdeal} style={styles.freshdeal} />
       <View>
@@ -199,7 +208,7 @@ const AppBody: React.FC = () => {
           onSubtitlePress={() => console.log('Subtitle pressed')}
           iconSource={Icons.forward1}
         />
-        <ProductList data={trending_products} />
+        <ProductList data={trendingProductsWithStringId} />
       </View>
     </View>
   );

@@ -6,10 +6,6 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import colors from '../../theme/colors';
 import { Icons } from '../../assets';

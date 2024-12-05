@@ -17,8 +17,6 @@ import {
 import { RootState } from '../../redux/store'; 
 import styles from './styles';
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
 
 
 interface Product {
@@ -28,7 +26,7 @@ interface Product {
   grams: number;
   price: number;
   discounted: number;
-  quantity?: number; // Optional quantity if the product is added to the cart
+  quantity?: number; 
 }
 
 interface CartItem extends Product {
@@ -52,7 +50,11 @@ const ProductList: React.FC<ProductListProps> = ({ data }) => {
     const isAddedToCart = cartStore.find((grocery: CartItem) => grocery.id === item.id);
 
     const handleAddToCart = () => {
-      dispatch(addProduct(item));
+      const productToAdd = {
+        ...item, 
+        quantity: 1, 
+      };
+      dispatch(addProduct(productToAdd)); 
     };
 
     const handleIncrement = () => {

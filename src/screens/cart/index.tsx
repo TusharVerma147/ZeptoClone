@@ -22,7 +22,7 @@ import styles from './styles';
 
 
 interface CartItem {
-  id: number;
+  id: string;
   name: string;
   image: string;
   grams: number;

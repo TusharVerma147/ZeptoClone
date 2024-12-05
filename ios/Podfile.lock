@@ -101,11 +101,11 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - Permission-LocationAccuracy (3.6.1):
+  - Permission-LocationAccuracy (3.10.1):
     - RNPermissions
-  - Permission-LocationAlways (3.6.1):
+  - Permission-LocationAlways (3.10.1):
     - RNPermissions
-  - Permission-LocationWhenInUse (3.6.1):
+  - Permission-LocationWhenInUse (3.10.1):
     - RNPermissions
   - RCT-Folly (2024.01.01.00):
     - boost
@@ -1798,8 +1798,27 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNPermissions (3.6.1):
+  - RNPermissions (3.10.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
     - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNReanimated (3.16.1):
     - DoubleConversion
     - glog
@@ -2236,9 +2255,9 @@ SPEC CHECKSUMS:
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   lottie-ios: a881093fab623c467d3bce374367755c272bdd59
   lottie-react-native: 5033b82618b3eeb6652ea6f30755bff8272b0214
-  Permission-LocationAccuracy: 76df17de5c6b8bc2eee34e61ee92cdd7a864c73d
-  Permission-LocationAlways: 8d99b025c9f73c696e0cdb367e42525f2e9a26f2
-  Permission-LocationWhenInUse: 3ba99e45c852763f730eabecec2870c2382b7bd4
+  Permission-LocationAccuracy: dc0b0989dd004f183a32ad5f99802d9e09b0571a
+  Permission-LocationAlways: 0a0de4637662cfdf3603d6933779da2bdd657306
+  Permission-LocationWhenInUse: 31f52ebddef50c306a585b5a82ca16c8ff582dec
   RCT-Folly: bf5c0376ffe4dd2cf438dcf86db385df9fdce648
   RCTDeprecation: fde92935b3caa6cb65cbff9fbb7d3a9867ffb259
   RCTRequired: 75c6cee42d21c1530a6f204ba32ff57335d19007
@@ -2307,7 +2326,7 @@ SPEC CHECKSUMS:
   RNFBAuth: cbec8a05154bbe0947c9cae65e57ab36eb6ed6ce
   RNGestureHandler: 598e45cedb905b157e9764acbef0b5e365693451
   RNGoogleSignin: 27c2199f487ee08cc692d8d2c035bc9c154ddc22
-  RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
+  RNPermissions: 130a27096f232731ffe04ef080294188cda5d324
   RNReanimated: bbfc101f2f9f69e403c581a4dd8ddfec31134e15
   RNScreens: 6e2ab381864f079fce8a18ddf49ef6f164d7d7bd
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d

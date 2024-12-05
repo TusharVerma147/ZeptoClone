@@ -9,7 +9,6 @@ const ScreenNames = {
     BottomTab: 'BottomTab',
     Category:'Category',
     Settings:'Settings',
-    Map:'Map',
     MailLogin:'MailLogin',
     SignUp:'SignUp',
     Payment:'Payment',

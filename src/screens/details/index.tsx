@@ -48,7 +48,11 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
   const isAddedToCart = cartStore.find((grocery:any) => grocery.id === item.id);
 
   const handleAddToCart = () => {
-    dispatch(addProduct(item));
+    const productToAdd = {
+      ...item, 
+      quantity: 1, 
+    };
+    dispatch(addProduct(productToAdd)); 
   };
 
   const handleIncrement = () => {
@@ -67,6 +71,10 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   const flatListRef = useRef<any>(null);
 
+  const trendingProductsWithStringId = trending_products.map((product) => ({
+    ...product,
+    id: product.id.toString(), 
+  }));
 
 
   return (
@@ -130,7 +138,7 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
             titleFontSize={23}
             titleFontWeight="500"
           />
-          <OtherProducts data={trending_products} flatListRef={flatListRef}  />
+          <OtherProducts    data={trendingProductsWithStringId}  flatListRef={flatListRef}  />
         </View>
       </ScrollView>
       {hasItemsInCart && (

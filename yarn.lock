@@ -3724,7 +3724,7 @@ __metadata:
     react-native-geolocation-service: ^5.3.1
     react-native-gesture-handler: ^2.20.2
     react-native-maps: ^1.20.0
-    react-native-permissions: ^3.8.4
+    react-native-permissions: ^3.6.1
     react-native-raw-bottom-sheet: ^3.0.0
     react-native-reanimated: ^3.16.1
     react-native-reanimated-carousel: ^3.5.1
@@ -8994,7 +8994,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-permissions@npm:^3.8.4":
+"react-native-permissions@npm:^3.6.1":
   version: 3.10.1
   resolution: "react-native-permissions@npm:3.10.1"
   peerDependencies:
