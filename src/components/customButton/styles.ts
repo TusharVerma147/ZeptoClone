@@ -2,7 +2,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import colors from '../../theme/colors';
 import { vh } from '../../utils/dimensions';
-const windowWidth = Dimensions.get('window').width;
+
 
 const styles =  StyleSheet.create({
   button: {

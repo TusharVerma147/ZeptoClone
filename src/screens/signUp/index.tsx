@@ -60,21 +60,7 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
     return subscriber;
   }, [navigation]);
 
-  // const onGoogleButtonPress = async () => {
-  //   try {
-  //     await GoogleSignin.hasPlayServices();
-  //     const response = await GoogleSignin.signIn();
-  //     console.log('id token', response);
-  //     const googleCredential = auth.GoogleAuthProvider.credential(response?.data?.idToken);
-  //     await auth().signInWithCredential(googleCredential);
-  //     await AsyncStorage.setItem('key', 'true');
-  //     Toast.show('User logged in successfully');
-  //     navigation.replace('BottomTab');
-  //   } catch (error: any) {
-  //     console.error(error);
-  //     Alert.alert('Error signing in: ', error.message);
-  //   }
-  // };
+
   const onGoogleButtonPress = async () => {
     try {
       await GoogleSignin.hasPlayServices();

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   View,
   Text,
   Image,
   FlatList,
-  Dimensions,
   TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -13,7 +12,7 @@ import { addProduct, incrementQuantity, decrementQuantity } from '../../redux/Ca
 import { RootState } from '../../redux/store'; 
 import styles from './styles';
 
-const width = Dimensions.get('window').width;
+
 
 
 interface Product {
@@ -32,14 +31,22 @@ interface CartItem extends Product {
 
 interface OtherProductsProps {
   data: Product[];
+  flatListRef: React.RefObject<FlatList>;
 }
 
-const OtherProducts: React.FC<OtherProductsProps> = ({ data }) => {
+const OtherProducts: React.FC<OtherProductsProps> = ({ data, flatListRef }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cartStore = useSelector((state: RootState) => state.cart); 
 
+
+
+ 
+
   const gotoDetail = (item: Product) => {
+    if (flatListRef.current) {
+      flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
+    }
     navigation.navigate('Details', { item });
   };
 
@@ -95,6 +102,7 @@ const OtherProducts: React.FC<OtherProductsProps> = ({ data }) => {
     <View style={styles.container}>
       <FlatList
         scrollEnabled={false}
+        ref={flatListRef}
         ItemSeparatorComponent={() => <View style={styles.separate}></View>}
         numColumns={2}
         data={data}

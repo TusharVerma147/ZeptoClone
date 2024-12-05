@@ -11,7 +11,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addProduct,
-  removeProduct,
   decrementQuantity,
   incrementQuantity,
 } from '../../redux/CartSlice';
@@ -37,13 +36,13 @@ interface CartItem extends Product {
 }
 
 interface ProductListProps {
-  data: Product[]; // Array of Product objects passed as a prop
+  data: Product[]; 
 }
 
 const ProductList: React.FC<ProductListProps> = ({ data }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const cartStore = useSelector((state: RootState) => state.cart); // Assuming your Redux state has a cart array
+  const cartStore = useSelector((state: RootState) => state.cart); 
 
   const gotoDetail = (item: Product) => {
     navigation.navigate('Details', { item });

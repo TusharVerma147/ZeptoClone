@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
       fontSize: 15,
       marginVertical: 10,
       fontWeight: '400',
-      // textAlign: 'center',
       color: colors.grey,
     },
     modalInput: {

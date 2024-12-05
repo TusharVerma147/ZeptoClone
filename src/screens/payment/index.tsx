@@ -33,7 +33,6 @@ interface PaymentProps {
 const Payment: React.FC<PaymentProps> = ({ navigation }) => {
   const route = useRoute<PaymentScreenRouteProp>();
   const { totalAmount } = route.params;
-  const { top: safeTop } = useSafeAreaInsets();
   console.log('total ---->', totalAmount);
   const [isButtonVisible, setIsButtonVisible] = useState<boolean>(false);
   const [isTickVisible, setIsTickVisible] = useState<boolean>(false);
@@ -55,7 +54,6 @@ const Payment: React.FC<PaymentProps> = ({ navigation }) => {
     <View
       style={[
         styles.container,
-        // { paddingTop: safeTop } 
       ]}
     >
       <AppHeader

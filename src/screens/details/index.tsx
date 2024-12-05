@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -65,6 +65,10 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   const hasItemsInCart = cartStore.length > 0;
 
+  const flatListRef = useRef<any>(null);
+
+
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
@@ -126,7 +130,7 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
             titleFontSize={23}
             titleFontWeight="500"
           />
-          <OtherProducts data={trending_products} />
+          <OtherProducts data={trending_products} flatListRef={flatListRef}  />
         </View>
       </ScrollView>
       {hasItemsInCart && (
