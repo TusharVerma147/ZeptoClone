@@ -11,6 +11,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, incrementQuantity, decrementQuantity } from '../../redux/CartSlice';
 import { RootState } from '../../redux/store'; 
 import styles from './styles';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+type NavigationProp = StackNavigationProp<any>;
 
 
 
@@ -35,7 +38,7 @@ interface OtherProductsProps {
 }
 
 const OtherProducts: React.FC<OtherProductsProps> = ({ data, flatListRef }) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
   const dispatch = useDispatch();
   const cartStore = useSelector((state: RootState) => state.cart); 
 

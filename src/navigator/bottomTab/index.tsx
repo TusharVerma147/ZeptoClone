@@ -45,8 +45,8 @@ const BottomTab = () => {
         tabBarLabel: ({ focused, color }) => {
           let labelStyle = {
             fontSize: 12,
-            color: focused ? colors.violet : colors.inactiveTabColor,
-            fontWeight: 'bold',
+            color: focused ? colors.violet : colors.black,
+            fontWeight: 'bold' as 'bold', 
           };
 
           let labelText;

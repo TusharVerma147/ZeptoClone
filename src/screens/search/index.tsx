@@ -15,7 +15,9 @@ import AppWrapper from '../../components/appWrapper';
 import { products, trending_products } from '../../utils/mockdata/item';
 import styles from './styles';
 import colors from '../../theme/colors';
+import { StackNavigationProp } from '@react-navigation/stack';
 
+type NavigationProp = StackNavigationProp<any>;
 
 
 interface Product {
@@ -25,7 +27,7 @@ interface Product {
 }
 
 const Search = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
   const [search, setSearch] = useState<string>('');
   const [searchProducts, setSearchProducts] = useState<Product[]>([]);
   const [searchTrendingProducts, setSearchedTrendingProducts] = useState<Product[]>([]);

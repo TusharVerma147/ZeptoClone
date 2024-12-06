@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, SectionList, Image, TouchableOpacity, ListRenderItemInfo } from 'react-native';
+import { Text, View, SectionList, Image, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import auth from '@react-native-firebase/auth'; 
 import { Icons } from '../../assets';
@@ -64,7 +64,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       await AsyncStorage.removeItem('key'); 
       navigation.reset({
         index: 0,
-        routes: [{ name: 'MailLogin' }]
+        routes: [{ name: 'MailLogin' }],
       });
     } catch (error) {
       console.log(error);

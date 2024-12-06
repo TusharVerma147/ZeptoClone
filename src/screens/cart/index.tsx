@@ -19,6 +19,8 @@ import {
   removeProduct,
 } from '../../redux/CartSlice';
 import styles from './styles';
+import { StackNavigationProp } from '@react-navigation/stack';
+type NavigationProp = StackNavigationProp<any>;
 
 
 interface CartItem {
@@ -36,7 +38,7 @@ interface RootState {
 }
 
 const Cart = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
   const cartItems = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
 

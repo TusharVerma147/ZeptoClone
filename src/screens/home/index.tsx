@@ -24,6 +24,9 @@ import {products, trending_products} from '../../utils/mockdata/item';
 import ProductList from '../../components/productList';
 import key from '../../apis/api';
 import styles from './styles';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+type NavigationProp = StackNavigationProp<any>;
 
 const width = Dimensions.get('window').width;
 
@@ -36,8 +39,19 @@ const Home: React.FC = () => {
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [address, setAddress] = useState<string>('');
 
+
+  Geolocation.setRNConfiguration({
+    skipPermissionRequests: false,
+    authorizationLevel: "always",
+    enableBackgroundLocationUpdates: true,
+    locationProvider: 'auto',
+})
+
+
   useEffect(() => {
+    Geolocation.requestAuthorization();
     requestLocationPermission();
+    
   }, []);
 
   const getCurrentLocation = () => {
@@ -123,7 +137,7 @@ interface AppHeaderProps {
 }
 
 const AppHeader: React.FC<AppHeaderProps> = ({address}) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
 
   const gotoSearchPage = () => {
     navigation.navigate('Search');

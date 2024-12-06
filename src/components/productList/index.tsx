@@ -16,8 +16,9 @@ import {
 } from '../../redux/CartSlice';
 import { RootState } from '../../redux/store'; 
 import styles from './styles';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-
+type NavigationProp = StackNavigationProp<any>;
 
 interface Product {
   id: string;
@@ -38,7 +39,7 @@ interface ProductListProps {
 }
 
 const ProductList: React.FC<ProductListProps> = ({ data }) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
   const dispatch = useDispatch();
   const cartStore = useSelector((state: RootState) => state.cart); 
 
