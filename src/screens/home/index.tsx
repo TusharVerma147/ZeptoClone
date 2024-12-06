@@ -81,28 +81,7 @@ const Home: React.FC = () => {
 
   const requestLocationPermission = async () => {
     try {
-      if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Zepto',
-            message:
-              'This app needs access to your location to provide location-based features.',
-            buttonNeutral: 'Ask Me Later',
-            buttonNegative: 'Cancel',
-            buttonPositive: 'OK',
-          },
-        );
-
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          getCurrentLocation();
-        } else {
-          console.log('Location permission denied');
-        }
-      } 
-      else if (Platform.OS === 'ios'){
-        getCurrentLocation();
-      }
+      getCurrentLocation();
     } catch (err) {
       console.warn(err);
     }

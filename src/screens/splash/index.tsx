@@ -15,12 +15,7 @@ interface SplashProps {
 
 const Splash: React.FC<SplashProps> = ({ navigation }) => {
 
-//   Geolocation.setRNConfiguration({
-//     skipPermissionRequests: false,
-//     authorizationLevel: "always",
-//     enableBackgroundLocationUpdates: true,
-//     locationProvider: 'auto',
-// })
+
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -32,7 +27,6 @@ const Splash: React.FC<SplashProps> = ({ navigation }) => {
         } else {
           navigation.replace('MailLogin');
         }
-        // Geolocation.requestAuthorization();
       } catch (err) {
         console.log(err);
         navigation.replace('MailLogin');
