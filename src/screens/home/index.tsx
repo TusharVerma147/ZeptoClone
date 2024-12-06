@@ -16,7 +16,6 @@ import colors from '../../theme/colors';
 import {Icons} from '../../assets';
 import AppWrapper from '../../components/appWrapper';
 import Geolocation from '@react-native-community/geolocation';
-import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import axios from 'axios';
 import Carousel from 'react-native-reanimated-carousel';
 import HomeTitles from '../../components/homeTitle';
@@ -100,21 +99,9 @@ const Home: React.FC = () => {
         } else {
           console.log('Location permission denied');
         }
-      } else if (Platform.OS === 'ios') {
-        const result = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
-
-        if (result === RESULTS.GRANTED) {
-          getCurrentLocation();
-        } else {
-          const requestResult = await request(
-            PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
-          );
-          if (requestResult === RESULTS.GRANTED) {
-            getCurrentLocation();
-          } else {
-            console.log('Location permission denied');
-          }
-        }
+      } 
+      else if (Platform.OS === 'ios'){
+        getCurrentLocation();
       }
     } catch (err) {
       console.warn(err);
