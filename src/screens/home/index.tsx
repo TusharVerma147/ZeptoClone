@@ -1,8 +1,6 @@
 import {
   View,
   Text,
-  PermissionsAndroid,
-  Platform,
   Image,
   StatusBar,
   Dimensions,

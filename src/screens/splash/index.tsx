@@ -4,7 +4,7 @@ import { Icons } from '../../assets';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Animated, { FadeInLeft } from 'react-native-reanimated';
 import styles from './styles';
-import Geolocation from '@react-native-community/geolocation';
+
 
 
 interface SplashProps {

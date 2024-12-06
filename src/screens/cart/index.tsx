@@ -112,7 +112,7 @@ const Cart = () => {
               title="Browse Products"
               textColor={colors.white}
               borderRadius={10}
-              onPress={() => navigation.navigate('Home')}
+              onPress={() => navigation.navigate('BottomTab',{screen:'Home'})}
             />
           </View>
         )}
