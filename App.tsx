@@ -1,6 +1,5 @@
-import { View, Text, ActivityIndicator } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
 import StackRoute from './src/navigator'
 import { Provider } from 'react-redux'
 import { Store } from './src/redux/Store'

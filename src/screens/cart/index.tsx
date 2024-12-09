@@ -44,7 +44,7 @@ const Cart = () => {
 
 
   const handleIncrement = (item: CartItem) => {
-    dispatch(incrementQuantity(item));
+    dispatch(incrementQuantity(item));    
   };
 
 

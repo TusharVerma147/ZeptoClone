@@ -6,7 +6,6 @@ const Icons = {
   account: require('./icons/user1.png'),
   user: require('./icons/account.png'),
   writing: require('./icons/writing.png'),
-  location1: require('./icons/location.jpeg'),
   search: require('./icons/searchicon.png'),
   writingwhite: require('./icons/writingwhite.png'),
   accountwhite: require('./icons/account.png'),

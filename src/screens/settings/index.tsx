@@ -5,6 +5,8 @@ import auth from '@react-native-firebase/auth';
 import { Icons } from '../../assets';
 import AppHeader from '../../components/appHeader';
 import styles from './styles';
+import Toast from 'react-native-simple-toast';
+import colors from '../../theme/colors';
 
 type SettingsProps = {
   navigation: {
@@ -65,6 +67,9 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       navigation.reset({
         index: 0,
         routes: [{ name: 'MailLogin' }],
+      });
+       Toast.showWithGravity('Logged out successfully', Toast.SHORT, Toast.BOTTOM, {
+        backgroundColor: colors.reddish, 
       });
     } catch (error) {
       console.log(error);
