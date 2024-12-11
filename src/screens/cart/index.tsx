@@ -56,6 +56,14 @@ const Cart = () => {
     }
   };
 
+  const gotoHome =()=>{
+    navigation.navigate('BottomTab',{screen:'Home'})
+  }
+
+  const gotoPayment =()=>{
+    navigation.navigate('Payment', {totalAmount})
+  }
+
   
   const renderCartItem = ({item}: {item: CartItem}) => (
     <View style={styles.cartItem}>
@@ -112,7 +120,7 @@ const Cart = () => {
               title="Browse Products"
               textColor={colors.white}
               borderRadius={10}
-              onPress={() => navigation.navigate('BottomTab',{screen:'Home'})}
+              onPress={gotoHome}
             />
           </View>
         )}
@@ -126,7 +134,7 @@ const Cart = () => {
           </View>
           <TouchableOpacity
             style={styles.footer}
-            onPress={() => navigation.navigate('Payment', {totalAmount})}>
+            onPress={gotoPayment}>
             <Text style={styles.footertext}>Proceed to Pay</Text>
           </TouchableOpacity>
         </View>

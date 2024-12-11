@@ -30,26 +30,6 @@ const styles = StyleSheet.create({
     bottom: {
       flex: 0.8,
     },
-    input: {
-      height: vh(50),
-      borderColor: colors.white,
-      borderWidth: 1,
-      borderRadius: 10,
-      paddingHorizontal: 10,
-      color: colors.black,
-      backgroundColor: colors.white,
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    error: {
-      color: colors.zeptored,
-      fontSize: responsiveFontSize(1.8),
-      height: vh(28),
-      marginTop: 0.4,
-    },
-    noerror:{
-      height:width/20
-    },
     footer: {
       marginTop: vh(40),
     },
@@ -64,13 +44,6 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       fontSize: responsiveFontSize(2),
       fontWeight: '500',
-    },
-    clock: {
-      height: 30,
-      width: 25,
-      resizeMode: 'contain',
-      marginHorizontal: 5,
-      tintColor: colors.purple,
     },
     logintext: {
       color: colors.zeptored,
@@ -112,7 +85,7 @@ const styles = StyleSheet.create({
     },
     modalContent: {
       width: '80%',
-      backgroundColor: 'white',
+      backgroundColor: colors.greyish,
       borderRadius: 10,
       paddingHorizontal: 20,
       height: width / 1.2,
@@ -126,7 +99,7 @@ const styles = StyleSheet.create({
       fontSize: 15,
       marginVertical: 10,
       fontWeight: '400',
-      color: colors.grey,
+      color: colors.black,
     },
     modalInput: {
       height: vh(50),

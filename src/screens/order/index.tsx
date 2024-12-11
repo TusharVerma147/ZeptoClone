@@ -15,6 +15,10 @@ type NavigationType = {
 const Order: React.FC = () => {
   const navigation = useNavigation<NavigationType>();
 
+  const gotoBottom = ()=> {
+    navigation.navigate('BottomTab')
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} />
@@ -40,7 +44,7 @@ const Order: React.FC = () => {
             title="Continue Shopping"
             textColor={colors.white}
             borderRadius={10}
-            onPress={() => navigation.navigate('BottomTab')}
+            onPress={gotoBottom}
           />
         </View>
       </View>

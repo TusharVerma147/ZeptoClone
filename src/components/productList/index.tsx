@@ -50,6 +50,8 @@ const ProductList: React.FC<ProductListProps> = ({ data }) => {
   const renderProducts = ({ item }: { item: Product }) => {
     const isAddedToCart = cartStore.find((grocery: CartItem) => grocery.id === item.id);
 
+    console.log('isAddded',isAddedToCart)
+
     const handleAddToCart = () => {
       const productToAdd = {
         ...item, 

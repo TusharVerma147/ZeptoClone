@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,19 +9,17 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
-  Platform
+  Platform,
 } from 'react-native';
-import { Icons } from '../../assets';
+import {Icons} from '../../assets';
 import colors from '../../theme/colors';
 import CustomButton from '../../components/customButton';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-simple-toast';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
-
+import CustomTextInput from '../../components/customTextInput';
 
 interface SignUpProps {
   navigation: {
@@ -30,7 +28,7 @@ interface SignUpProps {
   };
 }
 
-const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
+const SignUp: React.FC<SignUpProps> = ({navigation}) => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -38,41 +36,45 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-  
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId: '618497774501-knq282thiio2qdckfsnpr5d88lj5a08t.apps.googleusercontent.com',
+      webClientId:
+        '618497774501-knq282thiio2qdckfsnpr5d88lj5a08t.apps.googleusercontent.com',
       offlineAccess: true,
     });
   }, []);
 
   useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '618497774501-knq282thiio2qdckfsnpr5d88lj5a08t.apps.googleusercontent.com',
+      offlineAccess: true,
+    });
+
     const subscriber = auth().onAuthStateChanged(user => {
       if (user) {
         console.log('User is signed in: ', user);
-        navigation.navigate('BottomTab');
+        navigation.replace('BottomTab');
       } else {
         console.log('User is not signed in');
       }
     });
 
-    return subscriber;
+    return () => subscriber();
   }, [navigation]);
-
 
   const onGoogleButtonPress = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
       console.log('id token', response);
-  
-      
+
       const idToken = response?.data?.idToken;
       if (!idToken) {
-        throw new Error("Google sign-in did not return an ID token.");
+        throw new Error('Google sign-in did not return an ID token.');
       }
-  
+
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       await auth().signInWithCredential(googleCredential);
       await AsyncStorage.setItem('key', 'true');
@@ -122,7 +124,10 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
 
   const handleSignUp = async () => {
     try {
-      const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+      const userCredential = await auth().createUserWithEmailAndPassword(
+        email,
+        password,
+      );
       Toast.show('User Registered successfully!', Toast.SHORT);
       navigation.navigate('MailLogin');
     } catch (error: any) {
@@ -134,119 +139,97 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
     setPasswordVisible(!passwordVisible);
   };
 
+  const gotoLogin = () => {
+    navigation.navigate('MailLogin');
+  };
+
   return (
     <>
       <StatusBar barStyle={'light-content'} backgroundColor={colors.violet} />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboard}
-      >
-        
-      <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <Image style={styles.symbol} source={Icons.zeptooo} />
-        </View>
-        <View style={styles.bottom}>
-          <Text style={styles.logintext}>Sign Up</Text>
+        style={styles.keyboard}>
+        <View style={styles.container}>
+          <ScrollView
+            contentContainerStyle={styles.scroll}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}>
+            <View style={styles.header}>
+              <Image style={styles.symbol} source={Icons.zeptooo} />
+            </View>
+            <View style={styles.bottom}>
+              <Text style={styles.logintext}>Sign Up</Text>
 
-          <View style={styles.input}>
-            <Image style={styles.clock} source={Icons.user} />
-            <TextInput
-              style={styles.keyboard}
-              value={name}
-              onChangeText={text => {
-                setName(text), setNameError('');
-              }}
-              placeholder="Name"
-            />
-          </View>
-          {nameError ? (
-            <Text style={styles.error}>{nameError}</Text>
-          ) : (
-            <View style={styles.noerror}></View>
-          )}
-
-          <View style={styles.input}>
-            <Image style={styles.clock} source={Icons.mail} />
-            <TextInput
-              style={styles.keyboard}
-              value={email}
-              onChangeText={text => {
-                setEmail(text), setEmailError('');
-              }}
-              placeholder="Email"
-              autoCapitalize="none"
-            />
-          </View>
-          {emailError ? (
-            <Text style={styles.error}>{emailError}</Text>
-          ) : (
-            <View style={styles.noerror}></View>
-          )}
-
-          <View style={styles.input}>
-            <Image style={styles.clock} source={Icons.pass} />
-            <TextInput
-              style={styles.keyboard}
-              value={password}
-              onChangeText={text => {
-                setPassword(text), setPasswordError('');
-              }}
-              placeholder="Password"
-              secureTextEntry={!passwordVisible}
-            />
-            <TouchableOpacity onPress={togglePasswordVisibility}>
-              <Image
-                style={styles.clock}
-                source={passwordVisible ? Icons.eyeclose : Icons.eye}
+              <CustomTextInput
+                value={name}
+                onChangeText={text => {
+                  setName(text);
+                  setNameError('');
+                }}
+                placeholder="Name"
+                icon={Icons.user}
+                errorMessage={nameError}
               />
-            </TouchableOpacity>
-          </View>
-          {passwordError ? (
-            <Text style={styles.error}>{passwordError}</Text>
-          ) : (
-            <View style={styles.noerror}></View>
-          )}
 
-          <CustomButton
-            title="Sign Up"
-            style={{ marginTop: 10 }}
-            textStyle={{ fontWeight: '700' }}
-            borderRadius={50}
-            backgroundColor={colors.reddish}
-            textColor={colors.white}
-            onPress={validateSignUp}
-          />
-          <View style={styles.divideview}>
-            <View style={styles.orview}></View>
-            <Text style={styles.ortext}>or</Text>
-            <View style={styles.orview}></View>
-          </View>
-          <CustomButton
-            icon={Icons.google}
-            title="Sign in with Google"
-            onPress={onGoogleButtonPress}
-            textStyle={{ fontWeight: '700' }}
-            borderRadius={50}
-            backgroundColor={colors.white}
-            textColor={colors.black}
-          />
-        </View>
+              <CustomTextInput
+                value={email}
+                onChangeText={text => {
+                  setEmail(text);
+                  setEmailError('');
+                }}
+                placeholder="Email"
+                icon={Icons.mail}
+                errorMessage={emailError}
+              />
 
-        <View style={styles.footer}>
-          <Text style={styles.bytext}>Already have an account?</Text>
-          <View style={styles.policy}>
-            <Text
-              onPress={() => navigation.navigate('MailLogin')}
-              style={styles.termstext}>
-              Login
-            </Text>
-          </View>
+              <CustomTextInput
+                value={password}
+                onChangeText={text => {
+                  setPassword(text);
+                  setPasswordError('');
+                }}
+                placeholder="Password"
+                icon={Icons.pass}
+                secureTextEntry={!passwordVisible}
+                onIconPress={togglePasswordVisibility}
+                errorMessage={passwordError}
+              />
+
+              <CustomButton
+                title="Sign Up"
+                style={{marginTop: 10}}
+                textStyle={{fontWeight: '700'}}
+                borderRadius={50}
+                backgroundColor={colors.reddish}
+                textColor={colors.white}
+                onPress={validateSignUp}
+              />
+              <View style={styles.divideview}>
+                <View style={styles.orview}></View>
+                <Text style={styles.ortext}>or</Text>
+                <View style={styles.orview}></View>
+              </View>
+              <CustomButton
+                icon={Icons.google}
+                title="Sign in with Google"
+                onPress={onGoogleButtonPress}
+                textStyle={{fontWeight: '700'}}
+                borderRadius={50}
+                backgroundColor={colors.white}
+                textColor={colors.black}
+              />
+            </View>
+
+            <View style={styles.footer}>
+              <Text style={styles.bytext}>Already have an account?</Text>
+              <View style={styles.policy}>
+                <Text onPress={gotoLogin} style={styles.termstext}>
+                  Login
+                </Text>
+              </View>
+            </View>
+          </ScrollView>
         </View>
-        </ScrollView>
-      </View>
-           
       </KeyboardAvoidingView>
     </>
   );

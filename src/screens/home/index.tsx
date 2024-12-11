@@ -23,6 +23,7 @@ import key from '../../apis/api';
 import styles from './styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+
 type NavigationProp = StackNavigationProp<any>;
 
 const width = Dimensions.get('window').width;
@@ -84,6 +85,8 @@ const Home: React.FC = () => {
       console.warn(err);
     }
   };
+  
+ 
 
   return (
     <AppWrapper>
@@ -107,12 +110,15 @@ const AppHeader: React.FC<AppHeaderProps> = ({address}) => {
     navigation.navigate('Search');
   };
 
+  const gotoSettings = () =>{
+    navigation.navigate('Settings')
+  }
   
 
   return (
     <View style={styles.headerparent}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+        <TouchableOpacity onPress={gotoSettings}>
           <Image source={Icons.accountwhite} style={styles.account} />
         </TouchableOpacity>
         <View>
@@ -172,9 +178,6 @@ const AppBody: React.FC = () => {
       <View>
         <HomeTitles
           title={'Your Go-to items'}
-          subtitle={'See All'}
-          onSubtitlePress={() => console.log('Subtitle pressed')}
-          iconSource={Icons.forward1}
         />
         <ProductList data={productsWithStringId} />
       </View>
@@ -182,9 +185,6 @@ const AppBody: React.FC = () => {
       <View>
         <HomeTitles
           title={'Trending Products'}
-          subtitle={'See All'}
-          onSubtitlePress={() => console.log('Subtitle pressed')}
-          iconSource={Icons.forward1}
         />
         <ProductList data={trendingProductsWithStringId} />
       </View>

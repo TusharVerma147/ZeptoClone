@@ -1,34 +1,30 @@
-import React, { useState } from 'react';
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import React, {useState} from 'react';
+import {Text, View, Image, TouchableOpacity, ScrollView} from 'react-native';
+import {useRoute, RouteProp} from '@react-navigation/native';
 import colors from '../../theme/colors';
-import { Icons } from '../../assets';
+import {Icons} from '../../assets';
 import AppHeader from '../../components/appHeader';
 import HomeTitles from '../../components/homeTitle';
 import CustomButton from '../../components/customButton';
 import Toast from 'react-native-simple-toast';
 import styles from './styles';
 
-
 interface PaymentRouteParams {
   totalAmount: number;
 }
 
-type PaymentScreenRouteProp = RouteProp<{ Payment: PaymentRouteParams }, 'Payment'>;
+type PaymentScreenRouteProp = RouteProp<
+  {Payment: PaymentRouteParams},
+  'Payment'
+>;
 
 interface PaymentProps {
-  navigation: any; 
+  navigation: any;
 }
 
-const Payment: React.FC<PaymentProps> = ({ navigation }) => {
+const Payment: React.FC<PaymentProps> = ({navigation}) => {
   const route = useRoute<PaymentScreenRouteProp>();
-  const { totalAmount } = route.params;
+  const {totalAmount} = route.params;
   console.log('total ---->', totalAmount);
   const [isButtonVisible, setIsButtonVisible] = useState<boolean>(false);
   const [isTickVisible, setIsTickVisible] = useState<boolean>(false);
@@ -46,12 +42,15 @@ const Payment: React.FC<PaymentProps> = ({ navigation }) => {
     }
   };
 
+  const handleClicktoPay = () => {
+    Toast.showWithGravity('Payment Successful', Toast.SHORT, Toast.BOTTOM, {
+      backgroundColor: colors.reddish,
+    });
+    navigation.navigate('Order');
+  };
+
   return (
-    <View
-      style={[
-        styles.container,
-      ]}
-    >
+    <View style={[styles.container]}>
       <AppHeader
         title={'Payment Options'}
         subtitle={'To Pay:'}
@@ -67,7 +66,11 @@ const Payment: React.FC<PaymentProps> = ({ navigation }) => {
         <Text style={styles.addresstext}>Delivering to Appinventiv</Text>
       </View>
       <ScrollView>
-        <HomeTitles title={'Pay by UPI'} titleFontWeight="500" titleFontSize={18} />
+        <HomeTitles
+          title={'Pay by UPI'}
+          titleFontWeight="500"
+          titleFontSize={18}
+        />
         <View style={styles.paymentview}>
           <View style={styles.upisub}>
             <Image source={Icons.upi} style={styles.upi} />
@@ -95,7 +98,11 @@ const Payment: React.FC<PaymentProps> = ({ navigation }) => {
           </View>
         </View>
 
-        <HomeTitles title={'Netbanking'} titleFontWeight="500" titleFontSize={18} />
+        <HomeTitles
+          title={'Netbanking'}
+          titleFontWeight="500"
+          titleFontSize={18}
+        />
         <View style={styles.paymentview}>
           <View style={styles.sub1}>
             <View>
@@ -163,7 +170,11 @@ const Payment: React.FC<PaymentProps> = ({ navigation }) => {
           </View>
         </View>
 
-        <HomeTitles title={'Pay On Delivery'} titleFontWeight="500" titleFontSize={18} />
+        <HomeTitles
+          title={'Pay On Delivery'}
+          titleFontWeight="500"
+          titleFontSize={18}
+        />
         <View style={styles.paymentview}>
           <View style={styles.paymentsubview}>
             <View style={styles.upisub1}>
@@ -174,13 +185,14 @@ const Payment: React.FC<PaymentProps> = ({ navigation }) => {
               style={[
                 styles.check,
                 {
-                  backgroundColor: isTickVisible ? colors.zeptored : colors.white,
+                  backgroundColor: isTickVisible
+                    ? colors.zeptored
+                    : colors.white,
                   borderWidth: isTickVisible ? 0 : 1,
                   borderColor: isTickVisible ? 'none' : colors.lightgrey,
                 },
               ]}
-              onPress={handleTickPress}
-            >
+              onPress={handleTickPress}>
               {isTickVisible && <Text style={styles.tick}>✓</Text>}
             </TouchableOpacity>
           </View>
@@ -195,17 +207,7 @@ const Payment: React.FC<PaymentProps> = ({ navigation }) => {
             backgroundColor={colors.pink}
             textColor={colors.white}
             borderRadius={15}
-            onPress={() => {
-              Toast.showWithGravity(
-                'Payment Successful',
-                Toast.SHORT,
-                Toast.BOTTOM,
-                {
-                  backgroundColor: colors.reddish,
-                }
-              );
-              navigation.navigate('Order');
-            }}
+            onPress={handleClicktoPay}
           />
         </View>
       )}

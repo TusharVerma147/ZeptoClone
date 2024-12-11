@@ -43,12 +43,16 @@ const AppHeader: React.FC<AppHeaderProps> = ({
 }) => {
   const navigation = useNavigation();
 
+  const handlegoBack = () =>{
+    navigation.goBack();
+  }
+
   return (
     <View style={[styles.header, { backgroundColor }]}>
       <StatusBar backgroundColor={uppercolor} />
       <View style={[styles.titleContainer, centerTitle && styles.centeredTitleContainer]}>
         {showBackIcon && !centerTitle && (
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backContainer}>
+          <TouchableOpacity onPress={handlegoBack} style={styles.backContainer}>
             <Image
               source={Icons.left}
               style={{ height: backheight, width: backWidth, alignSelf: self, tintColor: backcolor }}

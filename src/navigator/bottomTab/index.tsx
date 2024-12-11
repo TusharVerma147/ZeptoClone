@@ -7,6 +7,7 @@ import { ScreenNames } from '../screenNames';
 import Home from '../../screens/home';
 import Category from '../../screens/categories';
 import Cart from '../../screens/cart';
+import styles from './styles';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +39,7 @@ const BottomTab = () => {
           return (
             <Image
               source={iconName}
-              style={{ width: 40, height: 30, resizeMode: 'contain' }}
+              style={styles.icon}
             />
           );
         },

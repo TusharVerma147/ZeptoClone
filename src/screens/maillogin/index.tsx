@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -16,12 +16,13 @@ import {
 import auth from '@react-native-firebase/auth';
 import CustomButton from '../../components/customButton';
 import colors from '../../theme/colors';
-import { vh } from '../../utils/dimensions';
+import {vh} from '../../utils/dimensions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-simple-toast';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { Icons } from '../../assets';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {Icons} from '../../assets';
 import styles from './styles';
+import CustomTextInput from '../../components/customTextInput';
 
 type NavigationProps = {
   navigate: (screen: string) => void;
@@ -32,7 +33,7 @@ interface MailLoginProps {
   navigation: NavigationProps;
 }
 
-const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
+const MailLogin: React.FC<MailLoginProps> = ({navigation}) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -48,9 +49,7 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
         '618497774501-knq282thiio2qdckfsnpr5d88lj5a08t.apps.googleusercontent.com',
       offlineAccess: true,
     });
-  }, []);
 
-  useEffect(() => {
     const subscriber = auth().onAuthStateChanged(user => {
       if (user) {
         console.log('User is signed in: ', user);
@@ -60,7 +59,7 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
       }
     });
 
-    return subscriber;
+    return () => subscriber();
   }, [navigation]);
 
   const onGoogleButtonPress = async () => {
@@ -71,7 +70,7 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
 
       const idToken = response?.data?.idToken;
       if (!idToken) {
-        throw new Error("Google sign-in did not return an ID token.");
+        throw new Error('Google sign-in did not return an ID token.');
       }
 
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
@@ -122,7 +121,7 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
     } catch (error: any) {
       if (error.code === 'auth/user-not-found') {
         setEmailError(
-          "Can't find Account. The email that you entered doesn't have an account associated with it."
+          "Can't find Account. The email that you entered doesn't have an account associated with it.",
         );
       } else {
         console.log(error.message);
@@ -153,58 +152,54 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
     }
   };
 
+  const gotoSignUp = () => {
+    navigation.navigate('SignUp');
+  };
+
   return (
     <>
       <StatusBar barStyle={'light-content'} backgroundColor={colors.violet} />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboard}
-      >
-        
-          <View style={styles.container}>
-          <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+        style={styles.keyboard}>
+        <View style={styles.container}>
+          <ScrollView
+            contentContainerStyle={styles.scroll}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}>
             <View style={styles.header}>
               <Image style={styles.symbol} source={Icons.zeptooo} />
             </View>
             <View style={styles.bottom}>
-              <Text style={styles.logintext}>Signin</Text>
-              <View style={styles.input}>
-                <Image style={styles.clock} source={Icons.mail} />
-                <TextInput
-                  style={styles.keyboard}
-                  value={email}
-                  onChangeText={text => {
-                    setEmail(text);
-                    setEmailError('');
-                  }}
-                  placeholder="Email"
-                  autoCapitalize="none"
-                />
-              </View>
-              {emailError ? <Text style={styles.error}>{emailError}</Text> : <View style={styles.noerror}></View>}
+              <Text style={styles.logintext}>Sign in</Text>
+              <CustomTextInput
+                value={email}
+                onChangeText={text => {
+                  setEmail(text);
+                  setEmailError('');
+                }}
+                placeholder="Email"
+                icon={Icons.mail}
+                errorMessage={emailError}
+              />
 
-              <View style={styles.input}>
-                <Image style={styles.clock} source={Icons.pass} />
-                <TextInput
-                  style={styles.keyboard}
-                  value={password}
-                  onChangeText={text => {
-                    setPassword(text);
-                    setPasswordError('');
-                  }}
-                  placeholder="Password"
-                  secureTextEntry={!passwordVisible}
-                />
-                <TouchableOpacity onPress={togglePasswordVisibility}>
-                  <Image style={styles.clock} source={passwordVisible ? Icons.eyeclose : Icons.eye} />
-                </TouchableOpacity>
-              </View>
-              {passwordError ? <Text style={styles.error}>{passwordError}</Text> : <View style={styles.noerror}></View>}
+              <CustomTextInput
+                value={password}
+                onChangeText={text => {
+                  setPassword(text);
+                  setPasswordError('');
+                }}
+                placeholder="Password"
+                icon={Icons.pass}
+                secureTextEntry={!passwordVisible}
+                onIconPress={togglePasswordVisibility}
+                errorMessage={passwordError}
+              />
 
               <CustomButton
                 title="Login"
-                style={{ marginTop: 5 }}
-                textStyle={{ fontWeight: '700' }}
+                style={{marginTop: 5}}
+                textStyle={{fontWeight: '700'}}
                 borderRadius={50}
                 backgroundColor={colors.reddish}
                 textColor={colors.white}
@@ -225,7 +220,7 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
                 icon={Icons.google}
                 title="Sign in with Google"
                 onPress={onGoogleButtonPress}
-                textStyle={{ fontWeight: '700' }}
+                textStyle={{fontWeight: '700'}}
                 borderRadius={50}
                 backgroundColor={colors.white}
                 textColor={colors.black}
@@ -234,46 +229,48 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
               <View style={styles.footer}>
                 <Text style={styles.bytext}>Don't have an account?</Text>
                 <View>
-                  <Text onPress={() => navigation.navigate('SignUp')} style={styles.termstext}>
+                  <Text onPress={gotoSignUp} style={styles.termstext}>
                     Sign Up
                   </Text>
                 </View>
               </View>
             </View>
-            </ScrollView>
-          </View>
-      
+          </ScrollView>
+        </View>
       </KeyboardAvoidingView>
 
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(!modalVisible)}
-      >
-        <TouchableWithoutFeedback onPress={() => { setModalVisible(false); setResetEmailError(''); }}>
+        onRequestClose={() => setModalVisible(!modalVisible)}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setModalVisible(false);
+            setResetEmailError('');
+          }}>
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.modalTitle}>Reset Your Password</Text>
               <Text style={styles.modalText}>
-                Enter your email and you may receive a link to reset your password.
+                Enter your email and you may receive a link to reset your
+                password.
               </Text>
-              <TextInput
-                style={styles.modalInput}
-                placeholder="Enter your email"
+              <CustomTextInput
                 value={resetEmail}
                 onChangeText={text => {
                   setResetEmail(text);
                   setResetEmailError('');
                 }}
-                autoCapitalize="none"
+                placeholder="Enter your email"
+                icon={Icons.mail}
+                errorMessage={resetEmailError}
               />
-              {resetEmailError ? <Text style={styles.error}>{resetEmailError}</Text> : <View style={styles.noerror}></View>}
               <View style={styles.modalButtons}>
                 <CustomButton
                   title="Reset"
-                  style={{ marginTop: 5 }}
-                  textStyle={{ fontWeight: '500' }}
+                  style={{marginTop: 5}}
+                  textStyle={{fontWeight: '500'}}
                   borderRadius={5}
                   backgroundColor={colors.reddish}
                   textColor={colors.white}
@@ -282,12 +279,15 @@ const MailLogin: React.FC<MailLoginProps> = ({ navigation }) => {
                 />
                 <CustomButton
                   title="Cancel"
-                  style={{ marginTop: 5 }}
-                  textStyle={{ fontWeight: '500' }}
+                  style={{marginTop: 5}}
+                  textStyle={{fontWeight: '500'}}
                   borderRadius={5}
                   backgroundColor={colors.grey}
                   textColor={colors.white}
-                  onPress={() => { setModalVisible(false); setResetEmailError(''); }}
+                  onPress={() => {
+                    setModalVisible(false);
+                    setResetEmailError('');
+                  }}
                   padding={vh(10)}
                 />
               </View>

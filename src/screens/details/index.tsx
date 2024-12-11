@@ -7,13 +7,13 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import { useRoute, RouteProp, useFocusEffect } from '@react-navigation/native';
 import { Icons } from '../../assets';
 import HomeTitles from '../../components/homeTitle';
 import OtherProducts from '../../components/otherProducts';
 import { trending_products } from '../../utils/mockdata/item';
 import AppHeader from '../../components/appHeader';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import {
   addProduct,
   decrementQuantity,
@@ -42,10 +42,13 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
   const route = useRoute<DetailsScreenRouteProp>();
   const { item } = route.params;
 
+  
+  
   const dispatch = useDispatch();
   const cartStore = useSelector((state: RootState) => state.cart);
-
+  
   const isAddedToCart = cartStore.find((grocery:any) => grocery.id === item.id);
+  // console.log('mjbdsvjhbzdfjhbv====>',item.id)
 
   const handleAddToCart = () => {
     const productToAdd = {
@@ -56,6 +59,7 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
   };
 
   const handleIncrement = () => {
+    console.log('quantity',isAddedToCart?.quantity)
     dispatch(incrementQuantity(item));
   };
 
@@ -67,6 +71,10 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
     setIsOpened(!isOpened);
   };
 
+  const gotoCart = () =>{
+    navigation.navigate('Cart')
+  }
+
   const hasItemsInCart = cartStore.length > 0;
 
   const flatListRef = useRef<any>(null);
@@ -75,6 +83,7 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
     ...product,
     id: product.id.toString(), 
   }));
+
 
 
   return (
@@ -145,7 +154,7 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
         <View style={styles.footerview}>
           <TouchableOpacity
             style={styles.footer}
-            onPress={() => navigation.navigate('Cart')}>
+            onPress={gotoCart}>
             <Image source={Icons.bag} style={styles.clock} />
             <Text style={styles.footertext}>View cart</Text>
           </TouchableOpacity>
