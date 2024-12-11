@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: responsiveFontSize(2),
     fontWeight: '600',
-    textAlign: 'center',
     marginLeft: 10,
     marginRight: 20,
   },

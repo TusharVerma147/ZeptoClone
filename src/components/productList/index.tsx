@@ -50,7 +50,7 @@ const ProductList: React.FC<ProductListProps> = ({ data }) => {
   const renderProducts = ({ item }: { item: Product }) => {
     const isAddedToCart = cartStore.find((grocery: CartItem) => grocery.id === item.id);
 
-    console.log('isAddded',isAddedToCart)
+    // console.log('isAddded',isAddedToCart)
 
     const handleAddToCart = () => {
       const productToAdd = {
@@ -71,7 +71,9 @@ const ProductList: React.FC<ProductListProps> = ({ data }) => {
     return (
       <TouchableOpacity
         style={styles.renderproduct}
-        onPress={() => gotoDetail(item)}>
+        onPress={() => gotoDetail(item)}
+        activeOpacity={0.8}
+        >
         <Image source={{ uri: item.image }} style={styles.itemimage} />
         <View style={styles.name}>
           <Text numberOfLines={1} style={styles.des}>
@@ -89,9 +91,13 @@ const ProductList: React.FC<ProductListProps> = ({ data }) => {
               </TouchableOpacity>
             ) : (
               <View style={styles.removecart}>
-                <Text style={styles.removecarttext} onPress={handleDecrement}>-</Text>
+                <TouchableOpacity onPress={handleDecrement}>
+                <Text style={styles.removecarttext} >-</Text>
+                </TouchableOpacity>
                 <Text style={styles.removecarttext}>{isAddedToCart.quantity}</Text>
-                <Text style={styles.removecarttext} onPress={handleIncrement}>+</Text>
+                <TouchableOpacity onPress={handleIncrement}>
+                <Text style={styles.removecarttext}>+</Text>
+                </TouchableOpacity>
               </View>
             )}
           </View>

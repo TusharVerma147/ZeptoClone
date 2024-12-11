@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { 
   View, 
   Text, 
@@ -9,7 +9,7 @@ import {
   FlatList, 
   Dimensions 
 } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation, useFocusEffect} from '@react-navigation/native';
 import { Icons } from '../../assets';
 import AppWrapper from '../../components/appWrapper';
 import { products, trending_products } from '../../utils/mockdata/item';
@@ -54,12 +54,20 @@ const Search = () => {
     }
   }, [search]);
   
-  useFocusEffect(
-    React.useCallback(() => {
+  const focusSearchInput = useCallback(() => {
+    const timeoutId = setTimeout(() => {
       if (searchInputRef.current) {
         searchInputRef.current.focus();
       }
-    }, [])
+    }, 100); 
+
+    return () => clearTimeout(timeoutId); 
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      focusSearchInput();
+    }, [focusSearchInput])
   );
   
   const handleItemPress = (item: Product) => {

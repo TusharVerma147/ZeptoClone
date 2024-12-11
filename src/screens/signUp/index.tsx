@@ -197,7 +197,7 @@ const SignUp: React.FC<SignUpProps> = ({navigation}) => {
 
               <CustomButton
                 title="Sign Up"
-                style={{marginTop: 10}}
+                style={styles.custombutton}
                 textStyle={{fontWeight: '700'}}
                 borderRadius={50}
                 backgroundColor={colors.reddish}

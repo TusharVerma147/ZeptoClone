@@ -7,7 +7,7 @@ interface CustomTextInputProps {
   value: string;
   onChangeText: (text: string) => void;
   placeholder: string;
-  icon: any; 
+  icon?: any; 
   secureTextEntry?: boolean;
   errorMessage: string | null;
   onIconPress?: () => void; 
@@ -25,7 +25,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   return (
     <View>
     <View style={styles.input}>
-      <Image style={styles.clock} source={icon} />
+    {icon && <Image style={styles.clock} source={icon} />} 
       <TextInput
         style={styles.space}
         value={value}

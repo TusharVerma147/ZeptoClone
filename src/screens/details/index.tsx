@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -7,21 +7,20 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
-import { useRoute, RouteProp, useFocusEffect } from '@react-navigation/native';
-import { Icons } from '../../assets';
+import {useRoute, RouteProp, useFocusEffect} from '@react-navigation/native';
+import {Icons} from '../../assets';
 import HomeTitles from '../../components/homeTitle';
 import OtherProducts from '../../components/otherProducts';
-import { trending_products } from '../../utils/mockdata/item';
+import {trending_products} from '../../utils/mockdata/item';
 import AppHeader from '../../components/appHeader';
-import { useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   addProduct,
   decrementQuantity,
   incrementQuantity,
 } from '../../redux/CartSlice';
 import styles from './styles';
-import { RootState } from '../../redux/store'; 
-
+import {RootState} from '../../redux/store';
 
 interface ProductItem {
   id: string;
@@ -33,33 +32,33 @@ interface ProductItem {
   description: string;
 }
 type DetailsScreenRouteProp = RouteProp<
-  { Details: { item: ProductItem } }, 
-  'Details' 
+  {Details: {item: ProductItem}},
+  'Details'
 >;
 
-const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
+const Details: React.FC<{navigation: any}> = ({navigation}) => {
   const [isOpened, setIsOpened] = useState(false);
   const route = useRoute<DetailsScreenRouteProp>();
-  const { item } = route.params;
+  const {item} = route.params;
 
-  
-  
   const dispatch = useDispatch();
   const cartStore = useSelector((state: RootState) => state.cart);
-  
-  const isAddedToCart = cartStore.find((grocery:any) => grocery.id === item.id);
+
+  const isAddedToCart = cartStore.find(
+    (grocery: any) => grocery.id === item.id,
+  );
   // console.log('mjbdsvjhbzdfjhbv====>',item.id)
 
   const handleAddToCart = () => {
     const productToAdd = {
-      ...item, 
-      quantity: 1, 
+      ...item,
+      quantity: 1,
     };
-    dispatch(addProduct(productToAdd)); 
+    dispatch(addProduct(productToAdd));
   };
 
   const handleIncrement = () => {
-    console.log('quantity',isAddedToCart?.quantity)
+    console.log('quantity', isAddedToCart?.quantity);
     dispatch(incrementQuantity(item));
   };
 
@@ -71,28 +70,26 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
     setIsOpened(!isOpened);
   };
 
-  const gotoCart = () =>{
-    navigation.navigate('Cart')
-  }
+  const gotoCart = () => {
+    navigation.navigate('Cart');
+  };
 
   const hasItemsInCart = cartStore.length > 0;
 
   const flatListRef = useRef<any>(null);
 
-  const trendingProductsWithStringId = trending_products.map((product) => ({
+  const trendingProductsWithStringId = trending_products.map(product => ({
     ...product,
-    id: product.id.toString(), 
+    id: product.id.toString(),
   }));
-
-
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <AppHeader/>
+      <AppHeader />
       <ScrollView>
         <View style={styles.imageview}>
-          <Image source={{ uri: item.image }} style={styles.itemimage} />
+          <Image source={{uri: item.image}} style={styles.itemimage} />
         </View>
         <View style={styles.nameview}>
           <View style={styles.timeview}>
@@ -113,23 +110,22 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
               </TouchableOpacity>
             ) : (
               <View style={styles.removetocart}>
-                <Text style={styles.removetocarttext} onPress={handleDecrement}>
-                  -
-                </Text>
+                <TouchableOpacity onPress={handleDecrement}>
+                  <Text style={styles.removetocarttext}>-</Text>
+                </TouchableOpacity>
                 <Text style={styles.removetocarttext}>
                   {isAddedToCart?.quantity}
                 </Text>
-                <Text style={styles.removetocarttext} onPress={handleIncrement}>
-                  +
-                </Text>
+                <TouchableOpacity onPress={handleIncrement}>
+                  <Text style={styles.removetocarttext}>+</Text>
+                </TouchableOpacity>
               </View>
             )}
           </View>
         </View>
         <View style={styles.productview}>
           <Text style={styles.producttext}>Product Description</Text>
-          <TouchableOpacity
-            onPress={handleDescription}>
+          <TouchableOpacity onPress={handleDescription}>
             <Image
               source={isOpened ? Icons.upload : Icons.drop}
               style={styles.clock}
@@ -147,14 +143,15 @@ const Details: React.FC<{ navigation: any }> = ({ navigation }) => {
             titleFontSize={23}
             titleFontWeight="500"
           />
-          <OtherProducts    data={trendingProductsWithStringId}  flatListRef={flatListRef}  />
+          <OtherProducts
+            data={trendingProductsWithStringId}
+            flatListRef={flatListRef}
+          />
         </View>
       </ScrollView>
       {hasItemsInCart && (
         <View style={styles.footerview}>
-          <TouchableOpacity
-            style={styles.footer}
-            onPress={gotoCart}>
+          <TouchableOpacity style={styles.footer} onPress={gotoCart}>
             <Image source={Icons.bag} style={styles.clock} />
             <Text style={styles.footertext}>View cart</Text>
           </TouchableOpacity>

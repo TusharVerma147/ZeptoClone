@@ -198,7 +198,7 @@ const MailLogin: React.FC<MailLoginProps> = ({navigation}) => {
 
               <CustomButton
                 title="Login"
-                style={{marginTop: 5}}
+                style={styles.custombutton}
                 textStyle={{fontWeight: '700'}}
                 borderRadius={50}
                 backgroundColor={colors.reddish}
@@ -207,7 +207,7 @@ const MailLogin: React.FC<MailLoginProps> = ({navigation}) => {
               />
 
               <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <Text style={styles.forgot}>Forgot Password?</Text>
+                <Text style={styles.forgot} >Forgot Password?</Text>
               </TouchableOpacity>
 
               <View style={styles.divideview}>
@@ -263,13 +263,13 @@ const MailLogin: React.FC<MailLoginProps> = ({navigation}) => {
                   setResetEmailError('');
                 }}
                 placeholder="Enter your email"
-                icon={Icons.mail}
+                // icon={Icons.mail}
                 errorMessage={resetEmailError}
               />
               <View style={styles.modalButtons}>
                 <CustomButton
                   title="Reset"
-                  style={{marginTop: 5}}
+                  style={styles.custombutton}
                   textStyle={{fontWeight: '500'}}
                   borderRadius={5}
                   backgroundColor={colors.reddish}
@@ -279,7 +279,7 @@ const MailLogin: React.FC<MailLoginProps> = ({navigation}) => {
                 />
                 <CustomButton
                   title="Cancel"
-                  style={{marginTop: 5}}
+                  style={styles.custombutton}
                   textStyle={{fontWeight: '500'}}
                   borderRadius={5}
                   backgroundColor={colors.grey}

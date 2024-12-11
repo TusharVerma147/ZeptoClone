@@ -23,7 +23,7 @@ const GridCategory: React.FC<GridCategoryProps> = ({ data }) => {
   
   const renderGridCategory = ({ item, index }: ListRenderItemInfo<GridCategoryItem>) => {
     return (
-      <TouchableOpacity style={styles.renderproduct}>
+      <TouchableOpacity style={styles.renderproduct} activeOpacity={0.8}>
         <Image source={item.image} style={styles.itemimage} />
         <View style={styles.name}>
           <Text style={styles.des}>{item.name}</Text>

@@ -43,7 +43,7 @@ const BottomTab = () => {
             />
           );
         },
-        tabBarLabel: ({ focused, color }) => {
+        tabBarLabel: ({ focused }) => {
           let labelStyle = {
             fontSize: 12,
             color: focused ? colors.violet : colors.black,
@@ -69,8 +69,8 @@ const BottomTab = () => {
           return <Text style={labelStyle}>{labelText}</Text>;
         },
         tabBarStyle: {
-          paddingBottom: 5,
-          height: 65,
+          paddingTop: 10,
+          height:80
         },
       })}
     >

@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
       backgroundColor: colors.white,
       flexDirection: 'row',
       alignItems: 'center',
-      marginTop:10
+      marginTop:10,
     },
     error: {
       color: colors.zeptored,
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
       resizeMode: 'contain',
       marginHorizontal: 5,
       tintColor: colors.purple,
+      marginRight:10
     },
   });
 

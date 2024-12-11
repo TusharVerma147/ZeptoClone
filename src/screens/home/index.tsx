@@ -7,6 +7,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  BackHandler
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -37,6 +38,8 @@ const Home: React.FC = () => {
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [address, setAddress] = useState<string>('');
 
+  const navigation = useNavigation<NavigationProp>();
+
 
   Geolocation.setRNConfiguration({
     skipPermissionRequests: false,
@@ -49,6 +52,18 @@ const Home: React.FC = () => {
   useEffect(() => {
     Geolocation.requestAuthorization();
     requestLocationPermission();
+    navigation.setOptions({
+      headerLeft: () => null, 
+    });
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      return true; 
+    });
+
+  
+    return () => {
+      backHandler.remove();
+    };
     
   }, []);
 

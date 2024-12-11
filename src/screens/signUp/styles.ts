@@ -68,6 +68,9 @@ const styles = StyleSheet.create({
     width: responsiveWidth(50),
     resizeMode: 'contain',
   },
+  custombutton:{
+    marginTop:10
+  },
   logintext: {
     color: colors.zeptored,
     fontSize: responsiveFontSize(4),

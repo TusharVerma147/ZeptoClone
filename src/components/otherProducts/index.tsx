@@ -73,7 +73,7 @@ const OtherProducts: React.FC<OtherProductsProps> = ({ data, flatListRef }) => {
     };
 
     return (
-      <TouchableOpacity onPress={() => gotoDetail(item)} style={styles.renderproduct}>
+      <TouchableOpacity onPress={() => gotoDetail(item)} style={styles.renderproduct}  activeOpacity={0.8}>
         <Image source={{ uri: item.image }} style={styles.itemimage} />
         <View style={styles.name}>
           <Text numberOfLines={1} style={styles.des}>
@@ -92,13 +92,17 @@ const OtherProducts: React.FC<OtherProductsProps> = ({ data, flatListRef }) => {
           </TouchableOpacity>
         ) : (
           <View style={styles.removecart}>
-            <Text style={styles.removecarttext} onPress={handleDecrement}>
+            <TouchableOpacity onPress={handleDecrement}>
+            <Text style={styles.removecarttext} >
               -
             </Text>
+            </TouchableOpacity>
             <Text style={styles.removecarttextdigit}>{isAddedToCart.quantity}</Text>
-            <Text style={styles.removecarttext} onPress={handleIncrement}>
+            <TouchableOpacity onPress={handleIncrement}>
+            <Text style={styles.removecarttext} >
               +
             </Text>
+            </TouchableOpacity>
           </View>
         )}
       </TouchableOpacity>

@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
       fontSize: responsiveFontSize(2),
       textAlign: 'right',
       marginTop: 5,
+      paddingRight:10
     },
     modalContainer: {
       flex: 1,
@@ -94,6 +95,9 @@ const styles = StyleSheet.create({
     modalTitle: {
       fontSize: 22,
       fontWeight: 'bold',
+    },
+    custombutton:{
+      marginTop:5
     },
     modalText: {
       fontSize: 15,

@@ -6,6 +6,7 @@ import {
   StatusBar,
   TouchableOpacity,
   FlatList,
+  Alert
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import colors from '../../theme/colors';
@@ -20,6 +21,7 @@ import {
 } from '../../redux/CartSlice';
 import styles from './styles';
 import { StackNavigationProp } from '@react-navigation/stack';
+// import RazorpayCheckout from 'react-native-razorpay';
 type NavigationProp = StackNavigationProp<any>;
 
 
@@ -43,6 +45,10 @@ const Cart = () => {
   const dispatch = useDispatch();
 
 
+
+
+
+  
   const handleIncrement = (item: CartItem) => {
     dispatch(incrementQuantity(item));    
   };
@@ -134,7 +140,7 @@ const Cart = () => {
           </View>
           <TouchableOpacity
             style={styles.footer}
-            onPress={gotoPayment}>
+            onPress={gotoHome}>
             <Text style={styles.footertext}>Proceed to Pay</Text>
           </TouchableOpacity>
         </View>
