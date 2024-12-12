@@ -25,7 +25,6 @@ interface PaymentProps {
 const Payment: React.FC<PaymentProps> = ({navigation}) => {
   const route = useRoute<PaymentScreenRouteProp>();
   const {totalAmount} = route.params;
-  console.log('total ---->', totalAmount);
   const [isButtonVisible, setIsButtonVisible] = useState<boolean>(false);
   const [isTickVisible, setIsTickVisible] = useState<boolean>(false);
 

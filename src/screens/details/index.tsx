@@ -7,7 +7,7 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
-import {useRoute, RouteProp, useFocusEffect} from '@react-navigation/native';
+import {useRoute, RouteProp,} from '@react-navigation/native';
 import {Icons} from '../../assets';
 import HomeTitles from '../../components/homeTitle';
 import OtherProducts from '../../components/otherProducts';
@@ -47,7 +47,7 @@ const Details: React.FC<{navigation: any}> = ({navigation}) => {
   const isAddedToCart = cartStore.find(
     (grocery: any) => grocery.id === item.id,
   );
-  // console.log('mjbdsvjhbzdfjhbv====>',item.id)
+
 
   const handleAddToCart = () => {
     const productToAdd = {
@@ -123,15 +123,13 @@ const Details: React.FC<{navigation: any}> = ({navigation}) => {
             )}
           </View>
         </View>
-        <View style={styles.productview}>
+        <TouchableOpacity onPress={handleDescription} style={styles.productview} activeOpacity={0.8}>
           <Text style={styles.producttext}>Product Description</Text>
-          <TouchableOpacity onPress={handleDescription}>
             <Image
               source={isOpened ? Icons.upload : Icons.drop}
               style={styles.clock}
             />
           </TouchableOpacity>
-        </View>
         {isOpened && (
           <View style={styles.desview}>
             <Text style={styles.productDescription}>{item.description}</Text>

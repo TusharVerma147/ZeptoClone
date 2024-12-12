@@ -3762,6 +3762,7 @@ __metadata:
     react-native-maps: ^1.20.0
     react-native-permissions: ^3.6.1
     react-native-raw-bottom-sheet: ^3.0.0
+    react-native-razorpay: ^2.3.0
     react-native-reanimated: ^3.16.1
     react-native-reanimated-carousel: ^3.5.1
     react-native-responsive-dimensions: ^3.1.1
@@ -9048,6 +9049,16 @@ __metadata:
   version: 3.0.0
   resolution: "react-native-raw-bottom-sheet@npm:3.0.0"
   checksum: bd8cb9fff9240d1d09279910498efb26df80631f697fd7d93352f1247f30880d6ec6d1c978822f59d1cd375b03c9dad48d6f520935fde13b7ae35ec8305a2694
+  languageName: node
+  linkType: hard
+
+"react-native-razorpay@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "react-native-razorpay@npm:2.3.0"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-native: ">=0.66.0"
+  checksum: 35a549938e001d2ad30f8bcacc04df05070ea8cafc201e8938c750f5abc9b4c9ad29240924398030a1cc3633ac3e71d1871f29ff7bdf9096aa0d9cbd304d2ad4
   languageName: node
   linkType: hard
 

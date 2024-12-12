@@ -21,21 +21,21 @@ type DataItem = {
 };
 
 const DATA: DataItem[] = [
-  {
-    title: 'Orders',
-    data: [],
-    image: Icons.bag
-  },
+  // {
+  //   title: 'Orders',
+  //   data: [],
+  //   image: Icons.bag
+  // },
   {
     title: 'Customer Support & FAQ',
     data: [],
     image: Icons.faqs
   },
-  {
-    title: 'Addresses',
-    data: [],
-    image: Icons.location
-  },
+  // {
+  //   title: 'Addresses',
+  //   data: [],
+  //   image: Icons.location
+  // },
   {
     title: 'Refunds',
     data: [],

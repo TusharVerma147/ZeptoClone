@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,9 +8,12 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  ActivityIndicator,
+  FlatList,
+  TouchableWithoutFeedback,
+  Modal,
 } from 'react-native';
-import React, {useEffect, useState, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import colors from '../../theme/colors';
 import {Icons} from '../../assets';
@@ -22,8 +26,7 @@ import {products, trending_products} from '../../utils/mockdata/item';
 import ProductList from '../../components/productList';
 import key from '../../apis/api';
 import styles from './styles';
-import { StackNavigationProp } from '@react-navigation/stack';
-
+import {StackNavigationProp} from '@react-navigation/stack';
 
 type NavigationProp = StackNavigationProp<any>;
 
@@ -37,34 +40,36 @@ interface UserLocation {
 const Home: React.FC = () => {
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [address, setAddress] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [nearbyPlaces, setNearbyPlaces] = useState<any[]>([]);
+  const [showNearbyPlaces, setShowNearbyPlaces] = useState<boolean>(false);
 
   const navigation = useNavigation<NavigationProp>();
 
-
   Geolocation.setRNConfiguration({
     skipPermissionRequests: false,
-    authorizationLevel: "always",
+    authorizationLevel: 'always',
     enableBackgroundLocationUpdates: true,
     locationProvider: 'auto',
-})
-
+  });
 
   useEffect(() => {
     Geolocation.requestAuthorization();
     requestLocationPermission();
     navigation.setOptions({
-      headerLeft: () => null, 
+      headerLeft: () => null,
     });
 
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      return true; 
-    });
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        return true;
+      },
+    );
 
-  
     return () => {
       backHandler.remove();
     };
-    
   }, []);
 
   const getCurrentLocation = () => {
@@ -79,15 +84,21 @@ const Home: React.FC = () => {
             longitude,
           });
 
-          const response = await axios.get(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${key}`,
-          );
-          const data = response.data;
-          setAddress(data.results[0]?.formatted_address || '');
+          try {
+            const response = await axios.get(
+              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${key}`,
+            );
+            const data = response.data;
+            setAddress(data.results[0]?.formatted_address || '');
+          } catch (error) {
+            console.error('Error fetching address:', error);
+          }
         }
+        setLoading(false);
       },
       error => {
         console.log(error.code, error.message);
+        setLoading(false);
       },
       {enableHighAccuracy: false, timeout: 15000, maximumAge: 10000},
     );
@@ -98,37 +109,110 @@ const Home: React.FC = () => {
       getCurrentLocation();
     } catch (err) {
       console.warn(err);
+      setLoading(false);
     }
   };
-  
- 
+
+  const fetchNearbyPlaces = async () => {
+    if (!userLocation) return;
+
+    const {latitude, longitude} = userLocation;
+
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1000&key=${key}`,
+      );
+      setNearbyPlaces(response.data.results);
+      setShowNearbyPlaces(true);
+    } catch (error) {
+      console.error('Error fetching nearby places:', error);
+    }
+  };
+
+  const handlePlaceSelect = (place: string) => {
+    setAddress(place);
+    setShowNearbyPlaces(false);
+  };
+
+  const handleListHeader = () => {
+    if (userLocation) {
+      getCurrentLocation();
+      setShowNearbyPlaces(false);
+    }
+  };
+  const handlePressOutside = () => {
+    setShowNearbyPlaces(false);
+  };
+
+  const ListHeader = () => {
+    return (
+      <View style={{}}>
+        <TouchableOpacity style={styles.listheader} onPress={handleListHeader}>
+          <Image source={Icons.coordinate} style={styles.clock} />
+          <Text style={styles.nearbyPlaceText}>Current Location</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <AppWrapper>
       <StatusBar barStyle={'dark-content'} backgroundColor={colors.white} />
-      <AppHeader address={address} />
-      <ScrollView style={styles.content}>
-        <AppBody />
-      </ScrollView>
+
+      <AppHeader address={address} onAddressPress={fetchNearbyPlaces} />
+
+      {loading ? (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color={colors.zeptored} />
+        </View>
+      ) : (
+        <ScrollView style={styles.content}>
+          <AppBody />
+        </ScrollView>
+      )}
+      <Modal
+        visible={showNearbyPlaces}
+        transparent={true}
+        onRequestClose={handlePressOutside}>
+        <TouchableWithoutFeedback onPress={handlePressOutside}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.nearbyPlacesContainer}>
+            <FlatList
+              data={nearbyPlaces}
+              showsVerticalScrollIndicator={false}
+              ListHeaderComponent={ListHeader}
+              renderItem={({item}) => (
+                <TouchableOpacity onPress={() => handlePlaceSelect(item.name)}>
+                  <View style={styles.nearbyPlaceItem}>
+                    <Text style={styles.nearbyPlaceText}>{item.name}</Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+              keyExtractor={item => item.place_id}
+            />
+          </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </AppWrapper>
   );
 };
 
 interface AppHeaderProps {
   address: string;
+  onAddressPress: () => void;
 }
 
-const AppHeader: React.FC<AppHeaderProps> = ({address}) => {
+const AppHeader: React.FC<AppHeaderProps> = ({address, onAddressPress}) => {
   const navigation = useNavigation<NavigationProp>();
 
   const gotoSearchPage = () => {
     navigation.navigate('Search');
   };
 
-  const gotoSettings = () =>{
-    navigation.navigate('Settings')
-  }
-  
+  const gotoSettings = () => {
+    navigation.navigate('Settings');
+  };
 
   return (
     <View style={styles.headerparent}>
@@ -141,7 +225,12 @@ const AppHeader: React.FC<AppHeaderProps> = ({address}) => {
             <Text style={styles.deliverytext}>Delivering In</Text>
             <Text style={styles.min}>10 Min</Text>
           </View>
-          <Text style={styles.address}>{`${address.slice(0, 50)}`}</Text>
+          <View style={styles.addressView}>
+            <Text style={styles.address}>{`${address.slice(0, 35)}`}</Text>
+            <TouchableOpacity onPress={onAddressPress}>
+              <Image source={Icons.dropdown} style={styles.clock} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       <View style={styles.search}>
@@ -164,15 +253,17 @@ const AppBody: React.FC = () => {
     {id: 3, source: Icons.ban4},
     {id: 4, source: Icons.ban5},
   ];
-  const trendingProductsWithStringId = trending_products.map((product) => ({
+
+  const trendingProductsWithStringId = trending_products.map(product => ({
     ...product,
-    id: product.id.toString(), 
+    id: product.id.toString(),
   }));
 
-  const productsWithStringId = products.map((product) => ({
+  const productsWithStringId = products.map(product => ({
     ...product,
-    id: product.id.toString(), 
+    id: product.id.toString(),
   }));
+
   return (
     <View style={styles.flat}>
       <View>
@@ -191,16 +282,12 @@ const AppBody: React.FC = () => {
         />
       </View>
       <View>
-        <HomeTitles
-          title={'Your Go-to items'}
-        />
+        <HomeTitles title={'Your Go-to items'} />
         <ProductList data={productsWithStringId} />
       </View>
       <Image source={Icons.freshdeal} style={styles.freshdeal} />
       <View>
-        <HomeTitles
-          title={'Trending Products'}
-        />
+        <HomeTitles title={'Trending Products'} />
         <ProductList data={trendingProductsWithStringId} />
       </View>
     </View>
@@ -208,3 +295,5 @@ const AppBody: React.FC = () => {
 };
 
 export default Home;
+
+

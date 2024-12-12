@@ -20,6 +20,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomTextInput from '../../components/customTextInput';
+import {emailRegex,specialCharacterRegex} from '../../utils/regex';
 
 interface SignUpProps {
   navigation: {
@@ -101,7 +102,7 @@ const SignUp: React.FC<SignUpProps> = ({navigation}) => {
       setNameError(null);
     }
 
-    const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
+
     if (!specialCharacterRegex.test(password)) {
       setPasswordError('Password must contain at least one special symbol');
       flag = false;
@@ -109,7 +110,6 @@ const SignUp: React.FC<SignUpProps> = ({navigation}) => {
       setPasswordError(null);
     }
 
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       setEmailError('Invalid email address');
       flag = false;

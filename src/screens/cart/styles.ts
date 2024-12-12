@@ -34,9 +34,9 @@ const styles = StyleSheet.create({
     margin: 10,
     fontWeight: '700',
   },
-  mainview:{
-    flexDirection:'row',
-    alignItems:'center',
+  mainview: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   cartItem: {
     flexDirection: 'row',
@@ -118,6 +118,31 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: 25,
     fontWeight: 'bold',
+  },
+  couponview: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    margin: 20,
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.grey,
+    backgroundColor: '#FAF9F6',
+  },
+  couponcode: {
+    backgroundColor: colors.lightpurple,
+    padding: 5,
+    maxWidth: 100,
+    color: colors.violet,
+    borderWidth: 1,
+    borderColor: colors.violet,
+    borderRadius: 5,
+    fontWeight: '600',
+  },
+  couontext: {
+    fontSize: 18,
+    fontWeight: '600',
   },
 });
 

@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, Dimensions,Platform} from 'react-native';
 import {
   responsiveFontSize,
   responsiveWidth,
@@ -6,12 +6,16 @@ import {
 } from 'react-native-responsive-dimensions';
 import colors from '../../theme/colors';
 const width = Dimensions.get('window').width;
+import {vh} from '../../utils/dimensions';
 
 const styles = StyleSheet.create({
   headerparent: {
     paddingTop: width / 25,
   },
-
+loaderContainer:{
+    justifyContent:'center',
+    alignItems:'center'
+},
   header: {
     flexDirection: 'row',
     paddingLeft: 10,
@@ -45,7 +49,10 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2),
     fontWeight: '600',
     marginLeft: 10,
-    marginRight: 20,
+  maxWidth: width - 70 - 40, 
+  },
+  addressView:{
+    flexDirection: 'row', alignItems: 'center'
   },
   location: {
     height: 200,
@@ -103,7 +110,55 @@ const styles = StyleSheet.create({
   },
   caraouselimageview:{
     alignItems:'center'
-  }
+  },
+  nearbyPlacesContainer: {
+    position: 'absolute',
+    top:  Platform.OS ==="ios" ? vh(140) :vh(80), 
+    left: 0,
+    right: 0,
+    backgroundColor: colors.white,
+    marginRight:10,
+    marginLeft:70,
+    borderBottomEndRadius: 10,
+    borderBottomStartRadius:10,
+    maxHeight: 200,
+    zIndex: 1,
+    borderBottomWidth:1,
+    borderLeftWidth:1,
+    borderRightWidth:1,
+    borderColor:colors.greyish
+  },
+  nearbyPlaceItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.greyish,
+    flexDirection:'row'
+  },
+  listheader: {
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.greyish,
+    flexDirection:'row'
+  },
+  nearbyPlaceText: {
+    fontSize: responsiveFontSize(2),
+    color: colors.black,
+    fontWeight:'600'
+  },
+  clock: {
+    height: 20,
+    width: 25,
+    resizeMode: 'contain',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    justifyContent: 'center', // Center the modal content
+    alignItems: 'center', // Center the modal content
+  },
+  
 });
 
 export default styles;
