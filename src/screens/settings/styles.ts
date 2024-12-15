@@ -28,8 +28,7 @@ const styles = StyleSheet.create({
       fontSize: vw(20),
     },
     log: {
-      marginTop: 5, 
-      marginBottom:20,
+      marginBottom:vh(80),
       alignItems: 'center',
       justifyContent: 'center',
     },

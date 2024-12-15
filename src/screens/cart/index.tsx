@@ -11,7 +11,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import colors from '../../theme/colors';
 import AppHeader from '../../components/appHeader';
-import {Icons, Images} from '../../assets';
+import {Icons} from '../../assets';
 import CustomButton from '../../components/customButton';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -24,12 +24,14 @@ import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import Toast from 'react-native-simple-toast';
 import RazorpayCheckout from 'react-native-razorpay';
+import { addOrder } from '../../redux/OrderHistorySlice';
+
 type NavigationProp = StackNavigationProp<any>;
 
 interface CartItem {
   id: string;
   name: string;
-  image: string;
+  image: URL;
   grams: number;
   discounted: number;
   quantity: number;
@@ -42,6 +44,7 @@ interface RootState {
 const Cart = () => {
   const navigation = useNavigation<NavigationProp>();
   const cartItems = useSelector((state: RootState) => state.cart);
+  console.log("Cart",cartItems)
   const dispatch = useDispatch();
   const [isCouponApplied, setIsCouponApplied] = useState(false);
   const [discountedAmount, setDiscountedAmount] = useState(0);
@@ -62,9 +65,7 @@ const Cart = () => {
     navigation.navigate('BottomTab', {screen: 'Home'});
   };
 
-  const gotoPayment = () => {
-    navigation.navigate('Payment', {totalAmount});
-  };
+  
   let razorpayKeyId = 'rzp_test_GnpMgYfbVsmYuV';
   let razorpayKeySecret = 'v2s6xqeaeW8kjNFBGq1wCLmT';
   const handlePayment = () => {
@@ -86,6 +87,23 @@ const Cart = () => {
     RazorpayCheckout.open(options)
       .then((data: any) => {
         dispatch(clearCart());
+
+        const orderDetails = {
+          id: data.razorpay_payment_id,
+          products: cartItems.map(item => ({
+            id: item.id,
+            name: item.name,
+            img: item.image,
+            quantity: item.quantity,
+            price: item.discounted,
+          })),
+          totalAmount: finalAmount,
+          paymentId: data.razorpay_payment_id,
+          orderDate: new Date().toISOString(),
+        };
+  
+        dispatch(addOrder(orderDetails)); 
+
         Toast.showWithGravity('Payment Succesfull', Toast.SHORT, Toast.BOTTOM, {
           backgroundColor: colors.reddish,
         });
@@ -156,7 +174,7 @@ const Cart = () => {
                 <>
                   <Image source={Icons.discount} />
 
-                  <Text style={styles.couontext}>Coupon applied: ZEP10</Text>
+                  <Text style={styles.coupontext}>Coupon applied: ZEP10</Text>
                   <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={handleRemoveCoupon}>
@@ -167,7 +185,7 @@ const Cart = () => {
                 <>
                   <Image source={Icons.discount} />
 
-                  <Text style={styles.couontext}>You have a new Coupon</Text>
+                  <Text style={styles.coupontext}>You have a new Coupon</Text>
                   <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={handleApplyCoupon}>

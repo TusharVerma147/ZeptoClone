@@ -1585,6 +1585,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@expo/react-native-action-sheet@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "@expo/react-native-action-sheet@npm:4.1.0"
+  dependencies:
+    "@types/hoist-non-react-statics": ^3.3.1
+    hoist-non-react-statics: ^3.3.0
+  peerDependencies:
+    react: ">=18.0.0"
+  checksum: 38ff3f21e5f63da0ffab3cf1800dbbe167283a6bfafaa059156da2fa2e771209a140d49d6261488c0651cf9cb8fbe5a8cf19c9c2718b563e8b1f5df8b9eda015
+  languageName: node
+  linkType: hard
+
 "@firebase/analytics-compat@npm:0.2.14":
   version: 0.2.14
   resolution: "@firebase/analytics-compat@npm:0.2.14"
@@ -3396,6 +3408,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/hoist-non-react-statics@npm:^3.3.1":
+  version: 3.3.6
+  resolution: "@types/hoist-non-react-statics@npm:3.3.6"
+  dependencies:
+    "@types/react": "*"
+    hoist-non-react-statics: ^3.3.0
+  checksum: f03e43bd081876c49584ffa0eb690d69991f258203efca44dcc30efdda49a50653ff06402917d1edc9cb7e2adebbe9e2d1d0e739bc99c1b5372103b1cc534e47
+  languageName: node
+  linkType: hard
+
 "@types/istanbul-lib-coverage@npm:*, @types/istanbul-lib-coverage@npm:^2.0.0, @types/istanbul-lib-coverage@npm:^2.0.1":
   version: 2.0.6
   resolution: "@types/istanbul-lib-coverage@npm:2.0.6"
@@ -3425,6 +3447,22 @@ __metadata:
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
   checksum: 97ed0cb44d4070aecea772b7b2e2ed971e10c81ec87dd4ecc160322ffa55ff330dace1793489540e3e318d90942064bb697cc0f8989391797792d919737b3b98
+  languageName: node
+  linkType: hard
+
+"@types/lodash.isequal@npm:^4.5.8":
+  version: 4.5.8
+  resolution: "@types/lodash.isequal@npm:4.5.8"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: f3180c2d2925514fff1908a1303c11468c9f39b47fd7b053416aad3f1447f8e4a9894dd0460187ac9ac19387e25aec8dd8214d13a50a0967e0dc9cca8e4c5353
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.17.13
+  resolution: "@types/lodash@npm:4.17.13"
+  checksum: d0bf8fbd950be71946e0076b30fd40d492293baea75f05931b6b5b906fd62583708c6229abdb95b30205ad24ce1ed2f48bc9d419364f682320edd03405cc0c7e
   languageName: node
   linkType: hard
 
@@ -3759,6 +3797,7 @@ __metadata:
     react-native-fast-image: ^8.6.3
     react-native-geolocation-service: ^5.3.1
     react-native-gesture-handler: ^2.20.2
+    react-native-gifted-chat: ^2.6.4
     react-native-maps: ^1.20.0
     react-native-permissions: ^3.6.1
     react-native-raw-bottom-sheet: ^3.0.0
@@ -4864,7 +4903,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.8.15":
+"dayjs@npm:^1.11.13, dayjs@npm:^1.8.15":
   version: 1.11.13
   resolution: "dayjs@npm:1.11.13"
   checksum: f388db88a6aa93956c1f6121644e783391c7b738b73dbc54485578736565c8931bdfba4bb94e9b1535c6e509c97d5deb918bbe1ae6b34358d994de735055cca9
@@ -7613,6 +7652,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.isequal@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.isequal@npm:4.5.0"
+  checksum: da27515dc5230eb1140ba65ff8de3613649620e8656b19a6270afe4866b7bd461d9ba2ac8a48dcc57f7adac4ee80e1de9f965d89d4d81a0ad52bb3eec2609644
+  languageName: node
+  linkType: hard
+
 "lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
@@ -8856,7 +8902,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -8983,6 +9029,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-communications@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "react-native-communications@npm:2.2.1"
+  checksum: 0b1a63a116a34866d06790b0dd1153ff622aba148a8ad7d87e18e0ba6c2cfa545210be0d04f3428341a72fbcbd09ac95ea38b92197856cb0fda67bca2321e07b
+  languageName: node
+  linkType: hard
+
 "react-native-fast-image@npm:^8.6.3":
   version: 8.6.3
   resolution: "react-native-fast-image@npm:8.6.3"
@@ -9015,6 +9068,49 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-gifted-chat@npm:^2.6.4":
+  version: 2.6.4
+  resolution: "react-native-gifted-chat@npm:2.6.4"
+  dependencies:
+    "@expo/react-native-action-sheet": ^4.1.0
+    "@types/lodash.isequal": ^4.5.8
+    dayjs: ^1.11.13
+    lodash.isequal: ^4.5.0
+    prop-types: ^15.8.1
+    react-native-communications: ^2.2.1
+    react-native-iphone-x-helper: ^1.3.1
+    react-native-lightbox-v2: ^0.9.0
+    react-native-parsed-text: ^0.0.22
+    uuid: ^10.0.0
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-get-random-values: "*"
+    react-native-reanimated: "*"
+    react-native-safe-area-context: "*"
+  checksum: 232b9b28fcdaca562c1a0dd85ade6c41b559c16a6ec11c4165ab65cbe278a2569ad647da5b70c83558fc1995dda9dcc0085bcb5b2e6b2572c52f415d7ac8e6b1
+  languageName: node
+  linkType: hard
+
+"react-native-iphone-x-helper@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "react-native-iphone-x-helper@npm:1.3.1"
+  peerDependencies:
+    react-native: ">=0.42.0"
+  checksum: 024376646009a966e33e12fc2358751830818b0fb73b1c601a64eb5e490d2dc43eec23668991b985a8c412a84d087f20eb45bb9b593567c08b66e741b7bddda5
+  languageName: node
+  linkType: hard
+
+"react-native-lightbox-v2@npm:^0.9.0":
+  version: 0.9.2
+  resolution: "react-native-lightbox-v2@npm:0.9.2"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-native: ">=0.61.0"
+  checksum: b55783a0c629010dead4f9b9d449207853d31f2c577fc11f5db1527fddbd5fdd8a8e6122abfba79e12c619cf00fd0c4072b72a2b840425fdbf81ae419d4e9580
+  languageName: node
+  linkType: hard
+
 "react-native-maps@npm:^1.20.0":
   version: 1.20.0
   resolution: "react-native-maps@npm:1.20.0"
@@ -9028,6 +9124,18 @@ __metadata:
     react-native-web:
       optional: true
   checksum: 9027f2713ac6b84a84ecb7d27c9b7fd33f25e14149f93cc06406560a3d8f8305b038ac807677153a450fe3c4164487d0ebe2de4f61d708821840e3c400e4ab88
+  languageName: node
+  linkType: hard
+
+"react-native-parsed-text@npm:^0.0.22":
+  version: 0.0.22
+  resolution: "react-native-parsed-text@npm:0.0.22"
+  dependencies:
+    prop-types: ^15.7.x
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: a8672a50bbc60c9d925b8935b484cda2ed976483fce156f31b497d799eb349b24b79934aa683576e606e3fd3d8d97877d0048eba95f702f15ae21263c2658fd5
   languageName: node
   linkType: hard
 
@@ -10599,6 +10707,15 @@ __metadata:
   version: 1.0.1
   resolution: "utils-merge@npm:1.0.1"
   checksum: c81095493225ecfc28add49c106ca4f09cdf56bc66731aa8dabc2edbbccb1e1bfe2de6a115e5c6a380d3ea166d1636410b62ef216bb07b3feb1cfde1d95d5080
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "uuid@npm:10.0.0"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 4b81611ade2885d2313ddd8dc865d93d8dccc13ddf901745edca8f86d99bc46d7a330d678e7532e7ebf93ce616679fb19b2e3568873ac0c14c999032acb25869
   languageName: node
   linkType: hard
 

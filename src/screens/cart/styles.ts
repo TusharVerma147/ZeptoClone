@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.grey,
-    backgroundColor: '#FAF9F6',
+    backgroundColor: colors.cream,
   },
   couponcode: {
     backgroundColor: colors.lightpurple,
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontWeight: '600',
   },
-  couontext: {
+  coupontext: {
     fontSize: 18,
     fontWeight: '600',
   },

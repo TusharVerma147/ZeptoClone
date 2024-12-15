@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer,  useNavigationContainerRef, } from '@react-navigation/native';
@@ -13,6 +12,8 @@ import SignUp from '../screens/signUp';
 import Payment from '../screens/payment';
 import Search from '../screens/search';
 import Order from '../screens/order';
+import Chat from '../screens/Chat';
+import OrderHistory from '../screens/orderHistory';
 
 const Stack =createNativeStackNavigator();
 
@@ -33,6 +34,9 @@ const RootNavigator = () => {
         <Stack.Screen name={ScreenNames.Payment}  component={Payment}/>
         <Stack.Screen name={ScreenNames.Order}  component={Order}/>
         <Stack.Screen name={ScreenNames.Search}  component={Search}/>
+        <Stack.Screen name={ScreenNames.Chat}  component={Chat}/>
+        <Stack.Screen name={ScreenNames.OrderHistory}  component={OrderHistory}/>
+        
         <Stack.Screen
             component={BottomTab}
             name={ScreenNames.BottomTab}

@@ -40,8 +40,10 @@ const CartSlice = createSlice({
         }
       }
     },
+  
+  
     clearCart(state) {
-      return [];  // Clears all items from the cart
+      return [];  
     },
   },
 });

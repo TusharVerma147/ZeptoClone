@@ -76,7 +76,6 @@ const Home: React.FC = () => {
     console.log('Fetch location');
     Geolocation.getCurrentPosition(
       async position => {
-        console.log('Position:', position);
         if (position) {
           const {latitude, longitude} = position.coords;
           setUserLocation({

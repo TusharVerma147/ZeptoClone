@@ -14,4 +14,7 @@ export default {
     greyish:'#edecec',
     greyy:'#f4f5fa',
     lightpurple:'#fcecfa',
+    cream:'#FAF9F6',
+    primary: '#4A90E2', 
+    secondary: '#F2F2F2',
 }

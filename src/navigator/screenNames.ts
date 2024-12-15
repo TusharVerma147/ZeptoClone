@@ -12,6 +12,8 @@ const ScreenNames = {
     SignUp:'SignUp',
     Payment:'Payment',
     Order:'Order',
+    Chat:'Chat',
+    OrderHistory:'OrderHistory',
   };
   
   export {ScreenNames};

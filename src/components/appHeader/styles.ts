@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
       paddingHorizontal:30
     },
     categoryText: {
-      // fontSize: 25,
       fontWeight: '600',
     },
     subtitleText: {

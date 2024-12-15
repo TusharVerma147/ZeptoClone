@@ -1,5 +1,6 @@
 import { combineReducers, configureStore} from "@reduxjs/toolkit";
 import cartReducer from './CartSlice';  
+import orderHistoryReducer from './OrderHistorySlice';
 import { persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -12,6 +13,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   cart: cartReducer,
+  orderHistory: orderHistoryReducer,
 });
 
 
