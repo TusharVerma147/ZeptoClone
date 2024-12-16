@@ -65,6 +65,7 @@ const Icons = {
   dropdown: require('./icons/dropdown.png'),
   discount: require('./icons/discount.png'),
   coordinate: require('./icons/coordinate.png'),
+ search_history: require('./icons/search_history.png'),
 };
 const Images = {
   vegetable: require('./images/vegetable.png'),

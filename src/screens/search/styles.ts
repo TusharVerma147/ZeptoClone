@@ -47,6 +47,23 @@ const styles = StyleSheet.create({
       fontSize: 16,
       color: colors.grey,
     },
+    historyItemContainer: {
+      padding: 10,
+      borderColor: colors.lightgrey,
+    },
+    historyItemText: {
+      fontSize: 16,
+      color: colors.black,
+    },
+    clock: {
+      height: 20,  
+      width: 20,
+      marginHorizontal: 10,
+    },
+    searchhistory:{
+      flexDirection:'row'
+    }
+
   });
 
   export default styles;

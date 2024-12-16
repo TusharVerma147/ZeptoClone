@@ -9,6 +9,8 @@ interface Product {
 
 type CartState = Product[];
 
+
+
 const CartSlice = createSlice({
   name: 'cart',
   initialState: [] as CartState,

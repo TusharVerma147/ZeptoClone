@@ -1,34 +1,21 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Image, StatusBar } from 'react-native';
 import { useSelector } from 'react-redux';
 import AppHeader from '../../components/appHeader';
 import styles from './styles';
-import {Icons, Images} from '../../assets';
+import { RootState } from '../../redux/store';
+import colors from '../../theme/colors';
+
+
+
 
 const OrderHistory = () => {
-  const orders = useSelector((state) => state.orderHistory.orders);
-  const placeholderImage = 'https://via.placeholder.com/50';
- console.log("Orders",orders[2])
+  const orders = useSelector((state:RootState) => state.orderHistory.orders);
+ console.log("Orders",orders)
   const renderOrder = ({ item }) => 
     (
     <View style={styles.orderContainer}>
-      <View style={styles.productImagesRow}>
-        {item.products.map((product) => {console.log('Product',product)}
-        
-        // (
-        //   <Image
-        //     key={product.id}
-        //     source={{
-        //         uri: product.image ? product.image : placeholderImage,
-        //       }}
-        //     style={styles.productImage}
-        //   />
-        // )
-        
-        )}
-      </View>
-
-    
+           
       <Text style={styles.orderTitle}>Order ID: {item.id}</Text>
       <Text style={styles.orderTitle}>Payment ID: {item.paymentId}</Text>
       <Text style={styles.details}>Placed on {new Date(item.orderDate).toLocaleDateString()}</Text>
@@ -48,8 +35,12 @@ const OrderHistory = () => {
 
   return (
     <View style={styles.container}>
-  
-  <AppHeader title='Orders'/>
+   <StatusBar barStyle={'light-content'} />
+  <AppHeader title='Orders'   backgroundColor={colors.violet}
+        titleColor={colors.white}
+        showBackIcon={false}
+        centerTitle={true}
+        />
       {orders.length === 0 ? (
         <View style={styles.noorder}>
         <Text style={styles.noordertext}>No orders yet</Text>
@@ -59,7 +50,6 @@ const OrderHistory = () => {
           data={orders}
           renderItem={renderOrder}
           keyExtractor={(order) => order.id}
-          inverted
         />
       )}
     </View>

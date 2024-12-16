@@ -4,6 +4,7 @@ import colors from '../../theme/colors';
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor:colors.white
     },
     noorder:{
       justifyContent:'center',
@@ -15,22 +16,25 @@ const styles = StyleSheet.create({
        fontWeight:'800'
     },
     orderContainer: {
-      marginBottom: 20,
+      flex:1,
+      marginVertical:10,
+      marginHorizontal:20,
       padding: 10,
       borderWidth: 1,
-      borderColor: '#ddd',
-      borderRadius: 5,
-      backgroundColor:colors.white
+      borderColor: colors.purple,
+      borderRadius: 8,
+      backgroundColor:colors.lightpurple
     },
     orderTitle: {
       fontSize: 15,
       fontWeight: '500',
-      marginVertical:5
+      marginVertical:5,
+      color:colors.purple
     },
     details:{
     marginVertical:10,
-    color:colors.darkgrey,
     fontSize:15,
+    color:colors.violet
     },
     productImagesRow: {
       flexDirection: 'row',
@@ -44,9 +48,10 @@ const styles = StyleSheet.create({
       borderRadius: 5, 
     },
     total:{
-      fontWeight:'500',
+      fontWeight:'600',
       marginVertical:5,
-      fontSize:15
+      fontSize:15,
+      color:colors.purple
     }
   });
 

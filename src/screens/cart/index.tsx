@@ -93,7 +93,7 @@ const Cart = () => {
           products: cartItems.map(item => ({
             id: item.id,
             name: item.name,
-            img: item.image,
+            img: item.image.href,
             quantity: item.quantity,
             price: item.discounted,
           })),
@@ -107,11 +107,10 @@ const Cart = () => {
         Toast.showWithGravity('Payment Succesfull', Toast.SHORT, Toast.BOTTOM, {
           backgroundColor: colors.reddish,
         });
-        Alert.alert('Success', `Payment ID: ${data.razorpay_payment_id}`);
         navigation.navigate('BottomTab', {screen: 'Home'});
       })
       .catch((error: any) => {
-        Toast.showWithGravity('Payment Declined', Toast.SHORT, Toast.BOTTOM, {
+        Toast.showWithGravity('Payment Declined', Toast.LONG, Toast.BOTTOM, {
           backgroundColor: colors.reddish,
         });
       });
