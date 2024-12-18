@@ -55,10 +55,10 @@ const SignUp: React.FC<SignUpProps> = ({navigation}) => {
 
     const subscriber = auth().onAuthStateChanged(user => {
       if (user) {
-        console.log('User is signed in: ', user);
+        // console.log('User is signed in: ', user);
         navigation.replace('BottomTab');
       } else {
-        console.log('User is not signed in');
+        // console.log('User is not signed in');
       }
     });
 
@@ -82,7 +82,7 @@ const SignUp: React.FC<SignUpProps> = ({navigation}) => {
       Toast.show('User logged in successfully!', Toast.SHORT);
       navigation.replace('BottomTab');
     } catch (error: any) {
-      console.error(error);
+      // console.error(error);
       Alert.alert('Error signing in: ', error.message);
     }
   };

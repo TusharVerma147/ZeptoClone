@@ -1,14 +1,22 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { View, Text, TouchableOpacity, Image, StatusBar, TextInput, FlatList } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { Icons } from '../../assets';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StatusBar,
+  TextInput,
+  FlatList,
+} from 'react-native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {Icons} from '../../assets';
 import AppWrapper from '../../components/appWrapper';
-import { products, trending_products } from '../../utils/mockdata/item';
+import {products, trending_products} from '../../utils/mockdata/item';
 import styles from './styles';
 import colors from '../../theme/colors';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { addSearchTerm, updateSearchHistory } from '../../redux/SearchSlice'; 
+import {StackNavigationProp} from '@react-navigation/stack';
+import {addSearchTerm, updateSearchHistory} from '../../redux/SearchSlice';
 
 type NavigationProp = StackNavigationProp<any>;
 
@@ -21,10 +29,12 @@ interface Product {
 const Search = () => {
   const navigation = useNavigation<NavigationProp>();
   const dispatch = useDispatch();
-  const searchHistory = useSelector((state: any) => state.search.searchHistory);  
+  const searchHistory = useSelector((state: any) => state.search.searchHistory);
   const [search, setSearch] = useState<string>('');
   const [searchProducts, setSearchProducts] = useState<Product[]>([]);
-  const [searchTrendingProducts, setSearchedTrendingProducts] = useState<Product[]>([]);
+  const [searchTrendingProducts, setSearchedTrendingProducts] = useState<
+    Product[]
+  >([]);
 
   const searchInputRef = useRef<TextInput | null>(null);
 
@@ -34,11 +44,11 @@ const Search = () => {
 
   useEffect(() => {
     if (search) {
-      const filtered = products.filter((product) =>
-        product.name.toLowerCase().includes(search.toLowerCase())
+      const filtered = products.filter(product =>
+        product.name.toLowerCase().includes(search.toLowerCase()),
       );
-      const filteredTrending = trending_products.filter((trendingProduct) =>
-        trendingProduct.name.toLowerCase().includes(search.toLowerCase())
+      const filteredTrending = trending_products.filter(trendingProduct =>
+        trendingProduct.name.toLowerCase().includes(search.toLowerCase()),
       );
       setSearchProducts(filtered);
       setSearchedTrendingProducts(filteredTrending);
@@ -53,7 +63,7 @@ const Search = () => {
       if (searchInputRef.current) {
         searchInputRef.current.focus();
       }
-    }, 100);
+    }, 1000);
 
     return () => clearTimeout(timeoutId);
   }, []);
@@ -61,29 +71,38 @@ const Search = () => {
   useFocusEffect(
     React.useCallback(() => {
       focusSearchInput();
-    }, [focusSearchInput])
+    }, [focusSearchInput]),
   );
 
   const handleItemPress = (item: Product) => {
     dispatch(addSearchTerm(item));
-    navigation.navigate('Details', { item });
+    navigation.navigate('Details', {item});
   };
 
   const handleHistoryItemPress = (item: Product) => {
-    const updatedHistory = [item, ...searchHistory.filter((historyItem: Product) => historyItem.id !== item.id)];
+    const updatedHistory = [
+      item,
+      ...searchHistory.filter(
+        (historyItem: Product) => historyItem.id !== item.id,
+      ),
+    ];
     dispatch(updateSearchHistory(updatedHistory));
-    navigation.navigate('Details', { item });
+    navigation.navigate('Details', {item});
   };
 
-  const renderItem = ({ item }: { item: Product }) => (
-    <TouchableOpacity onPress={() => handleItemPress(item)} style={styles.itemContainer}>
-      <Image source={{ uri: item.image }} style={styles.itemImage} />
+  const renderItem = ({item}: {item: Product}) => (
+    <TouchableOpacity
+      onPress={() => handleItemPress(item)}
+      style={styles.itemContainer}>
+      <Image source={{uri: item.image}} style={styles.itemImage} />
       <Text style={styles.itemName}>{item.name}</Text>
     </TouchableOpacity>
   );
 
-  const renderSearchHistoryItem = ({ item }: { item: Product }) => (
-    <TouchableOpacity onPress={() => handleHistoryItemPress(item)} style={styles.historyItemContainer}>
+  const renderSearchHistoryItem = ({item}: {item: Product}) => (
+    <TouchableOpacity
+      onPress={() => handleHistoryItemPress(item)}
+      style={styles.historyItemContainer}>
       <View style={styles.searchhistory}>
         <Image source={Icons.search_history} style={styles.clock} />
         <Text style={styles.historyItemText}>{item.name}</Text>
@@ -99,8 +118,10 @@ const Search = () => {
       <FlatList
         data={searchHistory}
         renderItem={renderSearchHistoryItem}
-        keyExtractor={(item) => item.id.toString()}
-        ListEmptyComponent={<Text style={styles.noResults}>Search for the desired products</Text>}
+        keyExtractor={item => item.id.toString()}
+        ListEmptyComponent={
+          <Text style={styles.noResults}>Search for the desired products</Text>
+        }
       />
     );
   };
@@ -117,7 +138,7 @@ const Search = () => {
           placeholder="Search"
           style={styles.searchInput}
           value={search}
-          onChangeText={(text) => {
+          onChangeText={text => {
             setSearch(text);
             if (text === '') {
               setSearchProducts([]);
@@ -129,7 +150,7 @@ const Search = () => {
       <FlatList
         data={[...searchProducts, ...searchTrendingProducts]}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={item => item.id.toString()}
         ListEmptyComponent={getEmptyComponentMessage()}
       />
     </AppWrapper>

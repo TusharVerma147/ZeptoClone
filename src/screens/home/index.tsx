@@ -8,7 +8,6 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
-  BackHandler,
   ActivityIndicator,
   FlatList,
   TouchableWithoutFeedback,
@@ -56,20 +55,6 @@ const Home: React.FC = () => {
   useEffect(() => {
     Geolocation.requestAuthorization();
     requestLocationPermission();
-    navigation.setOptions({
-      headerLeft: () => null,
-    });
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => {
-        return true;
-      },
-    );
-
-    return () => {
-      backHandler.remove();
-    };
   }, []);
 
   const getCurrentLocation = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, Text, Image,ImageSourcePropType, StyleSheet, ViewStyle, TextStyle, StyleProp } from 'react-native';
+import {TouchableOpacity, Text, Image,ImageSourcePropType, ViewStyle, TextStyle, StyleProp } from 'react-native';
 import { vh } from '../../utils/dimensions';
 import styles from './styles';
 
